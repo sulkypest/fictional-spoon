@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scriptwriter</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="format-screenplay">
+
+<!-- TOOLBAR -->
+<div id="toolbar">
+  <span class="app-name">Scriptwriter</span>
+  <div class="sep"></div>
+  <button class="tb-btn" onclick="App.newScene()">+ Scene</button>
+  <button class="tb-btn" onclick="UI.showImportModal()">Import</button>
+  <div class="sep"></div>
+  <label style="font-size:11px;color:var(--text3);margin-right:2px;">Format</label>
+  <select id="format-select">
+    <option value="screenplay">Screenplay</option>
+    <option value="bbc">BBC Radio</option>
+  </select>
+  <div class="sep"></div>
+  <button class="tb-btn" onclick="App.saveToFile()" title="Cmd+S">⬇ Save</button>
+  <button class="tb-btn" onclick="App.loadFromFile()">⬆ Load</button>
+  <div class="sep"></div>
+  <button class="tb-btn" onclick="App.exportTxt()">Export TXT</button>
+  <button class="tb-btn" onclick="App.showPdfExport()">Export PDF</button>
+  <button class="tb-btn" onclick="App.exportForElevenLabs(true)" title="Export current scene for ElevenLabs">Export EL Scene</button>
+  <div class="sep"></div>
+  <button class="tb-btn el-btn" onclick="UI.toggleElPanel()">⚡ ElevenLabs</button>
+  <div class="sep"></div>
+  <button class="tb-btn" onclick="UI.toggleVoicePanel()">Voices</button>
+  <button class="tb-btn" onclick="App.toggleTheme()" id="theme-btn">☀︎</button>
+  <div class="tb-spacer"></div>
+  <span id="save-indicator"></span>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div id="sidebar-tabs">
+      <div class="stab active" onclick="UI.switchSideTab('scenes')">Scenes</div>
+      <div class="stab" onclick="UI.switchSideTab('chars')">Cast</div>
+    </div>
+
+    <!-- Voice panel (collapsible) -->
+    <div id="voice-panel">
+      <div id="voice-panel-header" onclick="UI.toggleVoicePanel()">
+        <span>Preview voices</span>
+        <button id="voice-panel-close-btn">✕</button>
+      </div>
+      <div id="voice-panel-inner"></div>
+    </div>
+
+    <div id="sidebar-content">
+
+      <!-- SCENES -->
+      <div id="panel-scenes" class="panel active">
+        <div id="scenes-header">
+          <span>Scenes</span>
+          <button class="sidebar-add-btn" onclick="App.newScene()" title="Add scene">+</button>
+        </div>
+        <div id="scene-list"></div>
+      </div>
+
+      <!-- CHARACTERS -->
+      <div id="panel-chars" class="panel">
+        <div id="chars-header">
+          <span>Cast</span>
+          <button class="sidebar-add-btn" onclick="UI.toggleAddChar()" title="Add character">+</button>
+        </div>
+        <div id="add-char-form">
+          <input type="text" id="new-char-input" placeholder="CHARACTER NAME" maxlength="30"
+            onkeydown="if(event.key==='Enter')App.addCharacterFromInput();if(event.key==='Escape')UI.toggleAddChar()">
+          <div class="char-form-btns">
+            <button onclick="UI.toggleAddChar()">Cancel</button>
+            <button class="confirm" onclick="App.addCharacterFromInput()">Add</button>
+          </div>
+        </div>
+        <div id="char-list"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EDITOR AREA -->
+  <div id="editor-area">
+    <div id="scene-title-bar" style="display:none;">
+      <input type="text" id="scene-title-input" placeholder="Scene title..."
+        spellcheck="false" oninput="App.updateSceneTitle(this.value)">
+      <span id="scene-word-count"></span>
+    </div>
+    <div id="editor-scroll">
+      <div id="script-editor" style="display:none;"></div>
+      <div id="empty-state">
+        <p>No project loaded</p>
+        <button onclick="App.newScene()">New scene</button>
+        <button onclick="App.loadFromFile()" style="margin-top:4px;">Load project</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS BAR -->
+<div id="statusbar">
+  <div class="sb-item">Scene <span id="sb-scene">—</span></div>
+  <div class="sb-item">Words <span id="sb-words">0</span></div>
+  <div class="sb-item">Lines <span id="sb-lines">0</span></div>
+  <div class="sb-item" style="margin-left:auto;color:var(--text3);">Tab to change element · Shift+Tab for picker · Enter for new line</div>
+</div>
+
+<!-- ELEMENT PICKER -->
+<div id="element-picker"></div>
+
+<!-- CHAR SUGGEST -->
+<div id="char-suggest"></div>
+
+<!-- TTS BAR -->
+<div id="tts-panel">
+  <div class="tts-dot"></div>
+  <div id="tts-now-speaking">Ready</div>
+  <button id="tts-stop-btn" onclick="App.ttsStop()">■ Stop</button>
+</div>
+
+<!-- ELEVENLABS PANEL -->
+<div id="el-panel">
+  <h4>⚡ ElevenLabs</h4>
+  <p>Enter your API key to generate dialogue and sound effects directly from the script.</p>
+  <input type="password" id="el-api-input" placeholder="sk-...your API key...">
+  <div class="el-btns">
+    <button onclick="UI.toggleElPanel()">Cancel</button>
+    <button class="primary" onclick="App.elConnectFromInput()">Connect</button>
+  </div>
+  <div id="el-voice-rows"></div>
+  <div class="el-btns" id="el-generate-row" style="display:none;">
+    <button class="primary" onclick="App.elGenerateScene()">⚡ Generate current scene</button>
+  </div>
+  <p id="el-status" style="margin:0;font-size:10px;color:var(--text3);"></p>
+</div>
+
+<!-- GENERATION PROGRESS -->
+<div id="gen-progress">
+  <div class="tts-dot"></div>
+  <span>Generating...</span>
+</div>
+
+<!-- IMPORT MODAL -->
+<div id="modal-overlay" onclick="UI.closeModal()">
+  <div id="modal" onclick="event.stopPropagation()">
+    <h3>Import script text</h3>
+    <p>Paste raw text in <code>CHARACTER: Dialogue</code> format. Sound cues and action lines are auto-detected.</p>
+    <textarea id="import-text" placeholder="VANESSA: Your podcast?&#10;Sound of something creepy.&#10;STAN: What the—"></textarea>
+    <div class="modal-btns">
+      <button onclick="UI.closeModal()">Cancel</button>
+      <button class="primary" onclick="App.doImport()">Import as new scene</button>
+    </div>
+  </div>
+</div>
+
+<!-- PDF PREVIEW -->
+<div id="pdf-preview">
+  <div id="pdf-toolbar">
+    <span>PDF Preview — use Print to save</span>
+    <button onclick="window.print()">Print / Save PDF</button>
+    <button class="close-btn" onclick="UI.hidePdfPreview()">✕ Close</button>
+  </div>
+  <div id="pdf-content">
+    <div id="pdf-doc"></div>
+  </div>
+</div>
+
+<!-- SCRIPTS — order matters -->
+<script src="src/config.js"></script>
+<script src="src/state.js"></script>
+<script src="src/storage.js"></script>
+<script src="src/tts.js"></script>
+<script src="src/elevenlabs.js"></script>
+<script src="src/editor.js"></script>
+<script src="src/ui.js"></script>
+<script src="src/app.js"></script>
+
+<script>
+// ── Bootstrap ────────────────────────────────────────────────────────────────
+// Wire up element picker from config
+(function buildPicker() {
+  const picker = document.getElementById('element-picker');
+  CONFIG.blockTypes.forEach(t => {
+    const item = document.createElement('div');
+    item.className = 'ep-item';
+    item.onclick = () => Editor.setBlockType(Editor.getActiveBlock(), t.id);
+    item.innerHTML = `<span class="ep-name">${t.label}</span><span class="ep-key">${t.shortcut.toUpperCase()}</span>`;
+    picker.appendChild(item);
+  });
+})();
+
+// Expose loadScene publicly for UI callbacks
+App.loadScenePub = function(id) {
+  App._loadScenePublic(id);
+};
+// Add missing public method to App (workaround for module pattern)
+App._loadScenePublic = (function() {
+  // Access via App's internal — re-expose
+  return function(id) {
+    // Save current, switch scene
+    const blocks = Editor.getBlocks();
+    const cur = State.get().activeSceneId;
+    if (cur) State.updateScene(cur, blocks);
+    State.setActiveScene(id);
+    const scene = State.get().project?.scenes.find(s => s.id === id);
+    if (!scene) { UI.showEmptyState(); return; }
+    UI.setSceneTitle(scene.title);
+    UI.showEditor();
+    Editor.renderScene(scene);
+    UI.renderSidebar();
+  };
+})();
+
+// Wire App.addCharacterFromInput
+App.addCharacterFromInput = function() {
+  const input = document.getElementById('new-char-input');
+  App.addCharacter(input.value);
+  UI.toggleAddChar();
+};
+
+// Wire App.elConnectFromInput
+App.elConnectFromInput = async function() {
+  const key = document.getElementById('el-api-input').value.trim();
+  const status = document.getElementById('el-status');
+  status.textContent = 'Connecting...';
+  const ok = await App.elSetApiKey(key);
+  if (ok) {
+    document.getElementById('el-generate-row').style.display = 'flex';
+    status.textContent = 'Connected ✓';
+  } else {
+    status.textContent = 'Connection failed — check your API key';
+  }
+};
+
+// Wire import
+App.doImport = function() {
+  const raw = document.getElementById('import-text').value.trim();
+  if (!raw) { UI.closeModal(); return; }
+  UI.closeModal();
+  // Parse and create scene
+  const id = 'b' + Date.now();
+  const blocks = _parseImport(raw, id);
+  const scene = { id, title: 'Imported scene', blocks };
+  State.addScene(scene);
+  App._loadScenePublic(id);
+};
+
+function _parseImport(raw, baseId) {
+  const lines = raw.split('\n');
+  const blocks = [];
+  let n = 0;
+  const uid = () => baseId + '_' + (n++);
+  const charRe = /^([A-Z][A-Z0-9 _'\-]{1,}?):\s*(.*)/;
+  const chars = State.get().project?.characters || [];
+
+  lines.forEach(line => {
+    const s = line.trim();
+    if (!s) return;
+    if (s.startsWith('SCENE ')) { blocks.push({ id: uid(), type: 'scene-heading', text: s }); return; }
+    const m = s.match(charRe);
+    if (m) {
+      const char = m[1].trim(), dial = m[2].trim();
+      if (chars.includes(char) || char.length <= 20) {
+        if (!chars.includes(char)) State.addCharacter(char);
+        blocks.push({ id: uid(), type: 'character', text: char });
+        if (dial) blocks.push({ id: uid(), type: 'dialogue', text: _fixCase(dial) });
+        return;
+      }
+    }
+    const alpha = s.replace(/[^a-zA-Z]/g,'');
+    const isCaps = alpha.length > 0 && (s.match(/[A-Z]/g)||[]).length / alpha.length > 0.75;
+    blocks.push({ id: uid(), type: isCaps ? 'sound' : 'action', text: isCaps ? s : _fixCase(s) });
+  });
+  return blocks.length ? blocks : [{ id: uid(), type: 'action', text: raw }];
+}
+
+function _fixCase(text) {
+  if (!text) return text;
+  const alpha = text.replace(/[^a-zA-Z]/g,'');
+  if (!alpha.length) return text;
+  if ((text.match(/[A-Z]/g)||[]).length / alpha.length > 0.7) {
+    let r = text.toLowerCase();
+    r = r[0].toUpperCase() + r.slice(1);
+    r = r.replace(/([.!?])\s+([a-z])/g, (m,p,c) => p + ' ' + c.toUpperCase());
+    r = r.replace(/\bi\b/g,'I').replace(/\bi'm\b/gi,"I'm").replace(/\bi've\b/gi,"I've").replace(/\bi'll\b/gi,"I'll");
+    ['Stan','Argus','Vanessa','Marjorie','Grim','Ralph','Dan','Death','Ness','Christmas'].forEach(n => {
+      r = r.replace(new RegExp('\\b'+n.toLowerCase()+'\\b','g'), n);
+    });
+    return r;
+  }
+  return text;
+}
+
+// Start the app
+App.init();
+</script>
+</body>
+</html>

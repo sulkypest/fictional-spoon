@@ -1,0 +1,6092 @@
+{
+  "version": 1,
+  "meta": {
+    "title": "Little Hellsgate",
+    "subtitle": "Episode 1 \u2014 Little Hellington",
+    "author": "",
+    "created": "2026",
+    "format": "screenplay"
+  },
+  "characters": [
+    "STAN",
+    "ARGUS",
+    "VANESSA",
+    "MARJORIE",
+    "NARRATOR",
+    "GRIM",
+    "CREATURE1",
+    "CHOIRMASTER",
+    "CHOIRMEMBER1",
+    "CHOIRMEMBER3",
+    "SECURITY",
+    "CLAIRE",
+    "SUSAN",
+    "JIMBOB",
+    "DISCLAIMER"
+  ],
+  "scenes": [
+    {
+      "id": "b104",
+      "title": "Scene 1",
+      "blocks": [
+        {
+          "id": "b1",
+          "type": "action",
+          "text": "Intro music"
+        },
+        {
+          "id": "b2",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b3",
+          "type": "dialogue",
+          "text": "Your podcast? I\u2019m the one who collates the recordings, checks the microphones, edits it together, attaches the microphones to Stan\u2019s uniforms--"
+        },
+        {
+          "id": "b4",
+          "type": "character",
+          "text": "NARRATOR"
+        },
+        {
+          "id": "b5",
+          "type": "dialogue",
+          "text": "Fine, our podcast. The concept is mine though. It\u2019s my IP."
+        },
+        {
+          "id": "b6",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b7",
+          "type": "dialogue",
+          "text": "The concept of recording things and editing them together?"
+        },
+        {
+          "id": "b8",
+          "type": "character",
+          "text": "NARRATOR"
+        },
+        {
+          "id": "b9",
+          "type": "dialogue",
+          "text": "No the... Can I just do my bit?"
+        },
+        {
+          "id": "b10",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b11",
+          "type": "dialogue",
+          "text": "Please do."
+        },
+        {
+          "id": "b12",
+          "type": "character",
+          "text": "NARRATOR"
+        },
+        {
+          "id": "b13",
+          "type": "parenthetical",
+          "text": "(OFF MIC)"
+        },
+        {
+          "id": "b14",
+          "type": "dialogue",
+          "text": "away from-"
+        },
+        {
+          "id": "b15",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b16",
+          "type": "dialogue",
+          "text": "You need to speak to the front of the mic, not in the top."
+        },
+        {
+          "id": "b17",
+          "type": "character",
+          "text": "NARRATOR"
+        },
+        {
+          "id": "b18",
+          "type": "dialogue",
+          "text": "Right, we can just edit that bit out."
+        },
+        {
+          "id": "b19",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b20",
+          "type": "dialogue",
+          "text": "We?"
+        },
+        {
+          "id": "b21",
+          "type": "character",
+          "text": "NARRATOR"
+        },
+        {
+          "id": "b22",
+          "type": "dialogue",
+          "text": "Ahem. Away from city lights, nestled in the bosom of the United Kingdom\u2019s national parks are villages a plenty, and we\u2019re pleased to welcome you to this one. With its quaint floral arrangements, redundant red telephone booth, quintessentially cutesy cobbled Main Street, two pubs, a post office, and a shop from a major supermarket which shall not be named for fear of terrible repercussions, it has all you could possibly need. Surrounded by rolling countryside and with that faint odour of animal excrement on the breeze it\u2019s exactly what one would hope for in a rural idyll. Just ask Mrs Juniper, who spends every day feeding the ducks from her perch on the park bench by the edge of the babbling brook. Just don\u2019t sit too close to her, and no, not just because of the smell."
+        },
+        {
+          "id": "b23",
+          "type": "action",
+          "text": "Full intro music"
+        },
+        {
+          "id": "b24",
+          "type": "action",
+          "text": "Phone buzzes"
+        },
+        {
+          "id": "b25",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b26",
+          "type": "dialogue",
+          "text": "Last day for Christmas post. I bloody know it\u2019s the last day to post things before Christmas. That\u2019s why I\u2019m in the arse end of nowhere."
+        },
+        {
+          "id": "b27",
+          "type": "action",
+          "text": "Car door slams"
+        },
+        {
+          "id": "b5001",
+          "type": "sound",
+          "text": "ENGINE OFF. KEYS JANGLE."
+        },
+        {
+          "id": "b28",
+          "type": "action",
+          "text": "Car locking"
+        },
+        {
+          "id": "b5002",
+          "type": "sound",
+          "text": "BRIEF AMBIENCE \u2014 WIND THROUGH TREES, DISTANT CROW, GRAVEL UNDERFOOT."
+        },
+        {
+          "id": "b29",
+          "type": "action",
+          "text": "Trudging footsteps"
+        },
+        {
+          "id": "b5003",
+          "type": "sound",
+          "text": "FOOTSTEPS SHIFT FROM GRAVEL TO COBBLESTONES AS HE HITS MAIN STREET."
+        },
+        {
+          "id": "b30",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b31",
+          "type": "dialogue",
+          "text": "Post office, post office..."
+        },
+        {
+          "id": "b5004",
+          "type": "sound",
+          "text": "STAN'S FOOTSTEPS SLOW AND STOP."
+        },
+        {
+          "id": "b32",
+          "type": "action",
+          "text": "Sound of creepy choir getting louder, and louder."
+        },
+        {
+          "id": "b5005",
+          "type": "sound",
+          "text": "MUSIC ABRUPTLY STOPS."
+        },
+        {
+          "id": "b5006",
+          "type": "sound",
+          "text": "ONE BEAT OF DEAD SILENCE \u2014 THEN THE AMBIENT SOUNDS OF A LARGE GROUP BREATHING, SHUFFLING, TURNING."
+        },
+        {
+          "id": "b5007",
+          "type": "sound",
+          "text": "CHOIRMASTER CLEARS THROAT."
+        },
+        {
+          "id": "b5008",
+          "type": "action",
+          "text": "The group stirs \u2014 shuffling feet, murmured conferring."
+        },
+        {
+          "id": "b36",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b37",
+          "type": "dialogue",
+          "text": "Can we help you with something?"
+        },
+        {
+          "id": "b38",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b39",
+          "type": "dialogue",
+          "text": "Sorry, I was just passing by, didn\u2019t mean to interrupt."
+        },
+        {
+          "id": "b40",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b41",
+          "type": "dialogue",
+          "text": "Well you did."
+        },
+        {
+          "id": "b42",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b43",
+          "type": "dialogue",
+          "text": "Yes, and again, I\u2019m sorry. Though you are in the middle of the street."
+        },
+        {
+          "id": "b44",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b45",
+          "type": "dialogue",
+          "text": "We booked out this street. We had a reservation. Have you got a reservation?"
+        },
+        {
+          "id": "b46",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b47",
+          "type": "dialogue",
+          "text": "For the street?"
+        },
+        {
+          "id": "b48",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b49",
+          "type": "dialogue",
+          "text": "Well you\u2019re occupying it, aren\u2019t you? Standing there like some kind of poorly made imitation wax work. Eyes all agog, forehead so large it could be a billboard."
+        },
+        {
+          "id": "b50",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b51",
+          "type": "dialogue",
+          "text": "That\u2019s, needlessly hurtful. My forehead is in the average range."
+        },
+        {
+          "id": "b52",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b53",
+          "type": "dialogue",
+          "text": "Checked have you."
+        },
+        {
+          "id": "b54",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b55",
+          "type": "dialogue",
+          "text": "Yes, actually, I have..."
+        },
+        {
+          "id": "b56",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b57",
+          "type": "dialogue",
+          "text": "Because people keep telling you, you\u2019ve got a massive forehead?"
+        },
+        {
+          "id": "b58",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b59",
+          "type": "dialogue",
+          "text": "It may have been mentioned."
+        },
+        {
+          "id": "b60",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b61",
+          "type": "dialogue",
+          "text": "Did you check just the size...or the ratio compared to the rest of the face?"
+        },
+        {
+          "id": "b62",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b63",
+          "type": "dialogue",
+          "text": "That\u2019s... Irrelevant. I\u2019m sorry I interrupted your singing, if you could point me towards the post office I\u2019ll get out of the way."
+        },
+        {
+          "id": "b64",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b65",
+          "type": "dialogue",
+          "text": "Right, apologies for calling you a wax work. You\u2019re giving off uncanny valley vibes, I mean, as if you\u2019re not really a person, you are a person, right?"
+        },
+        {
+          "id": "b66",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b67",
+          "type": "dialogue",
+          "text": "Yes. Thank you. Look, could you tell me where the post office is, please?"
+        },
+        {
+          "id": "b68",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b69",
+          "type": "dialogue",
+          "text": "It\u2019s over there."
+        },
+        {
+          "id": "b70",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b71",
+          "type": "dialogue",
+          "text": "Right."
+        },
+        {
+          "id": "b72",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b73",
+          "type": "dialogue",
+          "text": "Well go on then."
+        },
+        {
+          "id": "b74",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b75",
+          "type": "dialogue",
+          "text": "I\u2019m going... It\u2019s just... is that blood, on the altar there? And, do choirs usually dress in black and have goat skull masks and..."
+        },
+        {
+          "id": "b76",
+          "type": "sound",
+          "text": "(BEAT)"
+        },
+        {
+          "id": "b77",
+          "type": "action",
+          "text": "Is that blood?"
+        },
+        {
+          "id": "b78",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b79",
+          "type": "dialogue",
+          "text": "Blood? No."
+        },
+        {
+          "id": "b80",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b81",
+          "type": "dialogue",
+          "text": "Course not, hah, I\u2019m going to go now."
+        },
+        {
+          "id": "b82",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b83",
+          "type": "dialogue",
+          "text": "It\u2019s red paint."
+        },
+        {
+          "id": "b84",
+          "type": "character",
+          "text": "CHOIRMEMBER1"
+        },
+        {
+          "id": "b85",
+          "type": "dialogue",
+          "text": "Red wine"
+        },
+        {
+          "id": "b86",
+          "type": "character",
+          "text": "CHOIRMEMBER3"
+        },
+        {
+          "id": "b87",
+          "type": "dialogue",
+          "text": "Ketchup"
+        },
+        {
+          "id": "b88",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b89",
+          "type": "dialogue",
+          "text": "It\u2019s all of those things, mixed together. It\u2019s a kind of cocktail, very good for the larynx and it\u2019s also... none of your business. What\u2019s that package in your hands? Is it a nuclear bomb? A nuclear warhead wrapped up like an innocent parcel in brown paper?"
+        },
+        {
+          "id": "b90",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b91",
+          "type": "dialogue",
+          "text": "No. You know, you\u2019re quite aggressive, not exactly a welcoming village vibe."
+        },
+        {
+          "id": "b92",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b93",
+          "type": "dialogue",
+          "text": "Aha, that\u2019s because you are not welcome, now shove off."
+        },
+        {
+          "id": "b94",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b95",
+          "type": "dialogue",
+          "text": "Bye."
+        },
+        {
+          "id": "b96",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b97",
+          "type": "dialogue",
+          "text": "And next time you want to stand in the street, remember to make a reservation like the rest of us."
+        },
+        {
+          "id": "b98",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b99",
+          "type": "parenthetical",
+          "text": "(SOTTO VOCE)"
+        },
+        {
+          "id": "b100",
+          "type": "dialogue",
+          "text": "this place is creepy as..."
+        },
+        {
+          "id": "b101",
+          "type": "character",
+          "text": "CHOIRMASTER"
+        },
+        {
+          "id": "b102",
+          "type": "dialogue",
+          "text": "Okay, raising of the beast to devour humanity, annnd 3, 2, 1..."
+        },
+        {
+          "id": "b103",
+          "type": "action",
+          "text": "Choir starts again and fades as Stan\u2019s footsteps walk away"
+        },
+        {
+          "id": "b5009",
+          "type": "sound",
+          "text": "UNDER THE FADING CHOIR \u2014 A LOW GEOLOGICAL RUMBLE, NOT MUSICAL. SOMETHING RESPONDING. FADES. STAN'S FOOTSTEPS QUICKEN SLIGHTLY."
+        }
+      ]
+    },
+    {
+      "id": "b278",
+      "title": "Scene 2",
+      "blocks": [
+        {
+          "id": "b105",
+          "type": "action",
+          "text": "Bell rings, with sfx of door opening, background noise of a quiet shop"
+        },
+        {
+          "id": "b106",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b107",
+          "type": "dialogue",
+          "text": "Hello there love, need some help with your package (creepy laugh). I\u2019m always open to some package fondling you know."
+        },
+        {
+          "id": "b108",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b109",
+          "type": "dialogue",
+          "text": "Um. I was just hoping to post this."
+        },
+        {
+          "id": "b110",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b111",
+          "type": "dialogue",
+          "text": "What is it?"
+        },
+        {
+          "id": "b112",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b113",
+          "type": "dialogue",
+          "text": "It\u2019s a package wrapped in paper about the size of a shoebox."
+        },
+        {
+          "id": "b114",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b115",
+          "type": "dialogue",
+          "text": "I can see that. Is it a nuclear weapon?"
+        },
+        {
+          "id": "b116",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b117",
+          "type": "dialogue",
+          "text": "No. Why do people keep asking that?"
+        },
+        {
+          "id": "b118",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b119",
+          "type": "dialogue",
+          "text": "Because people are worried you might be carrying a nuclear weapon disguised as an innocent package?"
+        },
+        {
+          "id": "b120",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b121",
+          "type": "dialogue",
+          "text": "Yes but, why is that the first thought people have?"
+        },
+        {
+          "id": "b122",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b123",
+          "type": "dialogue",
+          "text": "I imagine it\u2019s a product of the ever-increasing paranoia that permeates society mainly through social media. The fact that we are taught to look down on any other group in any way we can, the manipulation of our every waking moment by an army of manipulators who funnel vast fortunes, beyond the comprehension of most people, into making us think, and believe, what they want, regardless of the truth. The fact that making us contrarian to one another, by it\u2019s very nature, makes us easier to control and easier to \u2018milk\u2019 like cattle for every moment of our time, and every penny we are worth."
+        },
+        {
+          "id": "b124",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b125",
+          "type": "dialogue",
+          "text": "Uh, okay, what\u2019s that got to do with this package being a nuclear weapon."
+        },
+        {
+          "id": "b126",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b127",
+          "type": "dialogue",
+          "text": "So it is a nuclear weapon? I can\u2019t believe you\u2019d just walk around--"
+        },
+        {
+          "id": "b128",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b129",
+          "type": "dialogue",
+          "text": "It is not a nuclear weapon. That would be insane. Why would I come to the arse end of nowhere to post a nuclear weapon?"
+        },
+        {
+          "id": "b130",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b131",
+          "type": "dialogue",
+          "text": "That\u2019s rude. I think on some level launching a nuclear attack--"
+        },
+        {
+          "id": "b132",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b133",
+          "type": "dialogue",
+          "text": "By post."
+        },
+        {
+          "id": "b134",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b135",
+          "type": "dialogue",
+          "text": "Yes, by post, from somewhere like Little Hellington would be quite clever, nobody would see that coming."
+        },
+        {
+          "id": "b136",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b137",
+          "type": "dialogue",
+          "text": "Because it\u2019s stupid?"
+        },
+        {
+          "id": "b138",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b139",
+          "type": "dialogue",
+          "text": "Yes. It is quite stupid."
+        },
+        {
+          "id": "b140",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b141",
+          "type": "dialogue",
+          "text": "Right. (BEAT) Can I post this package?"
+        },
+        {
+          "id": "b142",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b143",
+          "type": "dialogue",
+          "text": "I\u2019ve not seen you around here before, are you new to the area?"
+        },
+        {
+          "id": "b144",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b145",
+          "type": "dialogue",
+          "text": "No. I\u2019m just passing through. Does that prevent me from sending a package?"
+        },
+        {
+          "id": "b146",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b147",
+          "type": "dialogue",
+          "text": "It\u2019s just a bit strange, isn\u2019t it, Stan? Why would you have a package to send to your mother from a middle-of-nowhere village like this?"
+        },
+        {
+          "id": "b148",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b149",
+          "type": "dialogue",
+          "text": "I suppose...wait, I didn\u2019t say my name was Stan, how did you know this was for my mother?"
+        },
+        {
+          "id": "b150",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b151",
+          "type": "dialogue",
+          "text": "It\u2019s on the package, right there in big black marker. It says \u2018To Mam, From Stan\u2019. You\u2019re going to need to write her address on it though, posties probably won\u2019t know who your Mam is, or maybe they would know, and that might be worse!"
+        },
+        {
+          "id": "b152",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b153",
+          "type": "dialogue",
+          "text": "Oh, hah, right. I need a label for it. Sorry. There was this choir outside, slightly creepy music, I think it\u2019s put me a little on edge. Kept going on about reserving the street as if--"
+        },
+        {
+          "id": "b154",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b155",
+          "type": "dialogue",
+          "text": "You walked up Main Street? You can\u2019t be doing that, it\u2019s booked. Didn\u2019t you check the reservations?"
+        },
+        {
+          "id": "b156",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b157",
+          "type": "dialogue",
+          "text": "No I didn\u2019t check... where would you even--"
+        },
+        {
+          "id": "b158",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b159",
+          "type": "dialogue",
+          "text": "Look the sign up sheet\u2019s right here."
+        },
+        {
+          "id": "b160",
+          "type": "action",
+          "text": "Rustling paper."
+        },
+        {
+          "id": "b161",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b162",
+          "type": "dialogue",
+          "text": "And that\u2019s where I book the street, is it?"
+        },
+        {
+          "id": "b163",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b164",
+          "type": "dialogue",
+          "text": "Yup. The demonic choir have it booked, see, right there. Performance for the final reckoning and the end of everything, five o\u2019clock until six. Huh, looks like we don\u2019t have any reservations at all after that. Not a single one...ever...again?"
+        },
+        {
+          "id": "b165",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b166",
+          "type": "dialogue",
+          "text": "... Look, can I send this or not? I was hoping to get a sticker to write the address on with and--"
+        },
+        {
+          "id": "b167",
+          "type": "action",
+          "text": "Bell rings door opens"
+        },
+        {
+          "id": "b168",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b169",
+          "type": "dialogue",
+          "text": "Hello Marjorie."
+        },
+        {
+          "id": "b170",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b171",
+          "type": "dialogue",
+          "text": "Woah, hah, wow. You scared the shit out of me. That\u2019s an amazing costume. Seven foot skeleton with long black robes and a, uh, scythe, very impressive, realistic. Ooh, please don\u2019t take me, I\u2019m too young, hah..."
+        },
+        {
+          "id": "b172",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b173",
+          "type": "dialogue",
+          "text": "Thank you. I do the tailoring myself, by hand, lack of skin can make tactile things tricky but at least I don\u2019t need a thimble.(BEAT) It really swishes, listen."
+        },
+        {
+          "id": "b174",
+          "type": "action",
+          "text": "Swishing robes"
+        },
+        {
+          "id": "b175",
+          "type": "action",
+          "text": "See?"
+        },
+        {
+          "id": "b176",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b177",
+          "type": "dialogue",
+          "text": "Um, yes?"
+        },
+        {
+          "id": "b178",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b179",
+          "type": "dialogue",
+          "text": "Hello Death, not seen you in a while."
+        },
+        {
+          "id": "b180",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b181",
+          "type": "dialogue",
+          "text": "No? Time\u2019s difficult when you\u2019re, y\u2019know, all encompassing. Are you Stan?"
+        },
+        {
+          "id": "b182",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b183",
+          "type": "dialogue",
+          "text": "Um, yes?"
+        },
+        {
+          "id": "b184",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b185",
+          "type": "dialogue",
+          "text": "Stanley Waters, son of Eric and Veronica?"
+        },
+        {
+          "id": "b186",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b187",
+          "type": "dialogue",
+          "text": "Also...yes?"
+        },
+        {
+          "id": "b188",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b189",
+          "type": "dialogue",
+          "text": "You\u2019re late."
+        },
+        {
+          "id": "b190",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b191",
+          "type": "dialogue",
+          "text": "I\u2019m late?"
+        },
+        {
+          "id": "b192",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b193",
+          "type": "dialogue",
+          "text": "Yes. Obviously, or I wouldn\u2019t be here right now. Do you see what I have to deal with Marjorie? Honestly, people have no respect for the natural order of things. You were supposed to be killed in a, frankly horrific, car accident coming out of a service station on the the M25."
+        },
+        {
+          "id": "b194",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b195",
+          "type": "dialogue",
+          "text": "A what? This isn\u2019t funny. I\u2019m a very careful driver-"
+        },
+        {
+          "id": "b196",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b197",
+          "type": "dialogue",
+          "text": "Oh you weren\u2019t driving, you were walking towards your, quite crappy, little car."
+        },
+        {
+          "id": "b198",
+          "type": "action",
+          "text": "STAN\tUncalled for, my car\u2019s--"
+        },
+        {
+          "id": "b199",
+          "type": "action",
+          "text": "GRIM\tIt was a lorry, tricky word that, lorry. No tongue you see, so I really have to focus to make the word... anyway, a lorry takes a wrong turn and instead of going into the heavy goods vehicle section it ends up in the passenger vehicles section, it gets turned around, hops a curb, and then gets hit by an SUV, don\u2019t worry, nobody was hurt, but the lorry tips and spills its contents, which land on you."
+        },
+        {
+          "id": "b200",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b201",
+          "type": "dialogue",
+          "text": "That\u2019s horrific"
+        },
+        {
+          "id": "b202",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b203",
+          "type": "dialogue",
+          "text": "Oh it gets worse. The lorry is carrying toys. So you\u2019re crushed under the weight of them."
+        },
+        {
+          "id": "b204",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b205",
+          "type": "dialogue",
+          "text": "What, like, action figures. I mean it\u2019s bad but-"
+        },
+        {
+          "id": "b206",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b207",
+          "type": "dialogue",
+          "text": "No. \u2018adult\u2019 toys. You end up suffocating beneath a very realistic, but fake posterior."
+        },
+        {
+          "id": "b208",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b209",
+          "type": "dialogue",
+          "text": "Arse?"
+        },
+        {
+          "id": "b210",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b211",
+          "type": "dialogue",
+          "text": "Yes, a right arse, the whole thing."
+        },
+        {
+          "id": "b212",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b213",
+          "type": "dialogue",
+          "text": "That\u2019s weird, and kind of gross. Why would you talk to people like this? Is this how you spend your time? Dressing up and thinking of obscure ways for people to die?"
+        },
+        {
+          "id": "b214",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b215",
+          "type": "dialogue",
+          "text": "Once again, thank you, I did decide to go with the formal gown today. It was a whim really. I did just say it was horrific, did you think I was lying? The posterior had a \u2018twerking\u2019 function."
+        },
+        {
+          "id": "b216",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b217",
+          "type": "dialogue",
+          "text": "Your behaviour is wrong, it\u2019s not okay. I\u2019m not saying you\u2019re a bad person, but you need to take a look at what you\u2019re doing. This place is creepy. You know what, I\u2019m going to go. I\u2019ll carry on to another village"
+        },
+        {
+          "id": "b218",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b219",
+          "type": "dialogue",
+          "text": "Good luck with that at this time. It\u2019s the last day for Christmas post you know?"
+        },
+        {
+          "id": "b220",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b221",
+          "type": "dialogue",
+          "text": "Yes. I know. I have received many notifications about that specific fact. I\u2019m sure I\u2019ve time to go to a different post office."
+        },
+        {
+          "id": "b222",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b223",
+          "type": "dialogue",
+          "text": "Nearest one is fourteen miles away, be shut when you get there. Anyway, you\u2019ll never make it there without getting into a horrific accident, will he Death?"
+        },
+        {
+          "id": "b224",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b225",
+          "type": "dialogue",
+          "text": "Not if I have any say in it. Which I do. Because I\u2019m Death."
+        },
+        {
+          "id": "b226",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b227",
+          "type": "dialogue",
+          "text": "So this is him, is it?"
+        },
+        {
+          "id": "b228",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b229",
+          "type": "dialogue",
+          "text": "Yes. It appears to be. Sorry."
+        },
+        {
+          "id": "b230",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b231",
+          "type": "dialogue",
+          "text": "Well, beggars can\u2019t be choosers. Welcome to Little Hellington, Stan, you\u2019re going to love it here... oh, actually that\u2019s quite unlikely, but you\u2019ll be here, which is... something."
+        },
+        {
+          "id": "b232",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b233",
+          "type": "dialogue",
+          "text": "You people are all lunatics."
+        },
+        {
+          "id": "b234",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b235",
+          "type": "dialogue",
+          "text": "Don\u2019t worry Stan, you toddle back to the parking by the Dog and Whistle, hop in your crappy little car, and take a nice drive. There\u2019s a good chap."
+        },
+        {
+          "id": "b236",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b237",
+          "type": "dialogue",
+          "text": "I wouldn\u2019t do that if I were you, Stan. Anyway, you\u2019re more than welcome here. Come on, let me fondle your package."
+        },
+        {
+          "id": "b238",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b239",
+          "type": "dialogue",
+          "text": "I... can you stop saying that? And you, was that supposed to be a threat?"
+        },
+        {
+          "id": "b240",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b241",
+          "type": "dialogue",
+          "text": "No. I would never threaten anyone. I\u2019m a pacifist you know, also pescatarian, which is like a vegetarian only I eat fish. It\u2019s not relevant, but I like to tell people. Anyway, I was just telling you what will happen."
+        },
+        {
+          "id": "b242",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b243",
+          "type": "dialogue",
+          "text": "Telling me what\u2019s going to happen?"
+        },
+        {
+          "id": "b244",
+          "type": "character",
+          "text": "GRIM"
+        },
+        {
+          "id": "b245",
+          "type": "dialogue",
+          "text": "Yes. It\u2019s also going to rain later, if that\u2019s of interest. Seems less pertinent. Oh, and your package will get there on time and your mother will be very pleased with the nice little china house you picked out for her, puts it next to the ones she already has on the shelves in the living room. Not pride of place though, that goes to the one that was made with real tiny bricks."
+        },
+        {
+          "id": "b246",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b247",
+          "type": "dialogue",
+          "text": "But this one has an actual bell in the tower that works, and it\u2019s not a house, it\u2019s clearly a church."
+        },
+        {
+          "id": "b248",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b249",
+          "type": "dialogue",
+          "text": "Oh yes, love, that\u2019s the important part of what he just said."
+        },
+        {
+          "id": "b250",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b251",
+          "type": "dialogue",
+          "text": "Wait, how did...where did he go? Oh that\u2019s just cheap. Trying to scare me into thinking that was actually Death. This is childish."
+        },
+        {
+          "id": "b252",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b253",
+          "type": "dialogue",
+          "text": "He does that. Just vanishes into thin air."
+        },
+        {
+          "id": "b254",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b255",
+          "type": "dialogue",
+          "text": "Well that\u2019s hardly supernatural, is it? He\u2019s just ducked behind something, or there\u2019s a trap door. Is this all some kind of scam?"
+        },
+        {
+          "id": "b256",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b257",
+          "type": "dialogue",
+          "text": "Used to be that he\u2019d have all these smoke effects and dramatic music, but there\u2019s been a lot of budget cuts."
+        },
+        {
+          "id": "b258",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b259",
+          "type": "dialogue",
+          "text": "Right."
+        },
+        {
+          "id": "b260",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b261",
+          "type": "dialogue",
+          "text": "He was really upset when they took his smoke machine and the little bluetooth speaker he used."
+        },
+        {
+          "id": "b262",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b263",
+          "type": "dialogue",
+          "text": "He isn\u2019t death. I hope you get someone more gullible next time for your rubbish internet prank stuff."
+        },
+        {
+          "id": "b264",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b265",
+          "type": "dialogue",
+          "text": "Ness! Vanessa, can you come out here, the new bloke just arrived, and he doesn\u2019t believe that Death was just in the postoffice."
+        },
+        {
+          "id": "b266",
+          "type": "action",
+          "text": "Ominous music"
+        },
+        {
+          "id": "b267",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b268",
+          "type": "dialogue",
+          "text": "It\u2019s really cold in here...what\u2019s... What\u2019s going on?"
+        },
+        {
+          "id": "b269",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b270",
+          "type": "dialogue",
+          "text": "Well hello there."
+        },
+        {
+          "id": "b271",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b272",
+          "type": "dialogue",
+          "text": "What the? Who..."
+        },
+        {
+          "id": "b273",
+          "type": "action",
+          "text": "Thud of body falling"
+        },
+        {
+          "id": "b274",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b275",
+          "type": "dialogue",
+          "text": "New bloke\u2019s here."
+        },
+        {
+          "id": "b276",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b277",
+          "type": "dialogue",
+          "text": "I probably shouldn\u2019t have touched him."
+        }
+      ]
+    },
+    {
+      "id": "b342",
+      "title": "Scene 3",
+      "blocks": [
+        {
+          "id": "b279",
+          "type": "action",
+          "text": "Intro - advertisement jingle"
+        },
+        {
+          "id": "b280",
+          "type": "character",
+          "text": "JIMBOB"
+        },
+        {
+          "id": "b281",
+          "type": "dialogue",
+          "text": "Why howdy there! JimBob Jimboberson here, and today I want to talk to you about something very close to my heart. There were times in my life where I struggled with anxiety, stress, and uncontrollable rage. I knew there was a way to improve things but instead I was visited by a twisted creature in the night who whispered in my ear the agonising prospects of eternal damnation, it seeped into my subconsciousness until I could no longer distinguish it from my own thoughts, and finally it tipped me over the edge, so I lashed out at others, harming the people I loved and everyone around me. Oh god, I\u2019ve done terrible, unspeakable things...So, if you think you\u2019re one little push away from a slide into an existential crisis, if pushing your buttons could turn you into a murderous fiend, get in touch with Nether-Help, we\u2019re here to give you that little nudge that throws you into the Abyss."
+        },
+        {
+          "id": "b282",
+          "type": "character",
+          "text": "DISCLAIMER"
+        },
+        {
+          "id": "b283",
+          "type": "dialogue",
+          "text": "Nether-Help is a subsidiary of the Fifth Circle of Hell group, services may include surcharges against your soul, attempts to push you over the edge are not a guarantee of induced murderous intent."
+        },
+        {
+          "id": "b284",
+          "type": "action",
+          "text": "Outro - ad ends"
+        },
+        {
+          "id": "b285",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b286",
+          "type": "dialogue",
+          "text": "Wha? What the hell was that?"
+        },
+        {
+          "id": "b287",
+          "type": "action",
+          "text": "Intro - advertisement jingle"
+        },
+        {
+          "id": "b288",
+          "type": "character",
+          "text": "SUSAN"
+        },
+        {
+          "id": "b289",
+          "type": "dialogue",
+          "text": "Oh no, my shopping."
+        },
+        {
+          "id": "b290",
+          "type": "character",
+          "text": "CLAIRE"
+        },
+        {
+          "id": "b291",
+          "type": "dialogue",
+          "text": "Whoops, looks like your bag for life has run into a little strife."
+        },
+        {
+          "id": "b292",
+          "type": "character",
+          "text": "SUSAN"
+        },
+        {
+          "id": "b293",
+          "type": "dialogue",
+          "text": "I hope you die Claire, you stuck up--"
+        },
+        {
+          "id": "b294",
+          "type": "character",
+          "text": "CLAIRE"
+        },
+        {
+          "id": "b295",
+          "type": "dialogue",
+          "text": "At Misery and Suffering you now get a free Bag with every purchase over ten pounds."
+        },
+        {
+          "id": "b296",
+          "type": "character",
+          "text": "SUSAN"
+        },
+        {
+          "id": "b297",
+          "type": "dialogue",
+          "text": "I had a bag, Claire. It broke. It\u2019s not like--"
+        },
+        {
+          "id": "b298",
+          "type": "character",
+          "text": "CLAIRE"
+        },
+        {
+          "id": "b299",
+          "type": "dialogue",
+          "text": "These bags aren\u2019t just any old bag either, not even a bag for life! We\u2019re calling them a bag of Everlasting....torment. Made from human skin and proven to have a tensile strength up to five times greater than other supermarket own brand bags for life."
+        },
+        {
+          "id": "b300",
+          "type": "character",
+          "text": "SUSAN"
+        },
+        {
+          "id": "b301",
+          "type": "dialogue",
+          "text": "Human skin? That\u2019s disgusting."
+        },
+        {
+          "id": "b302",
+          "type": "character",
+          "text": "CLAIRE"
+        },
+        {
+          "id": "b303",
+          "type": "dialogue",
+          "text": "That\u2019s right, and our Misery club cardholders with over 5000 points can request bags made from the skin of anyone of their choosing."
+        },
+        {
+          "id": "b304",
+          "type": "character",
+          "text": "SUSAN"
+        },
+        {
+          "id": "b305",
+          "type": "dialogue",
+          "text": "Really? Well that\u2019s..."
+        },
+        {
+          "id": "b306",
+          "type": "action",
+          "text": "Phone number being dialled"
+        },
+        {
+          "id": "b307",
+          "type": "character",
+          "text": "CLAIRE"
+        },
+        {
+          "id": "b308",
+          "type": "dialogue",
+          "text": "Already have someone in mind, Susan? Wait, what are you doing Susan? Susan?"
+        },
+        {
+          "id": "b309",
+          "type": "character",
+          "text": "SUSAN"
+        },
+        {
+          "id": "b310",
+          "type": "dialogue",
+          "text": "Hi, yes, I\u2019ve just heard about your new bags of everlasting torment....yes I am a misery club member..."
+        },
+        {
+          "id": "b311",
+          "type": "character",
+          "text": "CLAIRE"
+        },
+        {
+          "id": "b312",
+          "type": "dialogue",
+          "text": "SUSAN?? Please, I\u2019m sorry, Susan? Oh god no...NO..."
+        },
+        {
+          "id": "b313",
+          "type": "action",
+          "text": "Outro - ad ends"
+        },
+        {
+          "id": "b314",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b315",
+          "type": "dialogue",
+          "text": "What is going on? Where am I?"
+        },
+        {
+          "id": "b316",
+          "type": "action",
+          "text": "Intro - brief intro jingle"
+        },
+        {
+          "id": "b317",
+          "type": "character",
+          "text": "NARRATOR"
+        },
+        {
+          "id": "b318",
+          "type": "dialogue",
+          "text": "You\u2019re dreaming in Hell\u2019s Shallows. Thanks for tuning in, unless you\u2019re a resident of the Shallows, in which case please ensure you get your minimum eight hours of non-stop Shallow-time. On today\u2019s schedule we have three hours of season finales, all of which end on huge cliffhangers, and yes, we can confirm that none of those shows will be renewed for a second season. Any attempts at fan-fiction to resolve things will be met with severe legal action..."
+        },
+        {
+          "id": "b319",
+          "type": "action",
+          "text": "Fades out"
+        },
+        {
+          "id": "b320",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b321",
+          "type": "dialogue",
+          "text": "[OVER TOP OF ADVERTISEMENT/NARRATOR] Wake up newbie."
+        },
+        {
+          "id": "b322",
+          "type": "character",
+          "text": "NARRATOR"
+        },
+        {
+          "id": "b323",
+          "type": "dialogue",
+          "text": "We\u2019ve also got season thirteen of Hate Island, in this week\u2019s challenge we separate the camp into two groups, but only one of the groups gets food, will war break out? Will there be another murder? Is this the week the islanders finally descend into cannibalism? That\u2019s always my favourite point in the season."
+        },
+        {
+          "id": "b324",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b325",
+          "type": "dialogue",
+          "text": "[OVER TOP OF ADVERTISEMENT/NARRATOR] Um, Marjorie, he\u2019s probably caught in a sleep cycle."
+        },
+        {
+          "id": "b326",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b327",
+          "type": "dialogue",
+          "text": "[OVER TOP OF ADVERTISEMENT/NARRATOR] Stan, you have to turn off the R.E.M."
+        },
+        {
+          "id": "b328",
+          "type": "character",
+          "text": "NARRATOR"
+        },
+        {
+          "id": "b329",
+          "type": "dialogue",
+          "text": "But first, here\u2019s, \u2018being judged by someone else\u2019s parents\u2019, don\u2019t forget, our artificial intelligence is in your head, these parents are talking about you, and they know every secret--"
+        },
+        {
+          "id": "b330",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b331",
+          "type": "dialogue",
+          "text": "[over top of advertisement/narrator] wake up"
+        },
+        {
+          "id": "b332",
+          "type": "action",
+          "text": "Slap"
+        },
+        {
+          "id": "b333",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b334",
+          "type": "dialogue",
+          "text": "Ow. What the F... Wait, what? I was having the strangest..."
+        },
+        {
+          "id": "b335",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b336",
+          "type": "dialogue",
+          "text": "Okay, calm down. I\u2019m beginning to think you might not have been the best candidate for the job. I\u2019ve got to nip back upstairs, but don\u2019t worry. Argus will be with you in a minute, and he\u2019s.. a person? Good luck."
+        },
+        {
+          "id": "b337",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b338",
+          "type": "dialogue",
+          "text": "Good luck?"
+        },
+        {
+          "id": "b339",
+          "type": "action",
+          "text": "Footsteps to stairs, and sounds of heavy door opening and being bolted again."
+        },
+        {
+          "id": "b340",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b341",
+          "type": "dialogue",
+          "text": "Is that a vault door?"
+        }
+      ]
+    },
+    {
+      "id": "b463",
+      "title": "Scene 4",
+      "blocks": [
+        {
+          "id": "b343",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b344",
+          "type": "dialogue",
+          "text": "Listen here you foul snivelling horror show reject. You can\u2019t seriously think I believe you\u2019re here to visit your aunt, can you?"
+        },
+        {
+          "id": "b345",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b346",
+          "type": "dialogue",
+          "text": "Why\u2019s that so hard to believe? She\u2019s my favourite aunt."
+        },
+        {
+          "id": "b347",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b348",
+          "type": "dialogue",
+          "text": "I\u2019m just having a hard time believing you\u2019re not here for something more nefarious. Says here your full name is... Demaazg...Demagogrzz... Whatever it is, it doesn\u2019t sound very friendly."
+        },
+        {
+          "id": "b349",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b350",
+          "type": "dialogue",
+          "text": "You can\u2019t stop me just because I have an unusual name, that\u2019s profiling."
+        },
+        {
+          "id": "b351",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b352",
+          "type": "dialogue",
+          "text": "That\u2019s not why I stopped you though, is it?"
+        },
+        {
+          "id": "b353",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b354",
+          "type": "dialogue",
+          "text": "Is it the way I look? Because that\u2019s just as-"
+        },
+        {
+          "id": "b355",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b356",
+          "type": "dialogue",
+          "text": "Nope. It isn\u2019t even the fact that you\u2019re an eight foot tall, six armed creature of shadow with a retractable internal jaw, and more teeth than a kleptomaniac dentist."
+        },
+        {
+          "id": "b357",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b358",
+          "type": "dialogue",
+          "text": "Well...what is it then?"
+        },
+        {
+          "id": "b359",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b360",
+          "type": "dialogue",
+          "text": "Really?"
+        },
+        {
+          "id": "b361",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b362",
+          "type": "dialogue",
+          "text": "Why are you looking at me like that?"
+        },
+        {
+          "id": "b363",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b364",
+          "type": "dialogue",
+          "text": "You\u2019re wearing human skin."
+        },
+        {
+          "id": "b365",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b366",
+          "type": "dialogue",
+          "text": "I was trying to be culturally sensitive, is it appropriation? It\u2019s so tricky nowadays getting the right balance. I want to show I\u2019m willing to be a part of everything, and that I\u2019m on your team, but if I take it too far I get into trouble for-"
+        },
+        {
+          "id": "b367",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b368",
+          "type": "dialogue",
+          "text": "Where did the skin come from, scum bag?"
+        },
+        {
+          "id": "b369",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b370",
+          "type": "dialogue",
+          "text": "Oh. Oh, why do you have to be so rude? I made a social foe-par, there\u2019s no need for this kind of treatment. I borrowed it from a security guard."
+        },
+        {
+          "id": "b371",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b372",
+          "type": "dialogue",
+          "text": "Borrowed it?"
+        },
+        {
+          "id": "b373",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b374",
+          "type": "dialogue",
+          "text": "He wasn\u2019t using it!"
+        },
+        {
+          "id": "b375",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b376",
+          "type": "dialogue",
+          "text": "Human\u2019s don\u2019t shed their skin like a reptile, buddy."
+        },
+        {
+          "id": "b377",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b378",
+          "type": "dialogue",
+          "text": "Oh. Are you sure?"
+        },
+        {
+          "id": "b379",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b380",
+          "type": "dialogue",
+          "text": "You killed someone, peeled off their skin, and then tried to climb into it."
+        },
+        {
+          "id": "b381",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b382",
+          "type": "dialogue",
+          "text": "What? Well that\u2019s just ridiculous."
+        },
+        {
+          "id": "b383",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b384",
+          "type": "dialogue",
+          "text": "Just let me..."
+        },
+        {
+          "id": "b385",
+          "type": "action",
+          "text": "Argus scans the creature - whirring/beeps"
+        },
+        {
+          "id": "b386",
+          "type": "action",
+          "text": "There we go. DNA checking, bound to be one of ours isn\u2019t it... Oh, Jameson, that\u2019s a shame, everybody liked Dan Jameson. Huh, probably should\u2019ve recognised him. So, that would mean you breached the accords and are..."
+        },
+        {
+          "id": "b387",
+          "type": "action",
+          "text": "Increasing humming sound/weapon charging"
+        },
+        {
+          "id": "b388",
+          "type": "action",
+          "text": "About to be turned into soup."
+        },
+        {
+          "id": "b389",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b390",
+          "type": "dialogue",
+          "text": "Now hang on a minute. I came in here with nothing but good intentions. Sure, I made a mistake with the whole cultural appropriation thing."
+        },
+        {
+          "id": "b391",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b392",
+          "type": "dialogue",
+          "text": "It\u2019s more the murder thing, really."
+        },
+        {
+          "id": "b393",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b394",
+          "type": "dialogue",
+          "text": "Ah, well. He stepped into our realm. Our traditions state that anyone who isn\u2019t invited can be killed instantly. I mean, I\u2019m not in complete agreement, but the zero tolerance to immigration strategy was a platform the Mistress of Blood ran on, and the people did have their say."
+        },
+        {
+          "id": "b395",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b396",
+          "type": "dialogue",
+          "text": "Did they?"
+        },
+        {
+          "id": "b397",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b398",
+          "type": "dialogue",
+          "text": "The ones who survived the swarming horde of death did."
+        },
+        {
+          "id": "b399",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b400",
+          "type": "dialogue",
+          "text": "Right, democracy at its finest. So this human. He was on your side of the boundary, was he?"
+        },
+        {
+          "id": "b401",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b402",
+          "type": "dialogue",
+          "text": "Yup. I wouldn\u2019t have devoured him...um, wouldn\u2019t have borrowed his clothes-"
+        },
+        {
+          "id": "b403",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b404",
+          "type": "dialogue",
+          "text": "Skin. It\u2019s not clothes. We wear clothes on top of the skin."
+        },
+        {
+          "id": "b405",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b406",
+          "type": "dialogue",
+          "text": "Ah, wondered why there weren\u2019t any washing instructions. There\u2019s a lot of layers though, it does get confusing."
+        },
+        {
+          "id": "b407",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b408",
+          "type": "dialogue",
+          "text": "Skin isn\u2019t a layer...it\u2019s skin. You said he was on your side?"
+        },
+        {
+          "id": "b409",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b410",
+          "type": "dialogue",
+          "text": "Absolutely, check for yourself."
+        },
+        {
+          "id": "b411",
+          "type": "action",
+          "text": "Humming decreases, click"
+        },
+        {
+          "id": "b412",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b413",
+          "type": "dialogue",
+          "text": "I will."
+        },
+        {
+          "id": "b414",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b415",
+          "type": "dialogue",
+          "text": "Do then."
+        },
+        {
+          "id": "b416",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b417",
+          "type": "dialogue",
+          "text": "I said, I will."
+        },
+        {
+          "id": "b418",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b419",
+          "type": "dialogue",
+          "text": "Well, go on then."
+        },
+        {
+          "id": "b420",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b421",
+          "type": "dialogue",
+          "text": "I\u2019m going."
+        },
+        {
+          "id": "b422",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b423",
+          "type": "dialogue",
+          "text": "Can someone contact my aunt? She\u2019s going to be worrying about where I am."
+        },
+        {
+          "id": "b424",
+          "type": "action",
+          "text": "Door slams. Footsteps. Office background"
+        },
+        {
+          "id": "b425",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b426",
+          "type": "dialogue",
+          "text": "Goddamn shadow creatures wearing our own skins acting like they\u2019ve just put something in the wrong pissing wheelie bin. Absolute-"
+        },
+        {
+          "id": "b427",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b428",
+          "type": "dialogue",
+          "text": "Major, would you like me to call the directorate about the individual in interrogation room one?"
+        },
+        {
+          "id": "b429",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b430",
+          "type": "dialogue",
+          "text": "No. And stop listening in."
+        },
+        {
+          "id": "b431",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b432",
+          "type": "dialogue",
+          "text": "I would like to do that, Major, however I am cursed to inhabit this place for all eternity, and part of my penance is to serve as an assistant to all those acting in official capacity for the defence of humankind. If I don\u2019t listen in...things go wrong."
+        },
+        {
+          "id": "b433",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b434",
+          "type": "dialogue",
+          "text": "Must you remind me every single time I ask you to piss off."
+        },
+        {
+          "id": "b435",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b436",
+          "type": "dialogue",
+          "text": "Sadly, yes. It\u2019s part of the curse. Trust me it\u2019s more tedious for me than it is for you. You only hear it when you tell me to shut up. If I had to think about the number of times I repeat it in any given day, all on the off chance that someone is listening in and needs some quick exposition--"
+        },
+        {
+          "id": "b437",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b438",
+          "type": "dialogue",
+          "text": "Vanessa. Prepare the death in service package for Dan Jameson."
+        },
+        {
+          "id": "b439",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b440",
+          "type": "dialogue",
+          "text": "Dan? But I could\u2019ve sworn I saw him walk into interrogation 1 just a minute ago."
+        },
+        {
+          "id": "b441",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b442",
+          "type": "dialogue",
+          "text": "That was a shadow creature wearing his skin. It didn\u2019t even fit. It\u2019s got six arms, are you really telling me you didn\u2019t notice the six arms? What about the tail? Or all the teeth? You thought the huge glistening shadow creature wearing human skin was Dan?"
+        },
+        {
+          "id": "b443",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b444",
+          "type": "dialogue",
+          "text": "Well. He\u2019s been drinking protein shakes. I assumed he\u2019d overdone it at the gym."
+        },
+        {
+          "id": "b445",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b446",
+          "type": "dialogue",
+          "text": "It barely covered a quarter of him!"
+        },
+        {
+          "id": "b447",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b448",
+          "type": "dialogue",
+          "text": "I can\u2019t judge people on how revealing their attire is."
+        },
+        {
+          "id": "b449",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b450",
+          "type": "dialogue",
+          "text": "Attire? It\u2019s skin."
+        },
+        {
+          "id": "b451",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b452",
+          "type": "dialogue",
+          "text": "Are you going to destroy the creature?"
+        },
+        {
+          "id": "b453",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b454",
+          "type": "dialogue",
+          "text": "Probably, but I need to find out if Dan screwed up first."
+        },
+        {
+          "id": "b455",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b456",
+          "type": "dialogue",
+          "text": "The new agent is on his way."
+        },
+        {
+          "id": "b457",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b458",
+          "type": "dialogue",
+          "text": "A new recruit? Bloody Death, he knew this had happened, didn\u2019t he? Well, I\u2019ve got a nice introductory task."
+        },
+        {
+          "id": "b459",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b460",
+          "type": "dialogue",
+          "text": "The new guy is called--"
+        },
+        {
+          "id": "b461",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b462",
+          "type": "dialogue",
+          "text": "I know, I know, he\u2019s called Dan, they\u2019re always called Dan."
+        }
+      ]
+    },
+    {
+      "id": "b536",
+      "title": "Scene 5",
+      "blocks": [
+        {
+          "id": "b464",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b465",
+          "type": "dialogue",
+          "text": "Major Argus please meet Stan."
+        },
+        {
+          "id": "b466",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b467",
+          "type": "dialogue",
+          "text": "Hi Dan. We\u2019ve got a shadow creature-"
+        },
+        {
+          "id": "b468",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b469",
+          "type": "dialogue",
+          "text": "That\u2019s a creature of infinite darkness from the void realm, a region of eternal torment."
+        },
+        {
+          "id": "b470",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b471",
+          "type": "dialogue",
+          "text": "In interrogation one. It\u2019s wearing the skin of Dan jameson and it claims that old Dan stepped across their boundary. So, new Dan-"
+        },
+        {
+          "id": "b472",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b473",
+          "type": "dialogue",
+          "text": "Actually, it\u2019s Stan. I think I\u2019ve been kidnapped."
+        },
+        {
+          "id": "b474",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b475",
+          "type": "dialogue",
+          "text": "What?"
+        },
+        {
+          "id": "b476",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b477",
+          "type": "dialogue",
+          "text": "Kidnapped. I\u2019m being held against my will. You\u2019re one of them aren\u2019t you-"
+        },
+        {
+          "id": "b478",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b479",
+          "type": "dialogue",
+          "text": "Not the kidnapping thing, your name."
+        },
+        {
+          "id": "b480",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b481",
+          "type": "dialogue",
+          "text": "Oh. Right, it\u2019s all mistaken identity. Hah, well now it makes sense. My name\u2019s Stan, not Dan, short for Stanley."
+        },
+        {
+          "id": "b482",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b483",
+          "type": "dialogue",
+          "text": "Stan? Vanessa, what the hell is this?"
+        },
+        {
+          "id": "b484",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b485",
+          "type": "dialogue",
+          "text": "I\u2019m sorry major, could you be more specific? What the hell is what? You don\u2019t seem to be pointing at anything."
+        },
+        {
+          "id": "b486",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b487",
+          "type": "dialogue",
+          "text": "This."
+        },
+        {
+          "id": "b488",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b489",
+          "type": "dialogue",
+          "text": "Oh. That\u2019s better. Very assertive pointing, major. That is the new person who arrived this afternoon."
+        },
+        {
+          "id": "b490",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b491",
+          "type": "dialogue",
+          "text": "He says his name\u2019s Stan."
+        },
+        {
+          "id": "b492",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b493",
+          "type": "dialogue",
+          "text": "Yes major, that\u2019s his name."
+        },
+        {
+          "id": "b494",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b495",
+          "type": "dialogue",
+          "text": "Your smart speaker is amazing. What is going on?"
+        },
+        {
+          "id": "b496",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b497",
+          "type": "dialogue",
+          "text": "Vanessa! Why is his name, Stan?"
+        },
+        {
+          "id": "b498",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b499",
+          "type": "dialogue",
+          "text": "Well, it\u2019s likely that his parents named him Stanley and people decided to shorten it to Stan to alleviate the burden of a whole extra syllable, people are inherently lazy. Though, now that I think about it, he might have changed his name by deed poll, though why someone would pick Stanley when there\u2019s so many other names to choose from."
+        },
+        {
+          "id": "b500",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b501",
+          "type": "dialogue",
+          "text": "They\u2019re supposed to be called Dan. We had an agreement that all the new agents are called Dan. Now we\u2019re going to have to relabel everything and then he\u2019s going to die and we\u2019ll have to change it all again. It\u2019s just inconsiderate. Bloody paper pushers sticking their nose in, sending void fodder over here as if it means nothing."
+        },
+        {
+          "id": "b502",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b503",
+          "type": "dialogue",
+          "text": "The major can be a bit... Ranty."
+        },
+        {
+          "id": "b504",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b505",
+          "type": "dialogue",
+          "text": "Can I go home now?"
+        },
+        {
+          "id": "b506",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b507",
+          "type": "dialogue",
+          "text": "Listen, Stan, your name is now Dan, am I clear?"
+        },
+        {
+          "id": "b508",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b509",
+          "type": "dialogue",
+          "text": "What?"
+        },
+        {
+          "id": "b510",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b511",
+          "type": "dialogue",
+          "text": "Good. Congratulations on being chosen for the most noble of causes, blah, blah, blah. Your locker has your name on it, go get in your uniform. We\u2019ve got a potential boundary breach that needs patching up."
+        },
+        {
+          "id": "b512",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b513",
+          "type": "dialogue",
+          "text": "We have, my what? I\u2019m sorry, I\u2019ve no idea what\u2019s going on. I am Stan, you have the wrong person. Oh, will you look at the time. I\u2019m pretty sure my parking is about to run out. Why don\u2019t I just nip out and top that up and we can return to this."
+        },
+        {
+          "id": "b514",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b515",
+          "type": "dialogue",
+          "text": "The sun is setting shortly."
+        },
+        {
+          "id": "b516",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b517",
+          "type": "dialogue",
+          "text": "You don\u2019t want to go wandering around here after nightfall, especially if you\u2019ve got no idea what\u2019s going on, got it, Dan?"
+        },
+        {
+          "id": "b518",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b519",
+          "type": "dialogue",
+          "text": "Stan. I think I\u2019ll be fine, thanks. I imagine your crime rate is a fair bit lower than most places I\u2019ve lived. Or is there a notorious wheelbarrow gang in the area? Maybe someone\u2019s been clipping unattended rose bushes, children ignoring no ball games signs, heaven\u2019s above--"
+        },
+        {
+          "id": "b520",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b521",
+          "type": "dialogue",
+          "text": "I don\u2019t think he\u2019s got the whole....um..."
+        },
+        {
+          "id": "b522",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b523",
+          "type": "dialogue",
+          "text": "Facade?"
+        },
+        {
+          "id": "b524",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b525",
+          "type": "dialogue",
+          "text": "Oh good word, major."
+        },
+        {
+          "id": "b526",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b527",
+          "type": "dialogue",
+          "text": "Right. Dan, I\u2019d like you to come with me to interrogation room 1. This should clear things up a little bit."
+        },
+        {
+          "id": "b528",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b529",
+          "type": "dialogue",
+          "text": "Interrogation room? Oh no, I\u2019ve stumbled into little guantanamo bay, water-boarding, sensory deprivation and three time winner of britain in bloom, don\u2019t forget to visit the pick your own strawberries just don\u2019t tell anyone where you got them."
+        },
+        {
+          "id": "b530",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b531",
+          "type": "dialogue",
+          "text": "Thinks he\u2019s funny, don\u2019t he?"
+        },
+        {
+          "id": "b532",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b533",
+          "type": "dialogue",
+          "text": "It\u2019s not an entirely inaccurate description."
+        },
+        {
+          "id": "b534",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b535",
+          "type": "dialogue",
+          "text": "It bloody well is. Interrogation 1, now."
+        }
+      ]
+    },
+    {
+      "id": "b633",
+      "title": "Scene 6",
+      "blocks": [
+        {
+          "id": "b537",
+          "type": "action",
+          "text": "Creature\u2019s voice is muffled until later - on the other side of the glass"
+        },
+        {
+          "id": "b538",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b539",
+          "type": "dialogue",
+          "text": "Don\u2019t worry, it\u2019s a one way mirror. He can\u2019t see you."
+        },
+        {
+          "id": "b540",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b541",
+          "type": "dialogue",
+          "text": "Yes I can."
+        },
+        {
+          "id": "b542",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b543",
+          "type": "dialogue",
+          "text": "Oh. Can you hear us as well?"
+        },
+        {
+          "id": "b544",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b545",
+          "type": "dialogue",
+          "text": "Nope. Can\u2019t hear a word."
+        },
+        {
+          "id": "b546",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b547",
+          "type": "dialogue",
+          "text": "I think he\u2019s lying."
+        },
+        {
+          "id": "b548",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b549",
+          "type": "dialogue",
+          "text": "Yes. Thank you, Dan, I got that."
+        },
+        {
+          "id": "b550",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b551",
+          "type": "dialogue",
+          "text": "It\u2019s Stan."
+        },
+        {
+          "id": "b552",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b553",
+          "type": "dialogue",
+          "text": "Nope. Right, as he can hear us we might be able to make this easier."
+        },
+        {
+          "id": "b554",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b555",
+          "type": "dialogue",
+          "text": "The make up is incredible. The skeleton stuff before was amazing, genuinely, I was a little scared. This is a bit over the top though, hard to take seriously. You lot are really into cosplay, aren\u2019t you? I bet this Dan guy would\u2019ve loved it."
+        },
+        {
+          "id": "b556",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b557",
+          "type": "dialogue",
+          "text": "Cosplay?"
+        },
+        {
+          "id": "b558",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b559",
+          "type": "dialogue",
+          "text": "It\u2019s a portmanteau of costume and play. People make elaborate costumes to look like fictional characters, very popular. I\u2019d like to do it one day...oh wait...I\u2019m bodiless."
+        },
+        {
+          "id": "b560",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b561",
+          "type": "dialogue",
+          "text": "Your smart speaker is kind of maudlin."
+        },
+        {
+          "id": "b562",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b563",
+          "type": "dialogue",
+          "text": "Shut up, Dan."
+        },
+        {
+          "id": "b564",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b565",
+          "type": "dialogue",
+          "text": "It\u2019s Stan."
+        },
+        {
+          "id": "b566",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b567",
+          "type": "dialogue",
+          "text": "Can I have my phone call now?"
+        },
+        {
+          "id": "b568",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b569",
+          "type": "dialogue",
+          "text": "No. Show this idiot that you\u2019re not in a costume."
+        },
+        {
+          "id": "b570",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b571",
+          "type": "dialogue",
+          "text": "But I am in a costume. That\u2019s why you\u2019re so annoyed with me. I\u2019m wearing this human costume."
+        },
+        {
+          "id": "b572",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b573",
+          "type": "dialogue",
+          "text": "No. Not that costume. I mean show him that you\u2019re actually not a human."
+        },
+        {
+          "id": "b574",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b575",
+          "type": "dialogue",
+          "text": "Aha, you can\u2019t fool me. I am a human. My name is Dan."
+        },
+        {
+          "id": "b576",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b577",
+          "type": "dialogue",
+          "text": "Oh for Christ\u2019s sake. We know you\u2019e not Dan, we\u2019ve just gone over all of this. You\u2019re wearing what\u2019s left of Dan."
+        },
+        {
+          "id": "b578",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b579",
+          "type": "dialogue",
+          "text": "So? He\u2019s not Dan either, he\u2019s Stan, You can\u2019t trick me into thinking he\u2019s Dan."
+        },
+        {
+          "id": "b580",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b581",
+          "type": "dialogue",
+          "text": "I know that. I bloody well know that. I\u2019m not trying to trick you."
+        },
+        {
+          "id": "b582",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b583",
+          "type": "dialogue",
+          "text": "Then why\u2019d you call him Dan? You, with the terrible haircut, what\u2019s your name?"
+        },
+        {
+          "id": "b584",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b585",
+          "type": "dialogue",
+          "text": "Terrible haircut?"
+        },
+        {
+          "id": "b586",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b587",
+          "type": "dialogue",
+          "text": "He\u2019s not wrong, and he\u2019s a trans-dimensional shadow beast that doesn\u2019t even have hair, so, ouch."
+        },
+        {
+          "id": "b588",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b589",
+          "type": "dialogue",
+          "text": "Why\u2019s he offended? He knew I was talking about him, so he knows it\u2019s a terrible haircut."
+        },
+        {
+          "id": "b590",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b591",
+          "type": "dialogue",
+          "text": "His name is... Stan."
+        },
+        {
+          "id": "b592",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b593",
+          "type": "dialogue",
+          "text": "Thank you. Wait, are you agreeing about my terrible hair?"
+        },
+        {
+          "id": "b594",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b595",
+          "type": "dialogue",
+          "text": "You\u2019re the one who just said it\u2019s terrible."
+        },
+        {
+          "id": "b596",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b597",
+          "type": "dialogue",
+          "text": "Did you have to say my hair? There\u2019s only two of us here and one of us has an eye-patch, a wooden leg, and a prosthetic arm."
+        },
+        {
+          "id": "b598",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b599",
+          "type": "dialogue",
+          "text": "You can\u2019t go around pointing out things like that as a way to identify someone. It\u2019s offensive. Isn\u2019t it?"
+        },
+        {
+          "id": "b600",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b601",
+          "type": "dialogue",
+          "text": "He\u2019s got a point."
+        },
+        {
+          "id": "b602",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b603",
+          "type": "dialogue",
+          "text": "I don\u2019t want to agree with it, but it does sting a little that someone would identify me as the bloke with a false leg, or that guy with the eye-patch. I\u2019m a rounded person with my own hopes and dreams."
+        },
+        {
+          "id": "b604",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b605",
+          "type": "dialogue",
+          "text": "Oh my god. What the hell are you people going on about? Is this some kind of prank show? Sod it, you can use this in your bloopers--"
+        },
+        {
+          "id": "b606",
+          "type": "action",
+          "text": "Banging of doors, sound of struggling"
+        },
+        {
+          "id": "b607",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b608",
+          "type": "dialogue",
+          "text": "What are you doing? Are you insane?"
+        },
+        {
+          "id": "b609",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b610",
+          "type": "dialogue",
+          "text": "Stan, Stanley, this is a very bad idea."
+        },
+        {
+          "id": "b611",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b612",
+          "type": "dialogue",
+          "text": "Practical effects team finally getting work instead of CGI is great, but not at my expense."
+        },
+        {
+          "id": "b613",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b614",
+          "type": "dialogue",
+          "text": "Oh, goody, I can make myself a coat out of this one."
+        },
+        {
+          "id": "b615",
+          "type": "action",
+          "text": "Door opens/creature voice changes from muffled to clear"
+        },
+        {
+          "id": "b616",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b617",
+          "type": "dialogue",
+          "text": "Well hello there."
+        },
+        {
+          "id": "b618",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b619",
+          "type": "dialogue",
+          "text": "Oh my god, what Is that smell?"
+        },
+        {
+          "id": "b620",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b621",
+          "type": "dialogue",
+          "text": "Sulphur. Stay back, it\u2019ll flay you in seconds."
+        },
+        {
+          "id": "b622",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b623",
+          "type": "dialogue",
+          "text": "I want a cummerbund!"
+        },
+        {
+          "id": "b624",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b625",
+          "type": "dialogue",
+          "text": "Arrrghh!!"
+        },
+        {
+          "id": "b626",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b627",
+          "type": "dialogue",
+          "text": "Get down"
+        },
+        {
+          "id": "b628",
+          "type": "action",
+          "text": "Bang, bang, bang, swishing skittering noises"
+        },
+        {
+          "id": "b629",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b630",
+          "type": "dialogue",
+          "text": "You prick Dan."
+        },
+        {
+          "id": "b631",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b632",
+          "type": "dialogue",
+          "text": "It\u2019s, (PANTING) uh, Stan."
+        }
+      ]
+    },
+    {
+      "id": "b780",
+      "title": "Scene 7",
+      "blocks": [
+        {
+          "id": "b634",
+          "type": "action",
+          "text": "Multiple footsteps along corridor"
+        },
+        {
+          "id": "b635",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b636",
+          "type": "dialogue",
+          "text": "It has all these arms, and then it just went up the wall, like...like some kind of insect. Then it vanished? It just--"
+        },
+        {
+          "id": "b637",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b638",
+          "type": "dialogue",
+          "text": "Shut up, Stan. Ness, can you see where he went?"
+        },
+        {
+          "id": "b639",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b640",
+          "type": "dialogue",
+          "text": "Into the vents."
+        },
+        {
+          "id": "b641",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b642",
+          "type": "dialogue",
+          "text": "Can you follow it?"
+        },
+        {
+          "id": "b643",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b644",
+          "type": "dialogue",
+          "text": "Ew. No. The vents are proper minging."
+        },
+        {
+          "id": "b645",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b646",
+          "type": "dialogue",
+          "text": "It\u2019s too big to fit in the vents. Vents aren\u2019t like they show them in films you know, they\u2019re much smaller. Unless you\u2019ve got people sized vents here."
+        },
+        {
+          "id": "b647",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b648",
+          "type": "dialogue",
+          "text": "Will you shut up you bumbling idiot."
+        },
+        {
+          "id": "b649",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b650",
+          "type": "dialogue",
+          "text": "Major, Stan arrived today. Maybe we could have a little more patience."
+        },
+        {
+          "id": "b651",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b652",
+          "type": "dialogue",
+          "text": "In at he deep end, that\u2019s how we do it. Never did me any harm."
+        },
+        {
+          "id": "b653",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b654",
+          "type": "dialogue",
+          "text": "Didn\u2019t it? You do have quite a lot of serious injuries."
+        },
+        {
+          "id": "b655",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b656",
+          "type": "dialogue",
+          "text": "We\u2019ve got a shadow creature running around in the vents."
+        },
+        {
+          "id": "b657",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b658",
+          "type": "dialogue",
+          "text": "I don\u2019t think it\u2019ll be running in them. Stan\u2019s right, it\u2019s a tight squeeze."
+        },
+        {
+          "id": "b659",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b660",
+          "type": "dialogue",
+          "text": "Exactly, all those films are lying to us."
+        },
+        {
+          "id": "b661",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b662",
+          "type": "dialogue",
+          "text": "Though it can run sort of like a centipede. Hm, judging from the noises, I would call it more of a complicated trot than a run, so, it\u2019s trotting through the air vents."
+        },
+        {
+          "id": "b663",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b664",
+          "type": "dialogue",
+          "text": "Trotting? Trotting sounds friendly. Like a hairless shetland pony--"
+        },
+        {
+          "id": "b665",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b666",
+          "type": "dialogue",
+          "text": "Whoops, it just took the security guard off corridor c."
+        },
+        {
+          "id": "b667",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b668",
+          "type": "dialogue",
+          "text": "Took?"
+        },
+        {
+          "id": "b669",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b670",
+          "type": "dialogue",
+          "text": "Oh nope, he\u2019s back. That\u2019s good."
+        },
+        {
+          "id": "b671",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b672",
+          "type": "dialogue",
+          "text": "Ness..."
+        },
+        {
+          "id": "b673",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b674",
+          "type": "dialogue",
+          "text": "Well most of him\u2019s back. Like, eighty percent, ah... It\u2019s not great but it\u2019s more than there was left of Dan, so that\u2019s...something."
+        },
+        {
+          "id": "b675",
+          "type": "action",
+          "text": "Doors opening, rattling locks"
+        },
+        {
+          "id": "b676",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b677",
+          "type": "dialogue",
+          "text": "I suppose we\u2019ve got about twenty percent of Dan if we count what that thing was wearing, so really, we\u2019re still only one person down."
+        },
+        {
+          "id": "b678",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b679",
+          "type": "dialogue",
+          "text": "Shut up Ness. You, gear up."
+        },
+        {
+          "id": "b680",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b681",
+          "type": "dialogue",
+          "text": "You can\u2019t seriously be expecting him to--"
+        },
+        {
+          "id": "b682",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b683",
+          "type": "dialogue",
+          "text": "Haircut, put on the gear that has \u2018Dan\u2019 written on it, now."
+        },
+        {
+          "id": "b684",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b685",
+          "type": "dialogue",
+          "text": "Please don\u2019t call me that. Don\u2019t these belong to the...um, skin guy?"
+        },
+        {
+          "id": "b686",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b687",
+          "type": "dialogue",
+          "text": "Listen, captain fivehead, just put them on and let\u2019s just hope that the shadow creature decides not to pull off your skin and wear it as a suit."
+        },
+        {
+          "id": "b688",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b689",
+          "type": "dialogue",
+          "text": "What about security?"
+        },
+        {
+          "id": "b690",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b691",
+          "type": "dialogue",
+          "text": "There\u2019s only one of them left, and she\u2019s useless."
+        },
+        {
+          "id": "b692",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b693",
+          "type": "dialogue",
+          "text": "Ohh, five head because it\u2019s bigger than a forehead, I get it."
+        },
+        {
+          "id": "b694",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b695",
+          "type": "dialogue",
+          "text": "What about the person on the speaker?"
+        },
+        {
+          "id": "b696",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b697",
+          "type": "dialogue",
+          "text": "Don\u2019t think I\u2019m a smart speaker anymore? Anyway, I\u2019m not a field operative, I\u2019m actually more medical. So if you do get your skin pulled off, I\u2019ll try to put it back on for you."
+        },
+        {
+          "id": "b698",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b699",
+          "type": "dialogue",
+          "text": "Uh, thanks?"
+        },
+        {
+          "id": "b700",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b701",
+          "type": "dialogue",
+          "text": "You don\u2019t need to worry about, Ness. She can take care of herself."
+        },
+        {
+          "id": "b702",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b703",
+          "type": "dialogue",
+          "text": "Come on, Stan, take off your clothes."
+        },
+        {
+          "id": "b704",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b705",
+          "type": "dialogue",
+          "text": "Uh, that voice is creeping me out a little."
+        },
+        {
+          "id": "b706",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b707",
+          "type": "dialogue",
+          "text": "I\u2019m about to strip off Ness."
+        },
+        {
+          "id": "b708",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b709",
+          "type": "dialogue",
+          "text": "Ew. Well done for killing the mood."
+        },
+        {
+          "id": "b710",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b711",
+          "type": "dialogue",
+          "text": "I\u2019m a fine specimen of a man. Scars are supposed to be sexy, aren\u2019t they?"
+        },
+        {
+          "id": "b712",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b713",
+          "type": "dialogue",
+          "text": "There\u2019s an upper limit, major, and you\u2019re far beyond it. And Stan, there\u2019s no actual need to take off your clothes, just put the overalls on."
+        },
+        {
+          "id": "b714",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b715",
+          "type": "dialogue",
+          "text": "The overalls are blessed, cursed, protected, all sorts of stuff. They\u2019re also made of spider\u2019s silk...oh, and they\u2019re waterproof and stain resistant, which is more important than you\u2019d think."
+        },
+        {
+          "id": "b716",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b717",
+          "type": "dialogue",
+          "text": "How did you get that much spider\u2019s silk, isn\u2019t it supposed to be-"
+        },
+        {
+          "id": "b718",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b719",
+          "type": "dialogue",
+          "text": "Let\u2019s not discuss that."
+        },
+        {
+          "id": "b720",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b721",
+          "type": "dialogue",
+          "text": "Right, just put this on..."
+        },
+        {
+          "id": "b722",
+          "type": "action",
+          "text": "Stan gets dressed"
+        },
+        {
+          "id": "b723",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b724",
+          "type": "dialogue",
+          "text": "Here, let me."
+        },
+        {
+          "id": "b725",
+          "type": "action",
+          "text": "Zipper closes"
+        },
+        {
+          "id": "b726",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b727",
+          "type": "dialogue",
+          "text": "Uh, the zip just zipped itself. That\u2019s cool."
+        },
+        {
+          "id": "b728",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b729",
+          "type": "dialogue",
+          "text": "Haha, yes, very cool, self-zipping, definitely not a HR complaint."
+        },
+        {
+          "id": "b730",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b731",
+          "type": "dialogue",
+          "text": "And the straps."
+        },
+        {
+          "id": "b732",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b733",
+          "type": "dialogue",
+          "text": "Right"
+        },
+        {
+          "id": "b734",
+          "type": "action",
+          "text": "Clicking/pulling of clips etc."
+        },
+        {
+          "id": "b735",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b736",
+          "type": "dialogue",
+          "text": "Now the helmet."
+        },
+        {
+          "id": "b737",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b738",
+          "type": "dialogue",
+          "text": "The what...what is that?"
+        },
+        {
+          "id": "b739",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b740",
+          "type": "dialogue",
+          "text": "You need to keep it on at all costs. Especially the broad spectrum ocular filters."
+        },
+        {
+          "id": "b741",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b742",
+          "type": "dialogue",
+          "text": "The bro--"
+        },
+        {
+          "id": "b743",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b744",
+          "type": "dialogue",
+          "text": "The goggles. You need to keep them, and the helmet, on at all costs."
+        },
+        {
+          "id": "b745",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b746",
+          "type": "dialogue",
+          "text": "Where are we going? Why would I need a helmet? At all costs? At what costs? Who would be paying?"
+        },
+        {
+          "id": "b747",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b748",
+          "type": "dialogue",
+          "text": "If it\u2019s all costs I suppose everyone would be paying."
+        },
+        {
+          "id": "b749",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b750",
+          "type": "dialogue",
+          "text": "No, it\u2019s just his \u2018all costs\u2019, I\u2019m not paying."
+        },
+        {
+          "id": "b751",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b752",
+          "type": "dialogue",
+          "text": "Maybe we could go dutch?"
+        },
+        {
+          "id": "b753",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b754",
+          "type": "dialogue",
+          "text": "You can\u2019t go dutch \u2018at all costs\u2019."
+        },
+        {
+          "id": "b755",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b756",
+          "type": "dialogue",
+          "text": "What is happening?"
+        },
+        {
+          "id": "b757",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b758",
+          "type": "dialogue",
+          "text": "Check his tanks and hook him up."
+        },
+        {
+          "id": "b759",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b760",
+          "type": "dialogue",
+          "text": "Got it, brace yourself Stan."
+        },
+        {
+          "id": "b761",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b762",
+          "type": "dialogue",
+          "text": "For what, oof. What the hell. That is heavy."
+        },
+        {
+          "id": "b763",
+          "type": "action",
+          "text": "Hissing"
+        },
+        {
+          "id": "b764",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b765",
+          "type": "dialogue",
+          "text": "[slightly muffled by helmet] okay. I think I\u2019m ready."
+        },
+        {
+          "id": "b766",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b767",
+          "type": "dialogue",
+          "text": "Ready? Hah, we\u2019ve got to visit the armoury yet."
+        },
+        {
+          "id": "b768",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b769",
+          "type": "dialogue",
+          "text": "Uh, major Argus, I think we might have a problem."
+        },
+        {
+          "id": "b770",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b771",
+          "type": "dialogue",
+          "text": "I know we have a problem Ness, we\u2019ve got an invading creature--"
+        },
+        {
+          "id": "b772",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b773",
+          "type": "dialogue",
+          "text": "Heading to vault seven."
+        },
+        {
+          "id": "b774",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b775",
+          "type": "dialogue",
+          "text": "It\u2019s what? Why isn\u2019t it just trying to escape?"
+        },
+        {
+          "id": "b776",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b777",
+          "type": "dialogue",
+          "text": "A full scale invasion seems a more logical goal."
+        },
+        {
+          "id": "b778",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b779",
+          "type": "dialogue",
+          "text": "Grab a weapon we\u2019re going to make this bastard regret what it did to Dan."
+        }
+      ]
+    },
+    {
+      "id": "b855",
+      "title": "Scene 8",
+      "blocks": [
+        {
+          "id": "b781",
+          "type": "action",
+          "text": "Echoing corridor, dripping sound, creepy."
+        },
+        {
+          "id": "b782",
+          "type": "action",
+          "text": "Background sound, a sudden \u2018heurgh\u2019 followed my.a wet thud."
+        },
+        {
+          "id": "b783",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b784",
+          "type": "dialogue",
+          "text": "[whistling] uh, Ralph, was that you? Ralph?...weird."
+        },
+        {
+          "id": "b785",
+          "type": "action",
+          "text": "Sound of her pacing back and forth"
+        },
+        {
+          "id": "b786",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b787",
+          "type": "dialogue",
+          "text": "Ralph. This isn\u2019t funny. Last time with the clown make-up, honestly, that was not funny either. Ness had me on medication and she referred me to counselling. They were going to fire you...Ralph?"
+        },
+        {
+          "id": "b788",
+          "type": "action",
+          "text": "Starts pacing again"
+        },
+        {
+          "id": "b789",
+          "type": "action",
+          "text": "Skittering sound followed by a hiss"
+        },
+        {
+          "id": "b790",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b791",
+          "type": "dialogue",
+          "text": "Ralph, you there? Oh come on, not the chainsaw guy this time. Seriously. You know what, Ralph, if you are doing something stupid I\u2019m not letting you off this time. I\u2019m going to let them fire you. This is work place bullying you son of a bitch."
+        },
+        {
+          "id": "b792",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b793",
+          "type": "dialogue",
+          "text": "Hello."
+        },
+        {
+          "id": "b794",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b795",
+          "type": "dialogue",
+          "text": "Seriously? I\u2019m not falling for that again. You can\u2019t just keep doing the same prank, Ralph. What are you even supposed to be?"
+        },
+        {
+          "id": "b796",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b797",
+          "type": "dialogue",
+          "text": "I\u2019m...wait, do you really think I\u2019m Ralph?"
+        },
+        {
+          "id": "b798",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b799",
+          "type": "dialogue",
+          "text": "You\u2019re definitely Ralph."
+        },
+        {
+          "id": "b800",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b801",
+          "type": "dialogue",
+          "text": "Aha, so this disguise is more effective than the last one. Interesting."
+        },
+        {
+          "id": "b802",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b803",
+          "type": "dialogue",
+          "text": "Honestly. The stupid voice ruins the whole effect. If you\u2019d have kept your mouth shut I might have been scared, but this is...I\u2019m kind of embarrassed for you. How much did that whole thing cost?"
+        },
+        {
+          "id": "b804",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b805",
+          "type": "dialogue",
+          "text": "So you don\u2019t think I look like this Ralph person?"
+        },
+        {
+          "id": "b806",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b807",
+          "type": "dialogue",
+          "text": "Hilarious. Take the stupid costume off or I\u2019m calling in support and you\u2019re going to look like a right tit."
+        },
+        {
+          "id": "b808",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b809",
+          "type": "dialogue",
+          "text": "Hello."
+        },
+        {
+          "id": "b810",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b811",
+          "type": "parenthetical",
+          "text": "(OFFMIC)"
+        },
+        {
+          "id": "b812",
+          "type": "dialogue",
+          "text": "why would I look more like a right tit than a left tit?"
+        },
+        {
+          "id": "b813",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b814",
+          "type": "dialogue",
+          "text": "Hi, Ness. Check out Ralph\u2019s latest-"
+        },
+        {
+          "id": "b815",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b816",
+          "type": "dialogue",
+          "text": "Run away!"
+        },
+        {
+          "id": "b817",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b818",
+          "type": "dialogue",
+          "text": "Not you as well, Ness. This is just too much."
+        },
+        {
+          "id": "b819",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b820",
+          "type": "dialogue",
+          "text": "What\u2019s wrong with my voice?"
+        },
+        {
+          "id": "b821",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b822",
+          "type": "dialogue",
+          "text": "Please run away before it-"
+        },
+        {
+          "id": "b823",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b824",
+          "type": "dialogue",
+          "text": "Oh god, what is that voice, Ralph?"
+        },
+        {
+          "id": "b825",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b826",
+          "type": "dialogue",
+          "text": "Is it not intimidating? I mean, what am I supposed to sound like? I learned english online so sometimes I wonder if it sounds a little twee."
+        },
+        {
+          "id": "b827",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b828",
+          "type": "dialogue",
+          "text": "Ralph is dead."
+        },
+        {
+          "id": "b829",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b830",
+          "type": "dialogue",
+          "text": "Ralph is... No way, Ness, how did he rope you into this."
+        },
+        {
+          "id": "b831",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b832",
+          "type": "dialogue",
+          "text": "I would objectively, rather be brought back to life, and then boiled alive seventeen times over than plan a prank with Ralph. You know that."
+        },
+        {
+          "id": "b833",
+          "type": "character",
+          "text": "SECURITY"
+        },
+        {
+          "id": "b834",
+          "type": "dialogue",
+          "text": "Well yeah, but that... Arrghh!"
+        },
+        {
+          "id": "b835",
+          "type": "action",
+          "text": "[running away]"
+        },
+        {
+          "id": "b836",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b837",
+          "type": "dialogue",
+          "text": "Ah, there she goes. It\u2019s sensible to have others quaking in their boots. Spreads the message that they should fear me. It\u2019s all part of the theatre of things."
+        },
+        {
+          "id": "b838",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b839",
+          "type": "dialogue",
+          "text": "Oh yes, very scary. You do sound a little..."
+        },
+        {
+          "id": "b840",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b841",
+          "type": "dialogue",
+          "text": "A little what?"
+        },
+        {
+          "id": "b842",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b843",
+          "type": "dialogue",
+          "text": "I mean, for a huge killing machine you\u2019re just a bit...wet."
+        },
+        {
+          "id": "b844",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b845",
+          "type": "dialogue",
+          "text": "Wet? I am not. I was sent here as the tip of the spear, I am an elite force sent to break the line between the realms-"
+        },
+        {
+          "id": "b846",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b847",
+          "type": "dialogue",
+          "text": "Try saying red lorry, yellow lorry ten times."
+        },
+        {
+          "id": "b848",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b849",
+          "type": "dialogue",
+          "text": "Fine, but only because I\u2019m detail orientated. Red lorry, yellow lorry, red lorry, yellow lorry, red lorry...it\u2019s tricky, let me try again--"
+        },
+        {
+          "id": "b850",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b851",
+          "type": "dialogue",
+          "text": "Oh, try she sells sea shells on the sea shore-"
+        },
+        {
+          "id": "b852",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b853",
+          "type": "dialogue",
+          "text": "She sells sea shells..."
+        },
+        {
+          "id": "b854",
+          "type": "action",
+          "text": "Fade out"
+        }
+      ]
+    },
+    {
+      "id": "b924",
+      "title": "Scene 9",
+      "blocks": [
+        {
+          "id": "b856",
+          "type": "action",
+          "text": "[running panting]"
+        },
+        {
+          "id": "b857",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b858",
+          "type": "dialogue",
+          "text": "What is this thing?"
+        },
+        {
+          "id": "b859",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b860",
+          "type": "dialogue",
+          "text": "It\u2019s an all-purpose plasma inducing particle accelerator. Don\u2019t point it at anything unless you want to destroy it."
+        },
+        {
+          "id": "b861",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b862",
+          "type": "dialogue",
+          "text": "Right. It looks like a hair dryer attached to a vacuum cleaner, why am I carrying it?"
+        },
+        {
+          "id": "b863",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b864",
+          "type": "dialogue",
+          "text": "To stop the thing from interrogation 1. The thing you let out into the facility."
+        },
+        {
+          "id": "b865",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b866",
+          "type": "dialogue",
+          "text": "I\u2019m not sure I\u2019m the right person for this. Shouldn\u2019t we call the police, the army, someone who-"
+        },
+        {
+          "id": "b867",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b868",
+          "type": "dialogue",
+          "text": "There\u2019s nobody more qualified to do this than me and you. And we can\u2019t call any of them. How do you expect to explain it to them? Oh, hi there, I\u2019m Stan, who should\u2019ve been called Dan, and I was just granted the chance to live a little longer by Death as long as I work in Little Hellington defending the mortal realm from the terrors that lurk in the abyss and elsewhere."
+        },
+        {
+          "id": "b869",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b870",
+          "type": "dialogue",
+          "text": "I didn\u2019t agree to any of that. I don\u2019t want to defend the mortal realm."
+        },
+        {
+          "id": "b871",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b872",
+          "type": "dialogue",
+          "text": "Haven\u2019t you got family, loved ones? Haven\u2019t you got a decent moral conscience that doesn\u2019t want that thing, and worse things like it, destroying the living world?"
+        },
+        {
+          "id": "b873",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b874",
+          "type": "dialogue",
+          "text": "...I\u2019d feel a little guilty about it, but I don\u2019t see why it\u2019s my job."
+        },
+        {
+          "id": "b875",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b876",
+          "type": "dialogue",
+          "text": "There we go. Wouldn\u2019t you feel guilty if you just died instead."
+        },
+        {
+          "id": "b877",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b878",
+          "type": "dialogue",
+          "text": "But...I\u2019m probably going to die, aren\u2019t I?"
+        },
+        {
+          "id": "b879",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b880",
+          "type": "dialogue",
+          "text": "Everyone\u2019s going to die, Stan. If you\u2019re not going to do things because you\u2019re going to die you should just stop breathing."
+        },
+        {
+          "id": "b881",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b882",
+          "type": "dialogue",
+          "text": "If I stop breathing I\u2019ll also die. Can\u2019t I just... Keep breathing?"
+        },
+        {
+          "id": "b883",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b884",
+          "type": "dialogue",
+          "text": "Next right turn and..."
+        },
+        {
+          "id": "b885",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b886",
+          "type": "dialogue",
+          "text": "Oh, ugh, that\u2019s disgusting."
+        },
+        {
+          "id": "b887",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b888",
+          "type": "dialogue",
+          "text": "Ralph. You poor twisted bastard. The things this guy used to do."
+        },
+        {
+          "id": "b889",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b890",
+          "type": "dialogue",
+          "text": "There\u2019s nothing left of him, oh it\u2019s horrible, it\u2019s...ugh..."
+        },
+        {
+          "id": "b891",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b892",
+          "type": "dialogue",
+          "text": "Technically there\u2019s quite a high percentage of him left, we\u2019ve gone over this."
+        },
+        {
+          "id": "b893",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b894",
+          "type": "dialogue",
+          "text": "Don\u2019t throw up you\u2019re--"
+        },
+        {
+          "id": "b895",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b896",
+          "type": "dialogue",
+          "text": "[throws up]"
+        },
+        {
+          "id": "b897",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b898",
+          "type": "dialogue",
+          "text": "Wearing a full face helmet."
+        },
+        {
+          "id": "b899",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b900",
+          "type": "dialogue",
+          "text": "Oh god, ugh, it\u2019s, argh."
+        },
+        {
+          "id": "b901",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b902",
+          "type": "dialogue",
+          "text": "Just stand up straight and look forward. It\u2019ll all slide down and you\u2019ll be able to see again."
+        },
+        {
+          "id": "b903",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b904",
+          "type": "dialogue",
+          "text": "Oh, eurgh. It\u2019s clearing...oh god, it\u2019s dripping down the inside of the overalls...this is embarrassing. This probably happens all the time though, right?"
+        },
+        {
+          "id": "b905",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b906",
+          "type": "dialogue",
+          "text": "Yeah, sure it does."
+        },
+        {
+          "id": "b907",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b908",
+          "type": "dialogue",
+          "text": "It really doesn\u2019t. I don\u2019t think I\u2019ve ever seen it happen before."
+        },
+        {
+          "id": "b909",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b910",
+          "type": "dialogue",
+          "text": "Ness! Did you find it?"
+        },
+        {
+          "id": "b911",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b912",
+          "type": "dialogue",
+          "text": "Yup. It scared the crap out of Ronnie, but she\u2019s alive and cowering in the laundry room."
+        },
+        {
+          "id": "b913",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b914",
+          "type": "dialogue",
+          "text": "Security really living up to their role. At least it didn\u2019t traumatise anyone else. We\u2019ve already budgeted for her therapy thanks to Ralph...may he rest in peace. Where\u2019s the creature?"
+        },
+        {
+          "id": "b915",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b916",
+          "type": "dialogue",
+          "text": "It\u2019s just around the corner having a crisis of confidence because I said it spoke funny."
+        },
+        {
+          "id": "b917",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b918",
+          "type": "dialogue",
+          "text": "Careful, the fact they all sound like simpering idiots is the only thing that stops them being genuinely terrifying. Okay newbie, lock and load."
+        },
+        {
+          "id": "b919",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b920",
+          "type": "dialogue",
+          "text": "I didn\u2019t eat any carrots, why are there carrots?"
+        },
+        {
+          "id": "b921",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b922",
+          "type": "dialogue",
+          "text": "Brilliant."
+        },
+        {
+          "id": "b923",
+          "type": "action",
+          "text": "Weapons charging"
+        }
+      ]
+    },
+    {
+      "id": "b969",
+      "title": "Scene 10",
+      "blocks": [
+        {
+          "id": "b925",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b926",
+          "type": "dialogue",
+          "text": "Bloody security cameras are all down. How the hell does a shadow creature know how to mess up our security system."
+        },
+        {
+          "id": "b927",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b928",
+          "type": "dialogue",
+          "text": "Well, it\u2019s a really old crappy system, and he said he\u2019d done quite a lot of online courses."
+        },
+        {
+          "id": "b929",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b930",
+          "type": "dialogue",
+          "text": "What?"
+        },
+        {
+          "id": "b931",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b932",
+          "type": "dialogue",
+          "text": "Our wifi signal carries through."
+        },
+        {
+          "id": "b933",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b934",
+          "type": "dialogue",
+          "text": "They\u2019ve been stealing our internet from across a transdimensional void? Hang on, how would they have devices, or our password, or..."
+        },
+        {
+          "id": "b935",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b936",
+          "type": "dialogue",
+          "text": "Probably learnt how to do it all on the internet."
+        },
+        {
+          "id": "b937",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b938",
+          "type": "dialogue",
+          "text": "What? Ness, what do you think the internet is?"
+        },
+        {
+          "id": "b939",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b940",
+          "type": "dialogue",
+          "text": "Did anyone tell the new Dan how to use the gun?"
+        },
+        {
+          "id": "b941",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b942",
+          "type": "dialogue",
+          "text": "He\u2019s called Stan, Ness, we really should stop calling him the new Dan."
+        },
+        {
+          "id": "b943",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b944",
+          "type": "dialogue",
+          "text": "We could call him the new Ralph."
+        },
+        {
+          "id": "b945",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b946",
+          "type": "dialogue",
+          "text": "Why would we do that? Nobody liked Ralph. He was an idiot."
+        },
+        {
+          "id": "b947",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b948",
+          "type": "dialogue",
+          "text": "Okay. We\u2019ll stick with new Dan."
+        },
+        {
+          "id": "b949",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b950",
+          "type": "dialogue",
+          "text": "No. Let\u2019s call him Stan."
+        },
+        {
+          "id": "b951",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b952",
+          "type": "dialogue",
+          "text": "If he survives."
+        },
+        {
+          "id": "b953",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b954",
+          "type": "dialogue",
+          "text": "[beat] that seems fair. How are they doing?"
+        },
+        {
+          "id": "b955",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b956",
+          "type": "dialogue",
+          "text": "The major is taking point and they\u2019re passing the laundry room, about to reach vault five. The creature is ahead of them though, and I imagine-"
+        },
+        {
+          "id": "b957",
+          "type": "action",
+          "text": "Alarm sound"
+        },
+        {
+          "id": "b958",
+          "type": "action",
+          "text": "It\u2019s going to be trying to open the door."
+        },
+        {
+          "id": "b959",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b960",
+          "type": "dialogue",
+          "text": "Well it\u2019s not going to find that easy, the security-"
+        },
+        {
+          "id": "b961",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b962",
+          "type": "dialogue",
+          "text": "It\u2019s already opened it, and it\u2019s seen the Major. Oh dear. How many parts can you replace for him before he stops working?"
+        },
+        {
+          "id": "b963",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b964",
+          "type": "dialogue",
+          "text": "He\u2019ll be fine. It\u2019ll take a lot more than one shadow creature to take down Argus. He\u2019s dealt with worse."
+        },
+        {
+          "id": "b965",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b966",
+          "type": "dialogue",
+          "text": "But new Ralph hasn\u2019t."
+        },
+        {
+          "id": "b967",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b968",
+          "type": "dialogue",
+          "text": "Seriously?"
+        }
+      ]
+    },
+    {
+      "id": "b1103",
+      "title": "Scene 11",
+      "blocks": [
+        {
+          "id": "b970",
+          "type": "action",
+          "text": "Alarms sounding, echoey hallways"
+        },
+        {
+          "id": "b971",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b972",
+          "type": "dialogue",
+          "text": "Okay, keep that end pointed at the creature, flick the two switches on the right side and you\u2019ll feel it starting to power up."
+        },
+        {
+          "id": "b973",
+          "type": "action",
+          "text": "Click, click, humming sound"
+        },
+        {
+          "id": "b974",
+          "type": "action",
+          "text": "Good. Now if I say fire, press that button."
+        },
+        {
+          "id": "b975",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b976",
+          "type": "dialogue",
+          "text": "What about the trigger?"
+        },
+        {
+          "id": "b977",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b978",
+          "type": "dialogue",
+          "text": "Don\u2019t ever pull the trigger."
+        },
+        {
+          "id": "b979",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b980",
+          "type": "dialogue",
+          "text": "Why is it so complicated?"
+        },
+        {
+          "id": "b981",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b982",
+          "type": "dialogue",
+          "text": "Because it does a lot of different things. Now pull yourself together. We round this corner and it\u2019s going to be right there. Whatever happens we have to stop it from letting anything else through the barrier."
+        },
+        {
+          "id": "b983",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b984",
+          "type": "dialogue",
+          "text": "Right... When you say \u2018whatever happens\u2019."
+        },
+        {
+          "id": "b985",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b986",
+          "type": "dialogue",
+          "text": "No matter what. At all costs. If you have to blast me as well, then you do it, got it?"
+        },
+        {
+          "id": "b987",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b988",
+          "type": "dialogue",
+          "text": "Right. At all costs. There\u2019s a lot of at all costs stuff going on. Sounds expensive."
+        },
+        {
+          "id": "b989",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b990",
+          "type": "dialogue",
+          "text": "Fate of the world stuff tends to come with a high cost. You\u2019ll be fine, it\u2019s only that one thing and we\u2019ve got it pinned down."
+        },
+        {
+          "id": "b991",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b992",
+          "type": "dialogue",
+          "text": "Right, it\u2019ll be fine. Let\u2019s do this."
+        },
+        {
+          "id": "b993",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b994",
+          "type": "dialogue",
+          "text": "Just in case why don\u2019t you walk a little more to the right...and front."
+        },
+        {
+          "id": "b995",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b996",
+          "type": "dialogue",
+          "text": "Wait, I don\u2019t want to be in front of you."
+        },
+        {
+          "id": "b997",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b998",
+          "type": "dialogue",
+          "text": "I\u2019m a professional."
+        },
+        {
+          "id": "b999",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1000",
+          "type": "dialogue",
+          "text": "That\u2019s what I\u2019m worried about. Professionals don\u2019t hesitate to shoot through other people. You said at all costs. I\u2019d be collateral damage. I\u2019ve seen films."
+        },
+        {
+          "id": "b1001",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1002",
+          "type": "dialogue",
+          "text": "I promise not to intentionally kill you"
+        },
+        {
+          "id": "b1003",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1004",
+          "type": "dialogue",
+          "text": "Fine."
+        },
+        {
+          "id": "b1005",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1006",
+          "type": "parenthetical",
+          "text": "(SOTTO VOCE)"
+        },
+        {
+          "id": "b1007",
+          "type": "dialogue",
+          "text": "accidents happen though"
+        },
+        {
+          "id": "b1008",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1009",
+          "type": "dialogue",
+          "text": "What did you say?"
+        },
+        {
+          "id": "b1010",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1011",
+          "type": "dialogue",
+          "text": "Nothing. Nothing at all."
+        },
+        {
+          "id": "b1012",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1013",
+          "type": "dialogue",
+          "text": "Uh, why don\u2019t we ask the speaker lady to check first?"
+        },
+        {
+          "id": "b1014",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1015",
+          "type": "dialogue",
+          "text": "Ness? No, she\u2019ll be hiding back at the stairs. Wouldn\u2019t be surprised if she\u2019s gone up to the post office to be honest. Right. Three, two, one-"
+        },
+        {
+          "id": "b1016",
+          "type": "action",
+          "text": "Turn around the corner, sound of weapons ker-chunking, whirring etc."
+        },
+        {
+          "id": "b1017",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1018",
+          "type": "dialogue",
+          "text": "Took you long enough."
+        },
+        {
+          "id": "b1019",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1020",
+          "type": "dialogue",
+          "text": "Don\u2019t move another muscle, or whatever it is you move...is it shadow?"
+        },
+        {
+          "id": "b1021",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1022",
+          "type": "dialogue",
+          "text": "Shadow is the absence of light. How would that even work?"
+        },
+        {
+          "id": "b1023",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1024",
+          "type": "dialogue",
+          "text": "Stop what you\u2019re doing or I\u2019ll be redecorating the walls."
+        },
+        {
+          "id": "b1025",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1026",
+          "type": "dialogue",
+          "text": "You\u2019ll...what does that mean? Are you going to viciously force me into an NVQ in interior design?"
+        },
+        {
+          "id": "b1027",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1028",
+          "type": "dialogue",
+          "text": "Is that what the button with the paintbrush on it does? Like wallpaper paste?"
+        },
+        {
+          "id": "b1029",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1030",
+          "type": "dialogue",
+          "text": "No, that\u2019s...it\u2019s not important. I mean, I\u2019lll shoot and you\u2019ll end up being splattered all over the place."
+        },
+        {
+          "id": "b1031",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1032",
+          "type": "dialogue",
+          "text": "Yeah. And if he misses, I won\u2019t."
+        },
+        {
+          "id": "b1033",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1034",
+          "type": "dialogue",
+          "text": "Oh. Are you a better shot?"
+        },
+        {
+          "id": "b1035",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1036",
+          "type": "dialogue",
+          "text": "Uh. I don\u2019t know, actually. I\u2019ve never even seen one of these before."
+        },
+        {
+          "id": "b1037",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1038",
+          "type": "dialogue",
+          "text": "First day is it?"
+        },
+        {
+          "id": "b1039",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1040",
+          "type": "dialogue",
+          "text": "I\u2019m not entirely sure what\u2019s going on. I\u2019m fifty-fifty on whether this is a dream, or some kind of next level prank. I suppose it could be a psychological experiment, highly unethical if it is, I mean--"
+        },
+        {
+          "id": "b1041",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1042",
+          "type": "dialogue",
+          "text": "Well, you\u2019re certainly a talker. Look this has been fun, but I am leaving now. You said I\u2019m not allowed to be here and so I\u2019m going home. That\u2019s okay isn\u2019t it?"
+        },
+        {
+          "id": "b1043",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1044",
+          "type": "dialogue",
+          "text": "No."
+        },
+        {
+          "id": "b1045",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1046",
+          "type": "dialogue",
+          "text": "What? How exactly is this supposed to work? I came here, you stopped me and said I wasn\u2019t allowed to be here. Immigration, visa, blah, blah, so I\u2019m saying okay fine, I\u2019ll go back."
+        },
+        {
+          "id": "b1047",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1048",
+          "type": "dialogue",
+          "text": "Sorry,"
+        },
+        {
+          "id": "b1049",
+          "type": "action",
+          "text": "Ker-chunk of weapons"
+        },
+        {
+          "id": "b1050",
+          "type": "action",
+          "text": "But our dead security officer on this side of the line changes things."
+        },
+        {
+          "id": "b1051",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1052",
+          "type": "dialogue",
+          "text": "Ah. Well that was self defence."
+        },
+        {
+          "id": "b1053",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1054",
+          "type": "dialogue",
+          "text": "What are you doing with the door handle?"
+        },
+        {
+          "id": "b1055",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1056",
+          "type": "dialogue",
+          "text": "Just leaning against it, nothing to worry about."
+        },
+        {
+          "id": "b1057",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1058",
+          "type": "dialogue",
+          "text": "Step away from the door."
+        },
+        {
+          "id": "b1059",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1060",
+          "type": "dialogue",
+          "text": "Fine. I\u2019ll come with you. I\u2019m not complaining."
+        },
+        {
+          "id": "b1061",
+          "type": "action",
+          "text": "Footsteps towards listening"
+        },
+        {
+          "id": "b1062",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1063",
+          "type": "dialogue",
+          "text": "Stan, keep your weapon pointed at that door. You, cockroach, turn around, arms against the wall. All of them."
+        },
+        {
+          "id": "b1064",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1065",
+          "type": "dialogue",
+          "text": "Major, the door is unlocked."
+        },
+        {
+          "id": "b1066",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1067",
+          "type": "dialogue",
+          "text": "Thanks for turning up."
+        },
+        {
+          "id": "b1068",
+          "type": "character",
+          "text": "CREATURE1"
+        },
+        {
+          "id": "b1069",
+          "type": "dialogue",
+          "text": "Oops."
+        },
+        {
+          "id": "b1070",
+          "type": "action",
+          "text": "Door creaks open"
+        },
+        {
+          "id": "b1071",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1072",
+          "type": "dialogue",
+          "text": "No!"
+        },
+        {
+          "id": "b1073",
+          "type": "action",
+          "text": "Sounds of struggling, weapons fire"
+        },
+        {
+          "id": "b1074",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1075",
+          "type": "dialogue",
+          "text": "Shoot the damn gun and shut the door. Shut the door"
+        },
+        {
+          "id": "b1076",
+          "type": "action",
+          "text": "Howling sounds, wind, thunder, ominous chanting"
+        },
+        {
+          "id": "b1077",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1078",
+          "type": "dialogue",
+          "text": "Shut the door, Stan, shut the door before they come in."
+        },
+        {
+          "id": "b1079",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1080",
+          "type": "parenthetical",
+          "text": "(WEAK)"
+        },
+        {
+          "id": "b1081",
+          "type": "dialogue",
+          "text": "shut...the...door..."
+        },
+        {
+          "id": "b1082",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1083",
+          "type": "dialogue",
+          "text": "Oh no, no, no, this prank is terrible. You\u2019re bleeding, is it dead? Are you dying?"
+        },
+        {
+          "id": "b1084",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1085",
+          "type": "dialogue",
+          "text": "Shut the door, Stan."
+        },
+        {
+          "id": "b1086",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1087",
+          "type": "dialogue",
+          "text": "Right. The door. I just have to shut the door..."
+        },
+        {
+          "id": "b1088",
+          "type": "action",
+          "text": "Footsteps"
+        },
+        {
+          "id": "b1089",
+          "type": "action",
+          "text": "Shut the...door..."
+        },
+        {
+          "id": "b1090",
+          "type": "action",
+          "text": "Demonic sounds intensify"
+        },
+        {
+          "id": "b1091",
+          "type": "action",
+          "text": "What the hell is happening."
+        },
+        {
+          "id": "b1092",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1093",
+          "type": "dialogue",
+          "text": "Come on, Stan, you can do it."
+        },
+        {
+          "id": "b1094",
+          "type": "action",
+          "text": "Door slams shut, sounds stop"
+        },
+        {
+          "id": "b1095",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1096",
+          "type": "dialogue",
+          "text": "Good work. Now, can you carry the Major back towards the stairs?"
+        },
+        {
+          "id": "b1097",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1098",
+          "type": "dialogue",
+          "text": "This...this door has a sign on it for a toilet, I mean, that\u2019s a men\u2019s room sign."
+        },
+        {
+          "id": "b1099",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1100",
+          "type": "dialogue",
+          "text": "Good, you can still see. You need to help the Major."
+        },
+        {
+          "id": "b1101",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1102",
+          "type": "dialogue",
+          "text": "I think he\u2019s dead."
+        }
+      ]
+    },
+    {
+      "id": "b1201",
+      "title": "Scene 12",
+      "blocks": [
+        {
+          "id": "b1104",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1105",
+          "type": "dialogue",
+          "text": "Well. It could\u2019ve been worse."
+        },
+        {
+          "id": "b1106",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1107",
+          "type": "dialogue",
+          "text": "It could\u2019ve been. Still wasn\u2019t great though. I mean, Ralph and Dan are dead."
+        },
+        {
+          "id": "b1108",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1109",
+          "type": "dialogue",
+          "text": "Ralph isn\u2019t that big a loss really and you don\u2019t know Dan\u2019s dead."
+        },
+        {
+          "id": "b1110",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1111",
+          "type": "dialogue",
+          "text": "He was the one who had a cockroach monster wearing his skin as a terrible disguise."
+        },
+        {
+          "id": "b1112",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1113",
+          "type": "dialogue",
+          "text": "Yeah... When you say it like that..."
+        },
+        {
+          "id": "b1114",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1115",
+          "type": "dialogue",
+          "text": "I\u2019m stuck here, aren\u2019t I?"
+        },
+        {
+          "id": "b1116",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1117",
+          "type": "dialogue",
+          "text": "No. There\u2019s always a choice."
+        },
+        {
+          "id": "b1118",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1119",
+          "type": "dialogue",
+          "text": "But, I was given the impression I\u2019d die in a horrific traffic sex toy accident if I left."
+        },
+        {
+          "id": "b1120",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1121",
+          "type": "dialogue",
+          "text": "Exactly! You\u2019ve got a choice. Stick around and plug the gaps in Little Hellsgate, or the sex toy thing."
+        },
+        {
+          "id": "b1122",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1123",
+          "type": "dialogue",
+          "text": "That\u2019s not a choice."
+        },
+        {
+          "id": "b1124",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1125",
+          "type": "dialogue",
+          "text": "It\u2019s the same one we\u2019ve all got."
+        },
+        {
+          "id": "b1126",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1127",
+          "type": "dialogue",
+          "text": "You\u2019re all going to be killed by robotic twerking if you leave?"
+        },
+        {
+          "id": "b1128",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1129",
+          "type": "dialogue",
+          "text": "No. If it were that specific it would be ridiculous... But we\u2019ll all die (BEAT) in embarrassing ways."
+        },
+        {
+          "id": "b1130",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1131",
+          "type": "dialogue",
+          "text": "What like?"
+        },
+        {
+          "id": "b1132",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1133",
+          "type": "dialogue",
+          "text": "Nobody has to share that. It\u2019s private. It\u2019s information that nobody needs to know about while it\u2019s hypothetical. If one day you decide to walk out there, we\u2019ll all know just how embarrassing it was going to be."
+        },
+        {
+          "id": "b1134",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1135",
+          "type": "dialogue",
+          "text": "Like poor Joan."
+        },
+        {
+          "id": "b1136",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1137",
+          "type": "dialogue",
+          "text": "Or what happened to Phillip."
+        },
+        {
+          "id": "b1138",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1139",
+          "type": "dialogue",
+          "text": "And Dan number 7, that was--"
+        },
+        {
+          "id": "b1140",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1141",
+          "type": "dialogue",
+          "text": "Oh yeah, I mean, makes my eyes water thinking about it."
+        },
+        {
+          "id": "b1142",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1143",
+          "type": "dialogue",
+          "text": "Stop discussing this stuff."
+        },
+        {
+          "id": "b1144",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1145",
+          "type": "dialogue",
+          "text": "I\u2019m just supposed to accept that leaving means Death?"
+        },
+        {
+          "id": "b1146",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1147",
+          "type": "dialogue",
+          "text": "You don\u2019t have to accept it, go find out. Of course, even if you can leave, do you want to? I\u2019m sure whatever you were doing before was far more worthwhile than defending the people of the world who live in blissful ignorance of the horrors trying to break into this world. Look at what you did on your first day, even if you did it really badly, you stopped the world being invaded by billions of shadow creatures who would have devoured every living thing on this planet within a week."
+        },
+        {
+          "id": "b1148",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1149",
+          "type": "dialogue",
+          "text": "I... You\u2019re asking me to put my life on the line."
+        },
+        {
+          "id": "b1150",
+          "type": "character",
+          "text": "ARGUS"
+        },
+        {
+          "id": "b1151",
+          "type": "dialogue",
+          "text": "Hah! I\u2019m not asking you to do anything you can sod off right now for all I care. You can stay to do something good, or because you\u2019re frightened that you\u2019ll die if you leave. Nobody needs to know if it\u2019s selfless or selfish, and none of us care. Now, pass me that newspaper, I\u2019m off to the bog, and I\u2019ll be a while."
+        },
+        {
+          "id": "b1152",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1153",
+          "type": "dialogue",
+          "text": "Delightful."
+        },
+        {
+          "id": "b1154",
+          "type": "action",
+          "text": "Footsteps leaving"
+        },
+        {
+          "id": "b1155",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1156",
+          "type": "dialogue",
+          "text": "Wait. He can\u2019t mean that toilet. That\u2019s the portal to the shadow things."
+        },
+        {
+          "id": "b1157",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1158",
+          "type": "dialogue",
+          "text": "It doesn\u2019t work like that. It\u2019s fine in there now...though I wouldn\u2019t go in any time soon. The major... Just let it air."
+        },
+        {
+          "id": "b1159",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1160",
+          "type": "dialogue",
+          "text": "So this is some kind of gateway to the shadow realm?"
+        },
+        {
+          "id": "b1161",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1162",
+          "type": "dialogue",
+          "text": "Hm, sort of."
+        },
+        {
+          "id": "b1163",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1164",
+          "type": "dialogue",
+          "text": "It\u2019s more like a terminal."
+        },
+        {
+          "id": "b1165",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1166",
+          "type": "dialogue",
+          "text": "Gateway, terminal, isn\u2019t it the same thing?"
+        },
+        {
+          "id": "b1167",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1168",
+          "type": "dialogue",
+          "text": "No. A gate just goes to one place. There are all sorts of gates here, to all sorts of places."
+        },
+        {
+          "id": "b1169",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1170",
+          "type": "dialogue",
+          "text": "Nice places?"
+        },
+        {
+          "id": "b1171",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1172",
+          "type": "dialogue",
+          "text": "You know how sometimes things get banished to another realm, or exorcised."
+        },
+        {
+          "id": "b1173",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1174",
+          "type": "dialogue",
+          "text": "Uh, in fictional stories I guess."
+        },
+        {
+          "id": "b1175",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1176",
+          "type": "dialogue",
+          "text": "Well, how do they get in? All those otherworldly things, come from somewhere, right?"
+        },
+        {
+          "id": "b1177",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1178",
+          "type": "dialogue",
+          "text": "From...here?"
+        },
+        {
+          "id": "b1179",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1180",
+          "type": "dialogue",
+          "text": "Exactly quite a few of them get in through here, or they used to anyway. Little Hellsgate is where things get shallow."
+        },
+        {
+          "id": "b1181",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1182",
+          "type": "dialogue",
+          "text": "Shallow?"
+        },
+        {
+          "id": "b1183",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1184",
+          "type": "dialogue",
+          "text": "Everyone talks about the depths of hell, but what they need to worry about is the shallows, because that\u2019s where the mortal realm meets hell\u2019s shores."
+        },
+        {
+          "id": "b1185",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1186",
+          "type": "dialogue",
+          "text": "You\u2019re talking about actual hell?"
+        },
+        {
+          "id": "b1187",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1188",
+          "type": "dialogue",
+          "text": "Just the edge of it, you\u2019re basically on a beach, but you\u2019re not on holiday, and you work in immigration now."
+        },
+        {
+          "id": "b1189",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1190",
+          "type": "dialogue",
+          "text": "I...what?"
+        },
+        {
+          "id": "b1191",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1192",
+          "type": "dialogue",
+          "text": "One thing\u2019s bugging me about today."
+        },
+        {
+          "id": "b1193",
+          "type": "character",
+          "text": "STAN"
+        },
+        {
+          "id": "b1194",
+          "type": "dialogue",
+          "text": "Just one?"
+        },
+        {
+          "id": "b1195",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1196",
+          "type": "dialogue",
+          "text": "How did Dan end up on the other side? And how did that thing get in."
+        },
+        {
+          "id": "b1197",
+          "type": "character",
+          "text": "MARJORIE"
+        },
+        {
+          "id": "b1198",
+          "type": "dialogue",
+          "text": "What do you mean?"
+        },
+        {
+          "id": "b1199",
+          "type": "character",
+          "text": "VANESSA"
+        },
+        {
+          "id": "b1200",
+          "type": "dialogue",
+          "text": "That door only opens from this side. Why would Dan let that thing in?"
+        }
+      ]
+    },
+    {
+      "id": "b1204",
+      "title": "Next Time",
+      "blocks": [
+        {
+          "id": "b1202",
+          "type": "character",
+          "text": "NARRATOR"
+        },
+        {
+          "id": "b1203",
+          "type": "dialogue",
+          "text": "Next time in Little Hellsgate, miss o\u2019toole is enraged as a mysterious canine continues to leave \u2018presents\u2019 on her carefully manicured lawn. The father lily-white is having a car boot sale in the church grounds, but who would want to buy only a car boot? And scandal has arisen, as the village shop has begun selling chewing gum, is it even confectionary? Oh, and beneath the village post office lurks a thinning between this world and multitudes of others filled with creatures from your worst nightmares. See you soon..."
+        }
+      ]
+    }
+  ]
+}
