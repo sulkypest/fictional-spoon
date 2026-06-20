@@ -247,6 +247,23 @@ const App = (() => {
     }
   }
 
+  async function elRefreshVoices() {
+    if (!_elApiKey) {
+      _showToast('Enter ElevenLabs API key first');
+      return false;
+    }
+    try {
+      _elVoices = await ElevenLabsService.getVoices(_elApiKey);
+      UI.renderElVoicePanel(_elVoices, _elVoiceMap);
+      _showToast(`Voices refreshed — ${_elVoices.length} voices`);
+      return true;
+    } catch (e) {
+      console.error('Failed to refresh voices', e);
+      _showToast('Could not refresh voices: ' + (e.message || e));
+      return false;
+    }
+  }
+
   function elSetVoice(character, voiceId) {
     _elVoiceMap[character] = voiceId;
     _persistUISettings();

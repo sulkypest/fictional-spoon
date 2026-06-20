@@ -199,7 +199,7 @@ const UI = (() => {
 
     function buildRows(filterText = '') {
       // Remove existing rows except controls
-      Array.from(container.querySelectorAll('.voice-row')).forEach(n => n.remove());
+        Array.from(container.querySelectorAll('.voice-row, .voice-browse-list')).forEach(n => n.remove());
       const q = (filterText || '').trim().toLowerCase();
       [...project.characters, '__STAGE_MANAGER__'].forEach(char => {
         const row = document.createElement('div');
@@ -225,6 +225,85 @@ const UI = (() => {
         row.appendChild(sel);
         container.appendChild(row);
       });
+        // Browse list
+        const browse = document.createElement('div');
+        browse.className = 'voice-browse-list';
+        const title = document.createElement('h4');
+        title.textContent = 'Browse voices';
+        browse.appendChild(title);
+
+        const list = document.createElement('div');
+        list.className = 'voice-list';
+        const filteredAll = q ? voicesData.filter(v => (v.name || '').toLowerCase().includes(q)) : voicesData;
+        filteredAll.forEach(v => {
+          const item = document.createElement('div');
+          item.className = 'voice-item';
+          const n = document.createElement('div');
+          n.className = 'voice-name';
+          n.textContent = v.name;
+          const meta = document.createElement('div');
+          meta.className = 'voice-meta';
+          meta.textContent = `${v.category || ''} ${Array.isArray(v.labels) ? v.labels.join(', ') : ''}`;
+
+          const controls = document.createElement('div');
+          controls.className = 'voice-controls';
+          if (v.previewUrl) {
+            const btn = document.createElement('button');
+            btn.textContent = 'Preview';
+            btn.onclick = async () => {
+              try {
+                btn.textContent = 'Loading...';
+                const r = await fetch(v.previewUrl);
+                const b = await r.arrayBuffer();
+                const blob = new Blob([b], { type: r.headers.get('content-type') || 'audio/mpeg' });
+                const url = URL.createObjectURL(blob);
+                const aud = new Audio(url);
+                aud.onended = () => { URL.revokeObjectURL(url); btn.textContent = 'Preview'; };
+                aud.play();
+              } catch (e) {
+                console.error('Voice preview failed', e);
+                _showToast('Voice preview failed');
+                btn.textContent = 'Preview';
+              }
+            };
+            controls.appendChild(btn);
+          }
+
+          // Assign dropdown
+          const assign = document.createElement('select');
+          const optNone = document.createElement('option'); optNone.value = ''; optNone.textContent = 'Assign to...';
+          assign.appendChild(optNone);
+          [...project.characters, '__STAGE_MANAGER__'].forEach(ch => {
+            const o = document.createElement('option'); o.value = ch; o.textContent = ch === '__STAGE_MANAGER__' ? 'Stage Mgr' : ch; assign.appendChild(o);
+          });
+          assign.onchange = () => {
+            const ch = assign.value;
+            if (!ch) return;
+            App.elSetVoice(ch, v.id);
+            _showToast(`${v.name} assigned to ${ch === '__STAGE_MANAGER__' ? 'Stage Mgr' : ch}`);
+            // Rebuild to reflect change
+            buildRows(filter.value);
+          };
+          controls.appendChild(assign);
+
+          item.appendChild(n);
+          item.appendChild(meta);
+          item.appendChild(controls);
+          list.appendChild(item);
+        });
+
+        browse.appendChild(list);
+        container.appendChild(browse);
+      }
+
+      buildRows();
+      filter.addEventListener('input', (e) => buildRows(e.target.value));
+
+      // Add refresh button
+      const refreshBtn = document.createElement('button');
+      refreshBtn.textContent = 'Refresh voices';
+      refreshBtn.onclick = () => App.elRefreshVoices();
+      container.insertBefore(refreshBtn, container.querySelector('.el-voice-controls')?.nextSibling || null);
     }
 
     buildRows();
