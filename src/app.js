@@ -32,7 +32,6 @@ const App = (() => {
     }
 
     _restoreUISettings();
-    UI.setSignInPrompt('Sign in to save/load scripts and access ElevenLabs.');
 
     // Try restoring last session from localStorage
     const saved = Storage.loadLocal();
@@ -259,9 +258,13 @@ const App = (() => {
       console.log('✓ User logged in, loading settings and voices...');
       try {
         await _loadElUserSettings();
+      } catch (e) {
+        console.warn('Failed to load ElevenLabs user settings:', e);
+      }
+      try {
         await _refreshElVoicesIfPossible();
       } catch (e) {
-        console.warn('Auth state restore failed', e);
+        console.warn('Failed to refresh ElevenLabs voices:', e);
       }
       console.log('✓ Hiding splash screen');
       UI.clearSignInPrompt();
@@ -271,7 +274,8 @@ const App = (() => {
       _elVoices = [];
       _elVoiceMap = {};
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
-      document.getElementById('el-generate-row').style.display = 'none';
+      const elGenRow = document.getElementById('el-generate-row');
+      if (elGenRow) elGenRow.style.display = 'none';
       UI.setElPanelAuthNote('Sign in to save your ElevenLabs key securely.');
       UI.setSignInPrompt('Sign in to save/load scripts and access ElevenLabs.');
       UI.showSplashScreen();
@@ -340,12 +344,14 @@ const App = (() => {
       _elVoices = await ElevenLabsService.getVoices(null);
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
       if (_elVoices.length) {
-        document.getElementById('el-generate-row').style.display = 'flex';
+        const elGenRow = document.getElementById('el-generate-row');
+        if (elGenRow) elGenRow.style.display = 'flex';
         UI.setElPanelAuthNote(`Signed in as ${_currentUser.displayName || _currentUser.email}.`);
       }
     } catch (e) {
       console.warn('Could not refresh ElevenLabs voices after sign-in', e);
-      document.getElementById('el-generate-row').style.display = 'none';
+      const elGenRow = document.getElementById('el-generate-row');
+      if (elGenRow) elGenRow.style.display = 'none';
       UI.setElPanelAuthNote('Sign in and save your ElevenLabs API key to enable generation.');
     }
   }
@@ -353,7 +359,8 @@ const App = (() => {
   function openElPanel() {
     if (!_currentUser) {
       UI.toggleElPanel();
-      document.getElementById('el-generate-row').style.display = 'none';
+      const elGenRow = document.getElementById('el-generate-row');
+      if (elGenRow) elGenRow.style.display = 'none';
       UI.setElPanelAuthNote('Please sign in with Draft Punk before using ElevenLabs.');
       return;
     }
@@ -388,7 +395,8 @@ const App = (() => {
       }
       _elVoices = await ElevenLabsService.getVoices(null);
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
-      document.getElementById('el-generate-row').style.display = 'flex';
+      const elGenRow = document.getElementById('el-generate-row');
+      if (elGenRow) elGenRow.style.display = 'flex';
       UI.setElPanelAuthNote(`Key saved securely. Signed in as ${_currentUser.displayName || _currentUser.email}.`);
       _showToast(`Connected — ${_elVoices.length} voices available`);
       return true;

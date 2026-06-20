@@ -476,7 +476,7 @@ const UI = (() => {
   }
 
   return {
-    setFormat, setTitle, setAuthState, setElPanelAuthNote,
+    setFormat, setTitle, setAuthState, setElPanelAuthNote, setSignInPrompt, clearSignInPrompt, showSplashScreen, hideSplashScreen,
     renderSidebar, renderCharList, switchSideTab, toggleAddChar,
     showEditor, showEmptyState, setSceneTitle, setWordCount,
     toggleVoicePanel, buildVoicePanel,
