@@ -68,8 +68,10 @@ const CONFIG = {
    */
   elevenlabs: {
     baseUrl: 'https://api.elevenlabs.io/v1',
-    // Optional: set to 'http://localhost:PORT' to route API calls through a local proxy
-    proxyBaseUrl: null,
+    // Proxy base path: route client requests through your server-side proxy to keep
+    // the ElevenLabs API key secret. Default routes to a same-origin endpoint '/el'.
+    // Set to null only if you accept storing the API key in the browser (not recommended).
+    proxyBaseUrl: '/el',
     defaultModel: 'eleven_multilingual_v2',
     dialogueModel: 'eleven_v3',          // For Text to Dialogue API
     sfxModel: 'eleven_sound_generation', // For Sound Effects API
