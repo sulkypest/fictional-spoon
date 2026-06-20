@@ -251,32 +251,41 @@ const App = (() => {
   }
 
   async function elGenerateScene() {
-    if (!_elApiKey) {
-      UI.showElApiKeyPrompt();
-      return;
-    }
-
-    _saveCurrentScene();
-    const id = State.get().activeSceneId;
-    const scene = State.get().project.scenes.find(s => s.id === id);
-    if (!scene) return;
-
-    const stageMgrId = _elVoiceMap['__STAGE_MANAGER__'] || _elVoices[0]?.id;
-    const { dialogueInputs, soundCues } = ElevenLabsService.parseSceneForGeneration(
-      scene.blocks, _elVoiceMap, stageMgrId
-    );
-
-    // Check for unassigned voices
-    const unassigned = [...new Set(dialogueInputs.filter(i => !i.voiceId && i.character !== '__STAGE_MANAGER__').map(i => i.character))];
-    if (unassigned.length) {
-      _showToast(`Please assign ElevenLabs voices for: ${unassigned.join(', ')}`);
-      UI.showElVoicePanel();
-      return;
-    }
-
-    UI.showGenerationProgress('Generating dialogue...');
-
+    // Instrumentation: show immediate feedback and robust error handling
+    console.log('App.elGenerateScene invoked');
+    UI.showGenerationProgress('Preparing generation...');
     try {
+      if (!_elApiKey) {
+        UI.hideGenerationProgress();
+        UI.showElApiKeyPrompt();
+        return;
+      }
+
+      _saveCurrentScene();
+      const id = State.get().activeSceneId;
+      const scene = State.get().project.scenes.find(s => s.id === id);
+      if (!scene) {
+        UI.hideGenerationProgress();
+        _showToast('No active scene to generate');
+        return;
+      }
+
+      const stageMgrId = _elVoiceMap['__STAGE_MANAGER__'] || _elVoices[0]?.id;
+      const { dialogueInputs, soundCues } = ElevenLabsService.parseSceneForGeneration(
+        scene.blocks, _elVoiceMap, stageMgrId
+      );
+
+      // Check for unassigned voices
+      const unassigned = [...new Set(dialogueInputs.filter(i => !i.voiceId && i.character !== '__STAGE_MANAGER__').map(i => i.character))];
+      if (unassigned.length) {
+        UI.hideGenerationProgress();
+        _showToast(`Please assign ElevenLabs voices for: ${unassigned.join(', ')}`);
+        UI.showElVoicePanel();
+        return;
+      }
+
+      UI.showGenerationProgress('Generating dialogue...');
+
       // Generate dialogue
       const audioBlob = await ElevenLabsService.generateDialogue(_elApiKey, dialogueInputs);
       _downloadBlob(audioBlob, `${scene.title}-dialogue.mp3`);
@@ -295,10 +304,10 @@ const App = (() => {
 
       UI.hideGenerationProgress();
       _showToast(`Done — ${soundCues.length} SFX + dialogue downloaded`);
-
     } catch (e) {
+      console.error('elGenerateScene error', e);
       UI.hideGenerationProgress();
-      _showToast('Generation failed: ' + e.message);
+      _showToast('Generation failed: ' + (e && e.message ? e.message : e));
     }
   }
 
