@@ -3,11 +3,26 @@ const admin = require('firebase-admin');
 const express = require('express');
 const fetch = require('node-fetch');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 admin.initializeApp();
 const db = admin.firestore();
 
 const app = express();
+
+// Frontend domain(s) allowed to call this API. The frontend can move (e.g. a future
+// custom domain) by editing only this list — the backend's own URL never changes.
+const ALLOWED_ORIGINS = [
+  'https://sulkypest.github.io',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+];
+
+app.use(cors({
+  origin: ALLOWED_ORIGINS,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(bodyParser.json({ limit: '10mb' }));
 
 async function verifyToken(req, res, next) {

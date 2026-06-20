@@ -1,10 +1,25 @@
 {
+  "firestore": {
+    "rules": "firestore.rules"
+  },
   "hosting": {
     "public": ".",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "proxy/**", "firebase/**"],
     "rewrites": [
       {
         "source": "/el/**",
+        "function": "api"
+      },
+      {
+        "source": "/saveKey",
+        "function": "api"
+      },
+      {
+        "source": "/saveSettings",
+        "function": "api"
+      },
+      {
+        "source": "/userSettings",
         "function": "api"
       }
     ]

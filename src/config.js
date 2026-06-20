@@ -5,6 +5,11 @@
  * environment variables or a server-side config endpoint.
  */
 
+// Backend identity: the Firebase Cloud Function that holds everyone's ElevenLabs
+// key server-side. Defined once here so the frontend's own domain (GitHub Pages,
+// a future custom domain, etc.) can change without touching any other file.
+const ELEVENLABS_API_BASE_URL = 'https://us-central1-draft-punk-a0735.cloudfunctions.net/api';
+
 const CONFIG = {
   app: {
     name: 'Scriptwriter',          // Replace when name is decided
@@ -68,10 +73,11 @@ const CONFIG = {
    */
   elevenlabs: {
     baseUrl: 'https://api.elevenlabs.io/v1',
-    // Proxy base path: route client requests through your server-side proxy to keep
-    // the ElevenLabs API key secret. Default routes to a same-origin endpoint '/el'.
+    apiBaseUrl: ELEVENLABS_API_BASE_URL,
+    // Proxy base path: route client requests through the server-side proxy above to
+    // keep the ElevenLabs API key secret, instead of calling ElevenLabs directly.
     // Set to null only if you accept storing the API key in the browser (not recommended).
-    proxyBaseUrl: '/el',
+    proxyBaseUrl: ELEVENLABS_API_BASE_URL + '/el',
     defaultModel: 'eleven_multilingual_v2',
     dialogueModel: 'eleven_v3',          // For Text to Dialogue API
     sfxModel: 'eleven_sound_generation', // For Sound Effects API

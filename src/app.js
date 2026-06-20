@@ -307,7 +307,7 @@ const App = (() => {
     if (!_currentUser) return;
     try {
       const token = await FirebaseAuth.getToken();
-      await fetch('/saveSettings', {
+      await fetch(CONFIG.elevenlabs.apiBaseUrl + '/saveSettings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -324,7 +324,7 @@ const App = (() => {
     if (!_currentUser) return;
     try {
       const token = await FirebaseAuth.getToken();
-      const res = await fetch('/userSettings', {
+      const res = await fetch(CONFIG.elevenlabs.apiBaseUrl + '/userSettings', {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -380,7 +380,7 @@ const App = (() => {
     }
     try {
       const token = await FirebaseAuth.getToken();
-      const res = await fetch('/saveKey', {
+      const res = await fetch(CONFIG.elevenlabs.apiBaseUrl + '/saveKey', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
