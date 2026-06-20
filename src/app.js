@@ -6,7 +6,7 @@
 
 const App = (() => {
 
-  let _elApiKey = null;      // ElevenLabs API key — runtime only, never persisted
+  let _elApiKey = null;      // ElevenLabs API key (persisted to localStorage for convenience)
   let _elVoices = [];        // ElevenLabs voice list
   let _elVoiceMap = {};      // { CHARACTER: elevenlabs_voice_id }
   let _pendingGeneration = null;
@@ -237,6 +237,7 @@ const App = (() => {
       _elApiKey = key;
       _elVoices = await ElevenLabsService.getVoices(key);
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
+      _persistUISettings();
       _showToast(`Connected — ${_elVoices.length} voices available`);
       return true;
     } catch (e) {
@@ -248,6 +249,7 @@ const App = (() => {
 
   function elSetVoice(character, voiceId) {
     _elVoiceMap[character] = voiceId;
+    _persistUISettings();
   }
 
   async function elGenerateScene() {
@@ -353,13 +355,16 @@ const App = (() => {
   }
   function _persistUISettings() {
     try {
-      Storage.saveUI({ theme: State.get().ui.theme, fontSize: _fontSize });
+      const payload = { theme: State.get().ui.theme, fontSize: _fontSize };
+      if (_elApiKey) payload.elApiKey = _elApiKey;
+      if (_elVoiceMap && Object.keys(_elVoiceMap).length) payload.elVoiceMap = _elVoiceMap;
+      Storage.saveUI(payload);
     } catch (e) {
       console.warn('Persist UI settings failed', e);
     }
   }
 
-  function _restoreUISettings() {
+  async function _restoreUISettings() {
     try {
       const uiSettings = Storage.loadUI();
       if (!uiSettings) {
@@ -381,6 +386,28 @@ const App = (() => {
         State.setUI('fontSize', _fontSize);
       } else {
         document.body.style.setProperty('--editor-font-size', _fontSize + 'px');
+      }
+
+      // Restore persisted ElevenLabs settings (API key + voice mapping)
+      if (uiSettings.elApiKey) {
+        try {
+          const valid = await ElevenLabsService.validateApiKey(uiSettings.elApiKey);
+          if (valid.valid) {
+            _elApiKey = uiSettings.elApiKey;
+            try {
+              _elVoices = await ElevenLabsService.getVoices(_elApiKey);
+              _elVoiceMap = uiSettings.elVoiceMap || {};
+              UI.renderElVoicePanel(_elVoices, _elVoiceMap);
+              _showToast(`Restored ElevenLabs key — ${_elVoices.length} voices`);
+            } catch (e) {
+              console.warn('Could not fetch voices during restore', e);
+            }
+          } else {
+            console.warn('Stored ElevenLabs API key is invalid');
+          }
+        } catch (e) {
+          console.warn('Error validating stored ElevenLabs API key', e);
+        }
       }
     } catch (e) {
       console.warn('Restore UI settings failed', e);

@@ -184,30 +184,51 @@ const UI = (() => {
     const container = document.getElementById('el-voice-rows');
     if (!container) return;
     container.innerHTML = '';
+    // Add a small filter box to help browse large voice lists
+    const ctrl = document.createElement('div');
+    ctrl.className = 'el-voice-controls';
+    const filter = document.createElement('input');
+    filter.type = 'search';
+    filter.id = 'el-voice-filter';
+    filter.placeholder = 'Filter voices by name...';
+    ctrl.appendChild(filter);
+    container.appendChild(ctrl);
     const project = State.get().project;
     if (!project) return;
+    const voicesData = Array.isArray(voices) ? voices.slice() : [];
 
-    [...project.characters, '__STAGE_MANAGER__'].forEach(char => {
-      const row = document.createElement('div');
-      row.className = 'voice-row';
-      const label = document.createElement('label');
-      label.textContent = char === '__STAGE_MANAGER__' ? 'Stage Mgr' : char;
-      const sel = document.createElement('select');
-      const none = document.createElement('option');
-      none.value = ''; none.textContent = '— unassigned —';
-      sel.appendChild(none);
-      voices.forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v.id;
-        opt.textContent = v.name;
-        if (currentMap[char] === v.id) opt.selected = true;
-        sel.appendChild(opt);
+    function buildRows(filterText = '') {
+      // Remove existing rows except controls
+      Array.from(container.querySelectorAll('.voice-row')).forEach(n => n.remove());
+      const q = (filterText || '').trim().toLowerCase();
+      [...project.characters, '__STAGE_MANAGER__'].forEach(char => {
+        const row = document.createElement('div');
+        row.className = 'voice-row';
+        const label = document.createElement('label');
+        label.textContent = char === '__STAGE_MANAGER__' ? 'Stage Mgr' : char;
+        const sel = document.createElement('select');
+        const none = document.createElement('option');
+        none.value = ''; none.textContent = '— unassigned —';
+        sel.appendChild(none);
+
+        const filtered = q ? voicesData.filter(v => (v.name || '').toLowerCase().includes(q)) : voicesData;
+        filtered.forEach(v => {
+          const opt = document.createElement('option');
+          opt.value = v.id;
+          opt.textContent = v.name + (v.preview_url ? ' ▶' : '');
+          if (currentMap && currentMap[char] === v.id) opt.selected = true;
+          sel.appendChild(opt);
+        });
+
+        sel.onchange = () => App.elSetVoice(char, sel.value);
+        row.appendChild(label);
+        row.appendChild(sel);
+        container.appendChild(row);
       });
-      sel.onchange = () => App.elSetVoice(char, sel.value);
-      row.appendChild(label);
-      row.appendChild(sel);
-      container.appendChild(row);
-    });
+    }
+
+    buildRows();
+    filter.addEventListener('input', (e) => buildRows(e.target.value));
   }
 
   // ── TTS now-playing ───────────────────────────────────────────────────────
