@@ -15,7 +15,7 @@ const App = (() => {
   // ── Bootstrap ─────────────────────────────────────────────────────────────
 
   function init() {
-    console.log('App.init starting');
+    console.log('=== App.init starting ===');
     Editor.init(document.getElementById('script-editor'));
     TTS.init(Editor.highlightBlock);
 
@@ -24,10 +24,11 @@ const App = (() => {
     _startAutosave();
 
     if (window.FirebaseAuth) {
-      console.log('FirebaseAuth found, initializing...');
+      console.log('✓ FirebaseAuth global found, calling FirebaseAuth.init');
       FirebaseAuth.init(_handleAuthStateChange);
+      console.log('✓ FirebaseAuth.init completed');
     } else {
-      console.warn('FirebaseAuth not found!');
+      console.error('✗ FirebaseAuth global NOT found!');
     }
 
     _restoreUISettings();
@@ -250,20 +251,23 @@ const App = (() => {
   }
 
   async function _handleAuthStateChange(user) {
+    console.log('=== Auth state changed ===', user ? `User: ${user.email}` : 'No user (signed out)');
     _currentUser = user;
-    console.log('_handleAuthStateChange:', user ? `Logged in as ${user.email}` : 'Logged out');
     UI.setAuthState(user);
 
     if (user) {
+      console.log('✓ User logged in, loading settings and voices...');
       try {
         await _loadElUserSettings();
         await _refreshElVoicesIfPossible();
       } catch (e) {
         console.warn('Auth state restore failed', e);
       }
+      console.log('✓ Hiding splash screen');
       UI.clearSignInPrompt();
       UI.hideSplashScreen();
     } else {
+      console.log('User logged out, showing splash screen');
       _elVoices = [];
       _elVoiceMap = {};
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
@@ -277,12 +281,14 @@ const App = (() => {
   async function toggleAuth() {
     if (!_currentUser) {
       try {
+        console.log('=== User clicked Sign In ===');
         console.log('Attempting Firebase sign-in...');
-        await FirebaseAuth.signIn();
-        console.log('Sign-in successful');
+        const result = await FirebaseAuth.signIn();
+        console.log('✓ Sign-in completed, result:', result);
       } catch (e) {
-        console.error('Sign-in error:', e);
-        _showToast('Sign-in failed: ' + (e?.message || e?.code || 'Unknown error'));
+        console.error('✗ Sign-in error:', e);
+        const errorMsg = e?.code || e?.message || 'Unknown error';
+        _showToast('Sign-in failed: ' + errorMsg);
       }
     } else {
       try {

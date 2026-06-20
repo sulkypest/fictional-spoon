@@ -8,9 +8,19 @@
     appId: '1:771798680673:web:65cf1424be555814d4d620'
   };
 
-  firebase.initializeApp(firebaseConfig);
+  console.log('Firebase config loaded');
+
+  if (!window.firebase) {
+    console.error('Firebase SDK not loaded!');
+  } else {
+    console.log('Firebase SDK found, initializing app');
+    firebase.initializeApp(firebaseConfig);
+    console.log('Firebase app initialized');
+  }
+
   const auth = firebase.auth();
   const provider = new firebase.auth.GoogleAuthProvider();
+  console.log('Firebase auth and provider set up');
 
   function init(onAuthStateChanged) {
     console.log('FirebaseAuth.init called, setting up listener');
@@ -24,10 +34,16 @@
 
   async function signIn() {
     try {
-      await auth.signInWithPopup(provider);
+      console.log('signIn called, initiating popup...');
+      const result = await auth.signInWithPopup(provider);
+      console.log('signInWithPopup successful, user:', result.user?.email);
       return auth.currentUser;
     } catch (e) {
-      console.error('Firebase signIn error', e);
+      console.error('Firebase signIn error:', {
+        code: e.code,
+        message: e.message,
+        full: e
+      });
       throw e;
     }
   }
