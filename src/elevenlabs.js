@@ -24,7 +24,9 @@ const ElevenLabsService = (() => {
       ...(body ? { body: JSON.stringify(body) } : {}),
     };
 
-    const res = await fetch(CONFIG.elevenlabs.baseUrl + path, opts);
+    const base = CONFIG.elevenlabs.proxyBaseUrl || CONFIG.elevenlabs.baseUrl;
+    const url = base + path;
+    const res = await fetch(url, opts);
 
     if (!res.ok) {
       let msg = `ElevenLabs API error ${res.status}`;

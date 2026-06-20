@@ -1,0 +1,14 @@
+{
+  "name": "scriptwriter-elevenlabs-proxy",
+  "version": "0.1.0",
+  "description": "Lightweight proxy to forward ElevenLabs API requests and keep the API key server-side",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
