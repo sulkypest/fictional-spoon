@@ -46,6 +46,17 @@ const UI = (() => {
   function clearSignInPrompt() {
     setSignInPrompt('');
   }
+
+  function showSplashScreen() {
+    const splash = document.getElementById('splash-screen');
+    if (splash) splash.classList.remove('hidden');
+  }
+
+  function hideSplashScreen() {
+    const splash = document.getElementById('splash-screen');
+    if (splash) splash.classList.add('hidden');
+  }
+
   // ── Sidebar ───────────────────────────────────────────────────────────────
 
   function renderSidebar() {

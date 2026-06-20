@@ -257,6 +257,7 @@ const App = (() => {
         console.warn('Auth state restore failed', e);
       }
       UI.clearSignInPrompt();
+      UI.hideSplashScreen();
     } else {
       _elVoices = [];
       _elVoiceMap = {};
@@ -264,6 +265,7 @@ const App = (() => {
       document.getElementById('el-generate-row').style.display = 'none';
       UI.setElPanelAuthNote('Sign in to save your ElevenLabs key securely.');
       UI.setSignInPrompt('Sign in to save/load scripts and access ElevenLabs.');
+      UI.showSplashScreen();
     }
   }
 
