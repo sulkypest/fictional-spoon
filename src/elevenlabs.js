@@ -74,6 +74,56 @@ const ElevenLabsService = (() => {
     }));
   }
 
+  /**
+   * Search the full ElevenLabs Voice Library (thousands of community voices),
+   * as opposed to getVoices() which only returns voices already saved to this account.
+   * @param {string} apiKey
+   * @param {{search?:string, gender?:string, age?:string, accent?:string, useCase?:string, page?:number, pageSize?:number}} filters
+   * @returns {{ voices: Array, hasMore: boolean }}
+   */
+  async function searchVoiceLibrary(apiKey, filters = {}) {
+    const { search = '', gender = '', age = '', accent = '', useCase = '', page = 0, pageSize = 24 } = filters;
+    const params = new URLSearchParams();
+    params.set('page_size', String(pageSize));
+    params.set('page', String(page));
+    if (search) params.set('search', search);
+    if (gender) params.set('gender', gender);
+    if (age) params.set('age', age);
+    if (accent) params.set('accent', accent);
+    if (useCase) params.set('use_cases', useCase);
+
+    const data = await _request(apiKey, `/shared-voices?${params.toString()}`);
+    const voices = (data.voices || []).map(v => ({
+      id: v.voice_id,
+      publicOwnerId: v.public_owner_id,
+      name: v.name,
+      category: v.category,
+      gender: v.gender,
+      age: v.age,
+      accent: v.accent,
+      useCase: v.use_case,
+      descriptive: v.descriptive,
+      language: v.language,
+      previewUrl: v.preview_url,
+    }));
+    return { voices, hasMore: voices.length === pageSize };
+  }
+
+  /**
+   * Add a voice from the public Voice Library to this account. Required before a
+   * shared voice's id can be used in generation calls — shared voices aren't
+   * usable by id until they belong to your own library.
+   * @param {string} apiKey
+   * @param {string} publicOwnerId
+   * @param {string} voiceId
+   * @param {string} name
+   * @returns {string} the new voice_id usable in this account
+   */
+  async function addSharedVoice(apiKey, publicOwnerId, voiceId, name) {
+    const data = await _request(apiKey, `/voices/add/${publicOwnerId}/${voiceId}`, 'POST', { new_name: name });
+    return data.voice_id;
+  }
+
   // ── Text to Dialogue (multi-speaker, Eleven v3) ───────────────────────────
 
   /**
@@ -229,6 +279,8 @@ const ElevenLabsService = (() => {
 
   return {
     getVoices,
+    searchVoiceLibrary,
+    addSharedVoice,
     generateDialogue,
     generateSoundEffect,
     parseSceneForGeneration,

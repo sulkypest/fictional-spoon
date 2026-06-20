@@ -391,16 +391,37 @@ body.format-bbc .block-character .block-input { text-align: left; }
 @keyframes ttspulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
 
 /* ElevenLabs panel */
-#el-panel { position: fixed; top: 60px; right: 20px; background: var(--bg2); border: 1px solid var(--border2); border-radius: 8px; padding: 16px; display: none; flex-direction: column; gap: 10px; z-index: 50; box-shadow: 0 4px 20px rgba(0,0,0,0.4); min-width: 300px; max-width: 360px; }
+#el-panel { position: fixed; top: 60px; right: 20px; bottom: 20px; background: var(--bg2); border: 1px solid var(--border2); border-radius: 8px; padding: 16px; display: none; flex-direction: column; gap: 10px; z-index: 50; box-shadow: 0 4px 20px rgba(0,0,0,0.4); width: 480px; max-width: calc(100vw - 40px); overflow-y: auto; }
 #el-panel.visible { display: flex; }
-#el-panel h4 { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+#el-panel h4 { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin: 4px 0; }
 #el-panel p { font-size: 11px; color: var(--text3); line-height: 1.5; }
 #el-api-input { background: var(--bg3); border: 1px solid var(--border2); color: var(--text); padding: 6px 8px; border-radius: 4px; font-size: 12px; font-family: var(--mono); outline: none; width: 100%; }
 #el-api-input:focus { border-color: var(--accent2); }
 #el-panel .el-btns { display: flex; gap: 8px; }
 #el-panel button { flex: 1; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 11px; font-family: var(--sans); border: 1px solid var(--border2); background: var(--bg4); color: var(--text2); }
 #el-panel button.primary { background: var(--accent2); border-color: var(--accent); color: #1a1a1a; font-weight: 600; }
-#el-voice-rows { display: flex; flex-direction: column; gap: 5px; max-height: 200px; overflow-y: auto; }
+#el-voice-rows { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+
+/* Voice Library filters */
+.el-voice-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.el-voice-filters input[type="search"] { flex: 1 1 100%; background: var(--bg3); border: 1px solid var(--border2); color: var(--text); padding: 6px 8px; border-radius: 4px; font-size: 11px; font-family: var(--sans); outline: none; }
+.el-voice-filters input[type="search"]:focus { border-color: var(--accent2); }
+.el-voice-filters select { flex: 1 1 calc(50% - 6px); background: var(--bg3); border: 1px solid var(--border2); color: var(--text2); padding: 5px 6px; border-radius: 4px; font-size: 10px; font-family: var(--sans); outline: none; cursor: pointer; }
+.el-voice-filters select:focus { border-color: var(--accent2); }
+
+/* Voice Library results */
+#el-voice-library { display: flex; flex-direction: column; gap: 8px; }
+.el-lib-status { font-size: 11px; color: var(--text3); text-align: center; padding: 12px 0; }
+.voice-grid { display: flex; flex-direction: column; gap: 6px; }
+.voice-card { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 6px; padding: 8px 10px; }
+.voice-card-name { font-size: 12px; font-weight: 600; color: var(--text); flex: 1 1 120px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.voice-card-tags { display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 100%; order: 3; }
+.voice-tag { font-size: 9px; text-transform: capitalize; color: var(--text3); background: var(--bg4); border: 1px solid var(--border2); border-radius: 10px; padding: 1px 7px; }
+.voice-card-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.voice-card-controls button { padding: 4px 8px; font-size: 10px; border-radius: 4px; border: 1px solid var(--border2); background: var(--bg4); color: var(--text2); cursor: pointer; white-space: nowrap; }
+.voice-card-controls select { padding: 4px 6px; font-size: 10px; border-radius: 4px; border: 1px solid var(--border2); background: var(--bg4); color: var(--text2); cursor: pointer; }
+.el-lib-load-more { padding: 8px; border-radius: 4px; border: 1px solid var(--border2); background: var(--bg4); color: var(--text2); cursor: pointer; font-size: 11px; }
+.el-lib-load-more:disabled { opacity: 0.6; cursor: default; }
 
 /* Generation progress */
 #gen-progress { position: fixed; bottom: 36px; right: 20px; background: var(--bg2); border: 1px solid var(--border2); border-radius: 8px; padding: 12px 16px; display: none; align-items: center; gap: 10px; z-index: 50; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }

@@ -228,130 +228,197 @@ const UI = (() => {
     document.getElementById('el-panel').classList.add('visible');
   }
 
+  // Compact per-character assignment list, drawn from voices already in this account.
   function renderElVoicePanel(voices, currentMap) {
     const container = document.getElementById('el-voice-rows');
     if (!container) return;
     container.innerHTML = '';
-    // Add a small filter box to help browse large voice lists
-    const ctrl = document.createElement('div');
-    ctrl.className = 'el-voice-controls';
-    const filter = document.createElement('input');
-    filter.type = 'search';
-    filter.id = 'el-voice-filter';
-    filter.placeholder = 'Filter voices by name...';
-    ctrl.appendChild(filter);
-    container.appendChild(ctrl);
     const project = State.get().project;
     if (!project) return;
-    const voicesData = Array.isArray(voices) ? voices.slice() : [];
+    const voicesData = Array.isArray(voices) ? voices : [];
 
-    function buildRows(filterText = '') {
-      // Remove existing rows except controls
-        Array.from(container.querySelectorAll('.voice-row, .voice-browse-list')).forEach(n => n.remove());
-      const q = (filterText || '').trim().toLowerCase();
-      [...project.characters, '__STAGE_MANAGER__'].forEach(char => {
-        const row = document.createElement('div');
-        row.className = 'voice-row';
-        const label = document.createElement('label');
-        label.textContent = char === '__STAGE_MANAGER__' ? 'Stage Mgr' : char;
-        const sel = document.createElement('select');
-        const none = document.createElement('option');
-        none.value = ''; none.textContent = '— unassigned —';
-        sel.appendChild(none);
+    const title = document.createElement('h4');
+    title.textContent = 'Your cast';
+    container.appendChild(title);
 
-        const filtered = q ? voicesData.filter(v => (v.name || '').toLowerCase().includes(q)) : voicesData;
-        filtered.forEach(v => {
-          const opt = document.createElement('option');
-          opt.value = v.id;
-          opt.textContent = v.name + (v.preview_url ? ' ▶' : '');
-          if (currentMap && currentMap[char] === v.id) opt.selected = true;
-          sel.appendChild(opt);
-        });
-
-        sel.onchange = () => App.elSetVoice(char, sel.value);
-        row.appendChild(label);
-        row.appendChild(sel);
-        container.appendChild(row);
+    [...project.characters, '__STAGE_MANAGER__'].forEach(char => {
+      const row = document.createElement('div');
+      row.className = 'voice-row';
+      const label = document.createElement('label');
+      label.textContent = char === '__STAGE_MANAGER__' ? 'Stage Mgr' : char;
+      const sel = document.createElement('select');
+      const none = document.createElement('option');
+      none.value = '';
+      none.textContent = voicesData.length ? '— unassigned —' : '— assign from Voice Library below —';
+      sel.appendChild(none);
+      voicesData.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v.id;
+        opt.textContent = v.name;
+        if (currentMap && currentMap[char] === v.id) opt.selected = true;
+        sel.appendChild(opt);
       });
-        // Browse list
-        const browse = document.createElement('div');
-        browse.className = 'voice-browse-list';
-        const title = document.createElement('h4');
-        title.textContent = 'Browse voices';
-        browse.appendChild(title);
+      sel.onchange = () => App.elSetVoice(char, sel.value);
+      row.appendChild(label);
+      row.appendChild(sel);
+      container.appendChild(row);
+    });
 
-        const list = document.createElement('div');
-        list.className = 'voice-list';
-        const filteredAll = q ? voicesData.filter(v => (v.name || '').toLowerCase().includes(q)) : voicesData;
-        filteredAll.forEach(v => {
-          const item = document.createElement('div');
-          item.className = 'voice-item';
-          const n = document.createElement('div');
-          n.className = 'voice-name';
-          n.textContent = v.name;
-          const meta = document.createElement('div');
-          meta.className = 'voice-meta';
-          meta.textContent = `${v.category || ''} ${Array.isArray(v.labels) ? v.labels.join(', ') : ''}`;
+    const refreshBtn = document.createElement('button');
+    refreshBtn.textContent = 'Refresh my voices';
+    refreshBtn.onclick = () => App.elRefreshVoices();
+    container.appendChild(refreshBtn);
+  }
 
-          const controls = document.createElement('div');
-          controls.className = 'voice-controls';
-          if (v.previewUrl) {
-            const btn = document.createElement('button');
-            btn.textContent = 'Preview';
-            btn.onclick = async () => {
-              try {
-                btn.textContent = 'Loading...';
-                const r = await fetch(v.previewUrl);
-                const b = await r.arrayBuffer();
-                const blob = new Blob([b], { type: r.headers.get('content-type') || 'audio/mpeg' });
-                const url = URL.createObjectURL(blob);
-                const aud = new Audio(url);
-                aud.onended = () => { URL.revokeObjectURL(url); btn.textContent = 'Preview'; };
-                aud.play();
-              } catch (e) {
-                console.error('Voice preview failed', e);
-                _showToast('Voice preview failed');
-                btn.textContent = 'Preview';
-              }
-            };
-            controls.appendChild(btn);
+  // Builds the filter dropdowns/search box once; they don't depend on search results.
+  function _buildElVoiceFiltersOnce() {
+    const container = document.getElementById('el-voice-filters');
+    if (!container || container.dataset.built) return;
+    container.dataset.built = '1';
+
+    const search = document.createElement('input');
+    search.type = 'search';
+    search.id = 'el-lib-search';
+    search.placeholder = 'Search by description, e.g. "gravelly old man"...';
+    container.appendChild(search);
+
+    const filterDefs = [
+      { key: 'gender', label: 'Gender', options: CONFIG.elevenlabs.voiceFilters.gender },
+      { key: 'age', label: 'Age', options: CONFIG.elevenlabs.voiceFilters.age },
+      { key: 'accent', label: 'Accent', options: CONFIG.elevenlabs.voiceFilters.accent },
+      { key: 'useCase', label: 'Use case', options: CONFIG.elevenlabs.voiceFilters.useCase },
+    ];
+
+    filterDefs.forEach(def => {
+      const sel = document.createElement('select');
+      sel.id = `el-lib-filter-${def.key}`;
+      const any = document.createElement('option');
+      any.value = '';
+      any.textContent = `${def.label}: Any`;
+      sel.appendChild(any);
+      def.options.forEach(opt => {
+        const o = document.createElement('option');
+        o.value = opt.value;
+        o.textContent = opt.label;
+        sel.appendChild(o);
+      });
+      sel.onchange = () => App.elSearchVoiceLibrary({ [def.key]: sel.value });
+      container.appendChild(sel);
+    });
+
+    let searchTimer = null;
+    search.addEventListener('input', () => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => App.elSearchVoiceLibrary({ search: search.value }), 350);
+    });
+  }
+
+  // Renders Voice Library search results as a card grid with preview + assign controls.
+  function renderElVoiceLibrary(state) {
+    _buildElVoiceFiltersOnce();
+    const container = document.getElementById('el-voice-library');
+    if (!container) return;
+    const project = State.get().project;
+    if (!project) return;
+
+    container.innerHTML = '';
+
+    if (state.loading && !state.voices.length) {
+      const status = document.createElement('p');
+      status.className = 'el-lib-status';
+      status.textContent = 'Searching Voice Library...';
+      container.appendChild(status);
+      return;
+    }
+
+    if (!state.voices.length) {
+      const status = document.createElement('p');
+      status.className = 'el-lib-status';
+      status.textContent = 'No voices match these filters.';
+      container.appendChild(status);
+      return;
+    }
+
+    const grid = document.createElement('div');
+    grid.className = 'voice-grid';
+
+    state.voices.forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'voice-card';
+
+      const n = document.createElement('div');
+      n.className = 'voice-card-name';
+      n.textContent = v.name;
+      card.appendChild(n);
+
+      const tags = document.createElement('div');
+      tags.className = 'voice-card-tags';
+      [v.gender, v.age, v.accent, v.useCase].filter(Boolean).forEach(t => {
+        const tag = document.createElement('span');
+        tag.className = 'voice-tag';
+        tag.textContent = String(t).replace(/_/g, ' ');
+        tags.appendChild(tag);
+      });
+      card.appendChild(tags);
+
+      const controls = document.createElement('div');
+      controls.className = 'voice-card-controls';
+
+      if (v.previewUrl) {
+        const btn = document.createElement('button');
+        btn.textContent = '▶ Preview';
+        btn.onclick = async () => {
+          try {
+            btn.textContent = 'Loading...';
+            const r = await fetch(v.previewUrl);
+            const b = await r.arrayBuffer();
+            const blob = new Blob([b], { type: r.headers.get('content-type') || 'audio/mpeg' });
+            const url = URL.createObjectURL(blob);
+            const aud = new Audio(url);
+            aud.onended = () => { URL.revokeObjectURL(url); btn.textContent = '▶ Preview'; };
+            aud.play();
+          } catch (e) {
+            console.error('Voice preview failed', e);
+            _showToast('Voice preview failed');
+            btn.textContent = '▶ Preview';
           }
-
-          // Assign dropdown
-          const assign = document.createElement('select');
-          const optNone = document.createElement('option'); optNone.value = ''; optNone.textContent = 'Assign to...';
-          assign.appendChild(optNone);
-          [...project.characters, '__STAGE_MANAGER__'].forEach(ch => {
-            const o = document.createElement('option'); o.value = ch; o.textContent = ch === '__STAGE_MANAGER__' ? 'Stage Mgr' : ch; assign.appendChild(o);
-          });
-          assign.onchange = () => {
-            const ch = assign.value;
-            if (!ch) return;
-            App.elSetVoice(ch, v.id);
-            _showToast(`${v.name} assigned to ${ch === '__STAGE_MANAGER__' ? 'Stage Mgr' : ch}`);
-            // Rebuild to reflect change
-            buildRows(filter.value);
-          };
-          controls.appendChild(assign);
-
-          item.appendChild(n);
-          item.appendChild(meta);
-          item.appendChild(controls);
-          list.appendChild(item);
-        });
-
-        browse.appendChild(list);
-        container.appendChild(browse);
+        };
+        controls.appendChild(btn);
       }
 
-    buildRows();
-    filter.addEventListener('input', (e) => buildRows(e.target.value));
+      const assign = document.createElement('select');
+      const optNone = document.createElement('option');
+      optNone.value = '';
+      optNone.textContent = 'Assign to...';
+      assign.appendChild(optNone);
+      [...project.characters, '__STAGE_MANAGER__'].forEach(ch => {
+        const o = document.createElement('option');
+        o.value = ch;
+        o.textContent = ch === '__STAGE_MANAGER__' ? 'Stage Mgr' : ch;
+        assign.appendChild(o);
+      });
+      assign.onchange = () => {
+        const ch = assign.value;
+        if (!ch) return;
+        App.elAssignLibraryVoice(ch, v);
+        assign.value = '';
+      };
+      controls.appendChild(assign);
 
-    // Add refresh button
-    const refreshBtn = document.createElement('button');
-    refreshBtn.textContent = 'Refresh voices';
-    refreshBtn.onclick = () => App.elRefreshVoices();
-    container.insertBefore(refreshBtn, container.querySelector('.el-voice-controls')?.nextSibling || null);
+      card.appendChild(controls);
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+
+    if (state.hasMore) {
+      const more = document.createElement('button');
+      more.className = 'el-lib-load-more';
+      more.textContent = state.loading ? 'Loading...' : 'Load more voices';
+      more.disabled = state.loading;
+      more.onclick = () => App.elLoadMoreVoiceLibrary();
+      container.appendChild(more);
+    }
   }
 
   // ── TTS now-playing ───────────────────────────────────────────────────────
@@ -480,7 +547,7 @@ const UI = (() => {
     renderSidebar, renderCharList, switchSideTab, toggleAddChar,
     showEditor, showEmptyState, setSceneTitle, setWordCount,
     toggleVoicePanel, buildVoicePanel,
-    toggleElPanel, showElApiKeyPrompt, showElVoicePanel, renderElVoicePanel,
+    toggleElPanel, showElApiKeyPrompt, showElVoicePanel, renderElVoicePanel, renderElVoiceLibrary,
     setNowPlaying, hideTtsPanel,
     showGenerationProgress, hideGenerationProgress,
     setSaveIndicator,

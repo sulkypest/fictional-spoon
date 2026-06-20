@@ -80,7 +80,8 @@ app.get('/userSettings', verifyToken, async (req, res) => {
 // Proxy route: forwards requests to ElevenLabs on behalf of the authenticated user
 app.all('/el/*', verifyToken, async (req, res) => {
   try {
-    const path = req.path.replace(/^\/el/, '');
+    // Use req.url (not req.path) so query strings — e.g. shared-voices filters — survive the proxy.
+    const path = req.url.replace(/^\/el/, '');
     const doc = await db.collection('eleven_keys').doc(req.uid).get();
     if (!doc.exists || !doc.data().key) return res.status(403).json({ error: 'No ElevenLabs key stored for this user' });
     const key = doc.data().key;

@@ -89,6 +89,51 @@ const CONFIG = {
     },
     maxCharsPerRequest: 2000,            // ElevenLabs Text to Dialogue limit
     stageMgrVoiceId: null,               // Set by user
+
+    // Filter options for browsing the Voice Library (/v1/shared-voices). Values match
+    // ElevenLabs' filter vocabulary; labels are what's shown in the UI dropdowns.
+    voiceFilters: {
+      gender: [
+        { value: 'male', label: 'Male' },
+        { value: 'female', label: 'Female' },
+      ],
+      age: [
+        { value: 'young', label: 'Young' },
+        { value: 'middle_aged', label: 'Middle-aged' },
+        { value: 'old', label: 'Old' },
+      ],
+      accent: [
+        { value: 'american', label: 'American' },
+        { value: 'british', label: 'British' },
+        { value: 'australian', label: 'Australian' },
+        { value: 'irish', label: 'Irish' },
+        { value: 'scottish', label: 'Scottish' },
+        { value: 'south african', label: 'South African' },
+        { value: 'indian', label: 'Indian' },
+        { value: 'african', label: 'African' },
+        { value: 'canadian', label: 'Canadian' },
+        { value: 'german', label: 'German' },
+        { value: 'french', label: 'French' },
+        { value: 'spanish', label: 'Spanish' },
+        { value: 'italian', label: 'Italian' },
+        { value: 'swedish', label: 'Swedish' },
+        { value: 'russian', label: 'Russian' },
+        { value: 'japanese', label: 'Japanese' },
+        { value: 'chinese', label: 'Chinese' },
+        { value: 'korean', label: 'Korean' },
+        { value: 'arabic', label: 'Arabic' },
+        { value: 'transatlantic', label: 'Transatlantic' },
+      ],
+      useCase: [
+        { value: 'narration', label: 'Narration' },
+        { value: 'characters_animation', label: 'Characters / Animation' },
+        { value: 'conversational', label: 'Conversational' },
+        { value: 'social_media', label: 'Social Media' },
+        { value: 'entertainment_tv', label: 'Entertainment / TV' },
+        { value: 'advertisement', label: 'Advertisement' },
+        { value: 'informative_educational', label: 'Informative / Educational' },
+      ],
+    },
   },
 
   /**

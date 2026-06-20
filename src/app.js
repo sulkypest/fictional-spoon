@@ -7,10 +7,19 @@
 const App = (() => {
 
   let _currentUser = null;
-  let _elVoices = [];        // ElevenLabs voice list
+  let _elVoices = [];        // ElevenLabs voice list (voices already in this account)
   let _elVoiceMap = {};      // { CHARACTER: elevenlabs_voice_id }
   let _pendingGeneration = null;
   let _fontSize = 15;
+
+  // Voice Library browse/filter state
+  let _elLibrary = {
+    voices: [],
+    filters: { search: '', gender: '', age: '', accent: '', useCase: '' },
+    page: 0,
+    hasMore: false,
+    loading: false,
+  };
 
   // ── Bootstrap ─────────────────────────────────────────────────────────────
 
@@ -365,6 +374,9 @@ const App = (() => {
       return;
     }
     UI.toggleElPanel();
+    if (!_elLibrary.voices.length && !_elLibrary.loading) {
+      elSearchVoiceLibrary();
+    }
   }
 
   // ── ElevenLabs integration ────────────────────────────────────────────────
@@ -399,6 +411,7 @@ const App = (() => {
       if (elGenRow) elGenRow.style.display = 'flex';
       UI.setElPanelAuthNote(`Key saved securely. Signed in as ${_currentUser.displayName || _currentUser.email}.`);
       _showToast(`Connected — ${_elVoices.length} voices available`);
+      elSearchVoiceLibrary();
       return true;
     } catch (e) {
       console.error('Failed to save ElevenLabs key:', e);
@@ -421,6 +434,57 @@ const App = (() => {
       console.error('Failed to refresh voices', e);
       _showToast('Could not refresh voices: ' + (e.message || e));
       return false;
+    }
+  }
+
+  // ── Voice Library browse/filter ───────────────────────────────────────────
+
+  async function elSearchVoiceLibrary(filters = {}, { append = false } = {}) {
+    if (!_currentUser) return;
+    const nextFilters = { ..._elLibrary.filters, ...filters };
+    const page = append ? _elLibrary.page + 1 : 0;
+    _elLibrary.filters = nextFilters;
+    _elLibrary.loading = true;
+    UI.renderElVoiceLibrary(_elLibrary);
+    try {
+      const { voices, hasMore } = await ElevenLabsService.searchVoiceLibrary(null, { ...nextFilters, page });
+      _elLibrary.voices = append ? [..._elLibrary.voices, ...voices] : voices;
+      _elLibrary.page = page;
+      _elLibrary.hasMore = hasMore;
+    } catch (e) {
+      console.error('Voice Library search failed', e);
+      _showToast('Could not search Voice Library: ' + (e.message || e));
+      if (!append) _elLibrary.voices = [];
+    } finally {
+      _elLibrary.loading = false;
+      UI.renderElVoiceLibrary(_elLibrary);
+    }
+  }
+
+  function elLoadMoreVoiceLibrary() {
+    if (_elLibrary.loading || !_elLibrary.hasMore) return;
+    elSearchVoiceLibrary({}, { append: true });
+  }
+
+  // Assign a voice found via the Voice Library to a character. Shared voices must be
+  // added to this account before their id is usable for generation, so this performs
+  // that step first, then assigns the resulting (now-owned) voice id as normal.
+  async function elAssignLibraryVoice(character, voice) {
+    if (!_currentUser) {
+      _showToast('Sign in first to assign voices');
+      return;
+    }
+    try {
+      _showToast(`Adding "${voice.name}" to your voices...`);
+      const newVoiceId = await ElevenLabsService.addSharedVoice(null, voice.publicOwnerId, voice.id, voice.name);
+      elSetVoice(character, newVoiceId);
+      _elVoices = await ElevenLabsService.getVoices(null);
+      UI.renderElVoicePanel(_elVoices, _elVoiceMap);
+      UI.renderElVoiceLibrary(_elLibrary);
+      _showToast(`${voice.name} assigned to ${character === '__STAGE_MANAGER__' ? 'Stage Mgr' : character}`);
+    } catch (e) {
+      console.error('Failed to assign library voice', e);
+      _showToast('Could not assign voice: ' + (e.message || e));
     }
   }
 
@@ -605,6 +669,9 @@ const App = (() => {
     showPdfExport,
     elSaveApiKey,
     elSetVoice,
+    elSearchVoiceLibrary,
+    elLoadMoreVoiceLibrary,
+    elAssignLibraryVoice,
     elGenerateScene,
     openElPanel,
     toggleAuth,
