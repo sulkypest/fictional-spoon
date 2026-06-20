@@ -1,7 +1,7 @@
 {
   "name": "scriptwriter-firebase-functions",
   "version": "0.1.0",
-  "engines": { "node": "16" },
+  "engines": { "node": "20" },
   "main": "index.js",
   "dependencies": {
     "cors": "^2.8.5",
