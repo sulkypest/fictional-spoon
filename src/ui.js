@@ -38,7 +38,14 @@ const UI = (() => {
     const note = document.getElementById('el-auth-note');
     if (note) note.textContent = text;
   }
+  function setSignInPrompt(text) {
+    const prompt = document.getElementById('signin-prompt');
+    if (prompt) prompt.textContent = text || '';
+  }
 
+  function clearSignInPrompt() {
+    setSignInPrompt('');
+  }
   // ── Sidebar ───────────────────────────────────────────────────────────────
 
   function renderSidebar() {

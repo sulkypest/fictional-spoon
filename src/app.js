@@ -27,6 +27,7 @@ const App = (() => {
     }
 
     _restoreUISettings();
+    UI.setSignInPrompt('Sign in to save/load scripts and access ElevenLabs.');
 
     // Try restoring last session from localStorage
     const saved = Storage.loadLocal();
@@ -191,7 +192,18 @@ const App = (() => {
 
   // ── Save / Load ───────────────────────────────────────────────────────────
 
+  function _requireAuth(action = 'use Scriptwriter') {
+    if (_currentUser) {
+      UI.clearSignInPrompt();
+      return true;
+    }
+    UI.setSignInPrompt(`Sign in to ${action}.`);
+    _showToast('Sign in first to continue');
+    return false;
+  }
+
   function saveToFile() {
+    if (!_requireAuth('save your project')) return;
     _saveCurrentScene();
     const project = State.get().project;
     project.meta = project.meta || {};
@@ -202,6 +214,7 @@ const App = (() => {
   }
 
   async function loadFromFile() {
+    if (!_requireAuth('load a project')) return;
     try {
       const data = await Storage.loadFromFile();
       if (data.ttsVoices) TTS.setCharacterVoices(data.ttsVoices);
@@ -213,11 +226,13 @@ const App = (() => {
   }
 
   function exportTxt() {
+    if (!_requireAuth('export your script')) return;
     _saveCurrentScene();
     Storage.exportTxt(State.get().project);
   }
 
   function exportForElevenLabs(sceneOnly = false) {
+    if (!_requireAuth('export for ElevenLabs')) return;
     _saveCurrentScene();
     const id = sceneOnly ? State.get().activeSceneId : null;
     Storage.exportForElevenLabs(State.get().project, id);
@@ -225,6 +240,7 @@ const App = (() => {
   }
 
   function showPdfExport() {
+    if (!_requireAuth('preview or export PDF')) return;
     _saveCurrentScene();
     UI.showPdfPreview(State.get().project);
   }
@@ -240,12 +256,14 @@ const App = (() => {
       } catch (e) {
         console.warn('Auth state restore failed', e);
       }
+      UI.clearSignInPrompt();
     } else {
       _elVoices = [];
       _elVoiceMap = {};
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
       document.getElementById('el-generate-row').style.display = 'none';
       UI.setElPanelAuthNote('Sign in to save your ElevenLabs key securely.');
+      UI.setSignInPrompt('Sign in to save/load scripts and access ElevenLabs.');
     }
   }
 
@@ -314,6 +332,16 @@ const App = (() => {
       document.getElementById('el-generate-row').style.display = 'none';
       UI.setElPanelAuthNote('Sign in and save your ElevenLabs API key to enable generation.');
     }
+  }
+
+  function openElPanel() {
+    if (!_currentUser) {
+      UI.toggleElPanel();
+      document.getElementById('el-generate-row').style.display = 'none';
+      UI.setElPanelAuthNote('Please sign in with Draft Punk before using ElevenLabs.');
+      return;
+    }
+    UI.toggleElPanel();
   }
 
   // ── ElevenLabs integration ────────────────────────────────────────────────
@@ -554,6 +582,7 @@ const App = (() => {
     elSaveApiKey,
     elSetVoice,
     elGenerateScene,
+    openElPanel,
     toggleAuth,
     ttsPlay,
     ttsStop,

@@ -28,7 +28,7 @@
   <button class="tb-btn" onclick="App.showPdfExport()">Export PDF</button>
   <button class="tb-btn" onclick="App.exportForElevenLabs(true)" title="Export current scene for ElevenLabs">Export EL Scene</button>
   <div class="sep"></div>
-  <button class="tb-btn el-btn" onclick="UI.toggleElPanel()">⚡ ElevenLabs</button>
+  <button class="tb-btn el-btn" onclick="App.openElPanel()">⚡ ElevenLabs</button>
   <div class="sep"></div>
   <button class="tb-btn" onclick="UI.toggleVoicePanel()">Voices</button>
   <button class="tb-btn" onclick="App.changeFontSize(-1)" title="Smaller editor text">A-</button>
@@ -36,6 +36,7 @@
   <button class="tb-btn" onclick="App.toggleTheme()" id="theme-btn">☾</button>
   <button class="tb-btn" id="auth-btn" onclick="App.toggleAuth()">Sign in</button>
   <span id="auth-user" style="font-size:11px;color:var(--text3);margin-left:8px;">Not signed in</span>
+  <span id="signin-prompt" style="font-size:11px;color:var(--accent);margin-left:16px;"></span>
   <div class="tb-spacer"></div>
   <span id="save-indicator"></span>
 </div>
