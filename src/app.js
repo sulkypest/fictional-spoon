@@ -335,7 +335,7 @@ const App = (() => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ key }),
+        body: JSON.stringify({ key, voiceMap: _elVoiceMap }),
       });
       if (!res.ok) {
         const error = await res.json().catch(() => null);

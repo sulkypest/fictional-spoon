@@ -15,8 +15,8 @@ const ElevenLabsService = (() => {
   // ── Helpers ──────────────────────────────────────────────────────────────
 
   async function _request(apiKey, path, method = 'GET', body = null, returnBlob = false) {
-    const base = CONFIG.elevenlabs.proxyBaseUrl || CONFIG.elevenlabs.baseUrl;
-    const useProxy = Boolean(CONFIG.elevenlabs.proxyBaseUrl);
+    const useProxy = !apiKey && Boolean(CONFIG.elevenlabs.proxyBaseUrl);
+    const base = useProxy ? CONFIG.elevenlabs.proxyBaseUrl : CONFIG.elevenlabs.baseUrl;
     const headers = {
       ...(body ? { 'Content-Type': 'application/json' } : {}),
     };
@@ -25,7 +25,7 @@ const ElevenLabsService = (() => {
       const token = window.FirebaseAuth ? await window.FirebaseAuth.getToken() : null;
       if (!token) throw new Error('Authentication required for ElevenLabs proxy');
       headers['Authorization'] = `Bearer ${token}`;
-    } else {
+    } else if (apiKey) {
       headers['xi-api-key'] = apiKey;
     }
 
