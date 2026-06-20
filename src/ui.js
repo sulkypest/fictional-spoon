@@ -49,12 +49,24 @@ const UI = (() => {
 
   function showSplashScreen() {
     const splash = document.getElementById('splash-screen');
+    const toolbar = document.getElementById('toolbar');
+    const main = document.getElementById('main');
+    const statusbar = document.getElementById('statusbar');
     if (splash) splash.classList.remove('hidden');
+    if (toolbar) toolbar.classList.add('hidden');
+    if (main) main.classList.add('hidden');
+    if (statusbar) statusbar.classList.add('hidden');
   }
 
   function hideSplashScreen() {
     const splash = document.getElementById('splash-screen');
+    const toolbar = document.getElementById('toolbar');
+    const main = document.getElementById('main');
+    const statusbar = document.getElementById('statusbar');
     if (splash) splash.classList.add('hidden');
+    if (toolbar) toolbar.classList.remove('hidden');
+    if (main) main.classList.remove('hidden');
+    if (statusbar) statusbar.classList.remove('hidden');
   }
 
   // ── Sidebar ───────────────────────────────────────────────────────────────
@@ -332,18 +344,14 @@ const UI = (() => {
         container.appendChild(browse);
       }
 
-      buildRows();
-      filter.addEventListener('input', (e) => buildRows(e.target.value));
-
-      // Add refresh button
-      const refreshBtn = document.createElement('button');
-      refreshBtn.textContent = 'Refresh voices';
-      refreshBtn.onclick = () => App.elRefreshVoices();
-      container.insertBefore(refreshBtn, container.querySelector('.el-voice-controls')?.nextSibling || null);
-    }
-
     buildRows();
     filter.addEventListener('input', (e) => buildRows(e.target.value));
+
+    // Add refresh button
+    const refreshBtn = document.createElement('button');
+    refreshBtn.textContent = 'Refresh voices';
+    refreshBtn.onclick = () => App.elRefreshVoices();
+    container.insertBefore(refreshBtn, container.querySelector('.el-voice-controls')?.nextSibling || null);
   }
 
   // ── TTS now-playing ───────────────────────────────────────────────────────

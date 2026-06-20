@@ -22,6 +22,20 @@
   pointer-events: none;
 }
 
+#toolbar,
+#main,
+#statusbar {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+#toolbar.hidden,
+#main.hidden,
+#statusbar.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .splash-content {
   text-align: center;
   max-width: 400px;
