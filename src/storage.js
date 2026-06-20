@@ -18,6 +18,7 @@
 const Storage = (() => {
 
   const KEY = CONFIG.storage.localStorageKey;
+const KEY_UI = KEY + '_ui';
 
   // ── Local file (primary) ──────────────────────────────────────────────────
 
@@ -81,6 +82,29 @@ const Storage = (() => {
 
   function clearLocal() {
     localStorage.removeItem(KEY);
+  }
+
+  function saveUI(settings) {
+    try {
+      localStorage.setItem(KEY_UI, JSON.stringify(settings));
+      return true;
+    } catch (e) {
+      console.warn('localStorage saveUI failed:', e);
+      return false;
+    }
+  }
+
+  function loadUI() {
+    try {
+      const raw = localStorage.getItem(KEY_UI);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function clearUI() {
+    localStorage.removeItem(KEY_UI);
   }
 
   // ── Export helpers ────────────────────────────────────────────────────────
@@ -181,6 +205,9 @@ const Storage = (() => {
     saveLocal,
     loadLocal,
     clearLocal,
+    saveUI,
+    loadUI,
+    clearUI,
     exportTxt,
     exportForElevenLabs,
   };

@@ -10,6 +10,7 @@ const App = (() => {
   let _elVoices = [];        // ElevenLabs voice list
   let _elVoiceMap = {};      // { CHARACTER: elevenlabs_voice_id }
   let _pendingGeneration = null;
+  let _fontSize = 15;
 
   // ── Bootstrap ─────────────────────────────────────────────────────────────
 
@@ -20,6 +21,8 @@ const App = (() => {
     _bindStateEvents();
     _bindUIEvents();
     _startAutosave();
+
+    _restoreUISettings();
 
     // Try restoring last session from localStorage
     const saved = Storage.loadLocal();
@@ -230,11 +233,17 @@ const App = (() => {
       _showToast('Invalid API key: ' + result.error);
       return false;
     }
-    _elApiKey = key;
-    _elVoices = await ElevenLabsService.getVoices(key);
-    UI.renderElVoicePanel(_elVoices, _elVoiceMap);
-    _showToast(`Connected — ${_elVoices.length} voices available`);
-    return true;
+    try {
+      _elApiKey = key;
+      _elVoices = await ElevenLabsService.getVoices(key);
+      UI.renderElVoicePanel(_elVoices, _elVoiceMap);
+      _showToast(`Connected — ${_elVoices.length} voices available`);
+      return true;
+    } catch (e) {
+      console.error('Failed to fetch ElevenLabs voices:', e);
+      _showToast('Could not fetch voices: ' + (e.message || e));
+      return false;
+    }
   }
 
   function elSetVoice(character, voiceId) {
@@ -326,6 +335,50 @@ const App = (() => {
     State.setUI('theme', isLight ? 'light' : 'dark');
   }
 
+  function changeFontSize(delta) {
+    _fontSize = Math.min(24, Math.max(12, _fontSize + delta));
+    document.body.style.setProperty('--editor-font-size', _fontSize + 'px');
+    UI.setSaveIndicator(`Editor text: ${_fontSize}px`);
+    State.setUI('fontSize', _fontSize);
+    _persistUISettings();
+  }
+  function _persistUISettings() {
+    try {
+      Storage.saveUI({ theme: State.get().ui.theme, fontSize: _fontSize });
+    } catch (e) {
+      console.warn('Persist UI settings failed', e);
+    }
+  }
+
+  function _restoreUISettings() {
+    try {
+      const uiSettings = Storage.loadUI();
+      if (!uiSettings) {
+        document.body.style.setProperty('--editor-font-size', _fontSize + 'px');
+        return;
+      }
+
+      if (uiSettings.theme) {
+        const isLight = uiSettings.theme === 'light';
+        document.body.classList.toggle('light', isLight);
+        const btn = document.getElementById('theme-btn');
+        if (btn) btn.textContent = isLight ? '☾' : '☀︎';
+        State.setUI('theme', uiSettings.theme);
+      }
+
+      if (uiSettings.fontSize) {
+        _fontSize = Math.min(24, Math.max(12, uiSettings.fontSize));
+        document.body.style.setProperty('--editor-font-size', _fontSize + 'px');
+        State.setUI('fontSize', _fontSize);
+      } else {
+        document.body.style.setProperty('--editor-font-size', _fontSize + 'px');
+      }
+    } catch (e) {
+      console.warn('Restore UI settings failed', e);
+      document.body.style.setProperty('--editor-font-size', _fontSize + 'px');
+    }
+  }
+
   function _showToast(msg) {
     UI.setSaveIndicator(msg);
   }
@@ -365,5 +418,6 @@ const App = (() => {
     ttsPlay,
     ttsStop,
     toggleTheme,
+    changeFontSize,
   };
 })();

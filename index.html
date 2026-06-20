@@ -6,7 +6,7 @@
 <title>Scriptwriter</title>
 <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body class="format-screenplay">
+<body class="format-screenplay light">
 
 <!-- TOOLBAR -->
 <div id="toolbar">
@@ -31,7 +31,9 @@
   <button class="tb-btn el-btn" onclick="UI.toggleElPanel()">⚡ ElevenLabs</button>
   <div class="sep"></div>
   <button class="tb-btn" onclick="UI.toggleVoicePanel()">Voices</button>
-  <button class="tb-btn" onclick="App.toggleTheme()" id="theme-btn">☀︎</button>
+  <button class="tb-btn" onclick="App.changeFontSize(-1)" title="Smaller editor text">A-</button>
+  <button class="tb-btn" onclick="App.changeFontSize(1)" title="Larger editor text">A+</button>
+  <button class="tb-btn" onclick="App.toggleTheme()" id="theme-btn">☾</button>
   <div class="tb-spacer"></div>
   <span id="save-indicator"></span>
 </div>
@@ -230,12 +232,17 @@ App.elConnectFromInput = async function() {
   const key = document.getElementById('el-api-input').value.trim();
   const status = document.getElementById('el-status');
   status.textContent = 'Connecting...';
-  const ok = await App.elSetApiKey(key);
-  if (ok) {
-    document.getElementById('el-generate-row').style.display = 'flex';
-    status.textContent = 'Connected ✓';
-  } else {
-    status.textContent = 'Connection failed — check your API key';
+  try {
+    const ok = await App.elSetApiKey(key);
+    if (ok) {
+      document.getElementById('el-generate-row').style.display = 'flex';
+      status.textContent = 'Connected ✓';
+    } else {
+      status.textContent = 'Connection failed — check your API key or network (see console)';
+    }
+  } catch (e) {
+    console.error('elConnectFromInput error', e);
+    status.textContent = 'Connection error: ' + (e.message || e);
   }
 };
 

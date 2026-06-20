@@ -17,7 +17,8 @@ const State = (() => {
       sidebarTab: 'scenes',    // 'scenes' | 'chars'
       voicePanelOpen: false,
       exportPreviewOpen: false,
-      theme: 'dark',           // 'dark' | 'light'
+      theme: 'light',          // 'dark' | 'light'
+      fontSize: 15,
     },
   };
 
