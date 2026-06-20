@@ -15,6 +15,7 @@ const App = (() => {
   // ── Bootstrap ─────────────────────────────────────────────────────────────
 
   function init() {
+    console.log('App.init starting');
     Editor.init(document.getElementById('script-editor'));
     TTS.init(Editor.highlightBlock);
 
@@ -23,7 +24,10 @@ const App = (() => {
     _startAutosave();
 
     if (window.FirebaseAuth) {
+      console.log('FirebaseAuth found, initializing...');
       FirebaseAuth.init(_handleAuthStateChange);
+    } else {
+      console.warn('FirebaseAuth not found!');
     }
 
     _restoreUISettings();
@@ -247,6 +251,7 @@ const App = (() => {
 
   async function _handleAuthStateChange(user) {
     _currentUser = user;
+    console.log('_handleAuthStateChange:', user ? `Logged in as ${user.email}` : 'Logged out');
     UI.setAuthState(user);
 
     if (user) {
@@ -272,9 +277,12 @@ const App = (() => {
   async function toggleAuth() {
     if (!_currentUser) {
       try {
+        console.log('Attempting Firebase sign-in...');
         await FirebaseAuth.signIn();
+        console.log('Sign-in successful');
       } catch (e) {
-        _showToast('Sign-in failed');
+        console.error('Sign-in error:', e);
+        _showToast('Sign-in failed: ' + (e?.message || e?.code || 'Unknown error'));
       }
     } else {
       try {

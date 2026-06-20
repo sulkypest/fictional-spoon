@@ -13,7 +13,9 @@
   const provider = new firebase.auth.GoogleAuthProvider();
 
   function init(onAuthStateChanged) {
+    console.log('FirebaseAuth.init called, setting up listener');
     auth.onAuthStateChanged((user) => {
+      console.log('Auth state changed:', user ? `User ${user.email}` : 'No user');
       if (typeof onAuthStateChanged === 'function') {
         onAuthStateChanged(user);
       }
