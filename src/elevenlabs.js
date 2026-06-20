@@ -15,16 +15,26 @@ const ElevenLabsService = (() => {
   // ── Helpers ──────────────────────────────────────────────────────────────
 
   async function _request(apiKey, path, method = 'GET', body = null, returnBlob = false) {
+    const base = CONFIG.elevenlabs.proxyBaseUrl || CONFIG.elevenlabs.baseUrl;
+    const useProxy = Boolean(CONFIG.elevenlabs.proxyBaseUrl);
+    const headers = {
+      ...(body ? { 'Content-Type': 'application/json' } : {}),
+    };
+
+    if (useProxy) {
+      const token = window.FirebaseAuth ? await window.FirebaseAuth.getToken() : null;
+      if (!token) throw new Error('Authentication required for ElevenLabs proxy');
+      headers['Authorization'] = `Bearer ${token}`;
+    } else {
+      headers['xi-api-key'] = apiKey;
+    }
+
     const opts = {
       method,
-      headers: {
-        'xi-api-key': apiKey,
-        ...(body ? { 'Content-Type': 'application/json' } : {}),
-      },
+      headers,
       ...(body ? { body: JSON.stringify(body) } : {}),
     };
 
-    const base = CONFIG.elevenlabs.proxyBaseUrl || CONFIG.elevenlabs.baseUrl;
     const url = base + path;
     const res = await fetch(url, opts);
 
@@ -34,7 +44,21 @@ const ElevenLabsService = (() => {
       throw new Error(msg);
     }
 
-    return returnBlob ? res.blob() : res.json();
+    if (returnBlob) {
+      if (useProxy) {
+        const payload = await res.json();
+        if (payload && payload.binary) {
+          const binary = atob(payload.binary);
+          const bytes = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+          return new Blob([bytes], { type: payload.contentType || 'audio/mpeg' });
+        }
+        throw new Error('Proxy returned no binary audio data');
+      }
+      return res.blob();
+    }
+
+    return res.json();
   }
 
   // ── Voice library ─────────────────────────────────────────────────────────

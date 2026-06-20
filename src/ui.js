@@ -21,6 +21,24 @@ const UI = (() => {
     document.querySelector('.app-name').textContent = title || 'Scriptwriter';
   }
 
+  function setAuthState(user) {
+    const btn = document.getElementById('auth-btn');
+    const label = document.getElementById('auth-user');
+    if (!btn || !label) return;
+    if (user) {
+      btn.textContent = 'Sign out';
+      label.textContent = `Signed in as ${user.displayName || user.email}`;
+    } else {
+      btn.textContent = 'Sign in';
+      label.textContent = 'Not signed in';
+    }
+  }
+
+  function setElPanelAuthNote(text) {
+    const note = document.getElementById('el-auth-note');
+    if (note) note.textContent = text;
+  }
+
   // ── Sidebar ───────────────────────────────────────────────────────────────
 
   function renderSidebar() {
@@ -432,7 +450,7 @@ const UI = (() => {
   }
 
   return {
-    setFormat, setTitle,
+    setFormat, setTitle, setAuthState, setElPanelAuthNote,
     renderSidebar, renderCharList, switchSideTab, toggleAddChar,
     showEditor, showEmptyState, setSceneTitle, setWordCount,
     toggleVoicePanel, buildVoicePanel,

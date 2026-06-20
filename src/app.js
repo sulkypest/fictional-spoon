@@ -6,7 +6,7 @@
 
 const App = (() => {
 
-  let _elApiKey = null;      // ElevenLabs API key (persisted to localStorage for convenience)
+  let _currentUser = null;
   let _elVoices = [];        // ElevenLabs voice list
   let _elVoiceMap = {};      // { CHARACTER: elevenlabs_voice_id }
   let _pendingGeneration = null;
@@ -21,6 +21,10 @@ const App = (() => {
     _bindStateEvents();
     _bindUIEvents();
     _startAutosave();
+
+    if (window.FirebaseAuth) {
+      FirebaseAuth.init(_handleAuthStateChange);
+    }
 
     _restoreUISettings();
 
@@ -225,35 +229,139 @@ const App = (() => {
     UI.showPdfPreview(State.get().project);
   }
 
+  async function _handleAuthStateChange(user) {
+    _currentUser = user;
+    UI.setAuthState(user);
+
+    if (user) {
+      try {
+        await _loadElUserSettings();
+        await _refreshElVoicesIfPossible();
+      } catch (e) {
+        console.warn('Auth state restore failed', e);
+      }
+    } else {
+      _elVoices = [];
+      _elVoiceMap = {};
+      UI.renderElVoicePanel(_elVoices, _elVoiceMap);
+      document.getElementById('el-generate-row').style.display = 'none';
+      UI.setElPanelAuthNote('Sign in to save your ElevenLabs key securely.');
+    }
+  }
+
+  async function toggleAuth() {
+    if (!_currentUser) {
+      try {
+        await FirebaseAuth.signIn();
+      } catch (e) {
+        _showToast('Sign-in failed');
+      }
+    } else {
+      try {
+        await FirebaseAuth.signOut();
+      } catch (e) {
+        _showToast('Sign-out failed');
+      }
+    }
+  }
+
+  async function _saveElUserSettings() {
+    if (!_currentUser) return;
+    try {
+      const token = await FirebaseAuth.getToken();
+      await fetch('/saveSettings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ voiceMap: _elVoiceMap }),
+      });
+    } catch (e) {
+      console.warn('Failed to save ElevenLabs user settings', e);
+    }
+  }
+
+  async function _loadElUserSettings() {
+    if (!_currentUser) return;
+    try {
+      const token = await FirebaseAuth.getToken();
+      const res = await fetch('/userSettings', {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.voiceMap) {
+        _elVoiceMap = data.voiceMap;
+      }
+    } catch (e) {
+      console.warn('Failed to load ElevenLabs user settings', e);
+    }
+  }
+
+  async function _refreshElVoicesIfPossible() {
+    if (!_currentUser) return;
+    try {
+      _elVoices = await ElevenLabsService.getVoices(null);
+      UI.renderElVoicePanel(_elVoices, _elVoiceMap);
+      if (_elVoices.length) {
+        document.getElementById('el-generate-row').style.display = 'flex';
+        UI.setElPanelAuthNote(`Signed in as ${_currentUser.displayName || _currentUser.email}.`);
+      }
+    } catch (e) {
+      console.warn('Could not refresh ElevenLabs voices after sign-in', e);
+      document.getElementById('el-generate-row').style.display = 'none';
+      UI.setElPanelAuthNote('Sign in and save your ElevenLabs API key to enable generation.');
+    }
+  }
+
   // ── ElevenLabs integration ────────────────────────────────────────────────
 
-  async function elSetApiKey(key) {
-    const result = await ElevenLabsService.validateApiKey(key);
-    if (!result.valid) {
-      _showToast('Invalid API key: ' + result.error);
+  async function elSaveApiKey(key) {
+    if (!_currentUser) {
+      _showToast('Sign in first to save your ElevenLabs key');
+      return false;
+    }
+    if (!key) {
+      _showToast('Please enter your ElevenLabs API key');
       return false;
     }
     try {
-      _elApiKey = key;
-      _elVoices = await ElevenLabsService.getVoices(key);
+      const token = await FirebaseAuth.getToken();
+      const res = await fetch('/saveKey', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ key }),
+      });
+      if (!res.ok) {
+        const error = await res.json().catch(() => null);
+        _showToast('Could not save key: ' + (error?.error || res.statusText));
+        return false;
+      }
+      _elVoices = await ElevenLabsService.getVoices(null);
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
-      _persistUISettings();
+      document.getElementById('el-generate-row').style.display = 'flex';
+      UI.setElPanelAuthNote(`Key saved securely. Signed in as ${_currentUser.displayName || _currentUser.email}.`);
       _showToast(`Connected — ${_elVoices.length} voices available`);
       return true;
     } catch (e) {
-      console.error('Failed to fetch ElevenLabs voices:', e);
-      _showToast('Could not fetch voices: ' + (e.message || e));
+      console.error('Failed to save ElevenLabs key:', e);
+      _showToast('Could not save key: ' + (e.message || e));
       return false;
     }
   }
 
   async function elRefreshVoices() {
-    if (!_elApiKey) {
-      _showToast('Enter ElevenLabs API key first');
+    if (!_currentUser) {
+      _showToast('Sign in first to refresh voices');
       return false;
     }
     try {
-      _elVoices = await ElevenLabsService.getVoices(_elApiKey);
+      _elVoices = await ElevenLabsService.getVoices(null);
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
       _showToast(`Voices refreshed — ${_elVoices.length} voices`);
       return true;
@@ -267,19 +375,20 @@ const App = (() => {
   function elSetVoice(character, voiceId) {
     _elVoiceMap[character] = voiceId;
     _persistUISettings();
+    if (_currentUser) {
+      _saveElUserSettings();
+    }
   }
 
   async function elGenerateScene() {
-    // Instrumentation: show immediate feedback and robust error handling
+    if (!_currentUser) {
+      _showToast('Sign in first to generate with ElevenLabs');
+      return;
+    }
+
     console.log('App.elGenerateScene invoked');
     UI.showGenerationProgress('Preparing generation...');
     try {
-      if (!_elApiKey) {
-        UI.hideGenerationProgress();
-        UI.showElApiKeyPrompt();
-        return;
-      }
-
       _saveCurrentScene();
       const id = State.get().activeSceneId;
       const scene = State.get().project.scenes.find(s => s.id === id);
@@ -294,7 +403,6 @@ const App = (() => {
         scene.blocks, _elVoiceMap, stageMgrId
       );
 
-      // Check for unassigned voices
       const unassigned = [...new Set(dialogueInputs.filter(i => !i.voiceId && i.character !== '__STAGE_MANAGER__').map(i => i.character))];
       if (unassigned.length) {
         UI.hideGenerationProgress();
@@ -304,20 +412,17 @@ const App = (() => {
       }
 
       UI.showGenerationProgress('Generating dialogue...');
-
-      // Generate dialogue
-      const audioBlob = await ElevenLabsService.generateDialogue(_elApiKey, dialogueInputs);
+      const audioBlob = await ElevenLabsService.generateDialogue(null, dialogueInputs);
       _downloadBlob(audioBlob, `${scene.title}-dialogue.mp3`);
 
-      // Generate sound effects one at a time
       if (soundCues.length) {
         UI.showGenerationProgress(`Generating ${soundCues.length} sound cues...`);
         for (let i = 0; i < soundCues.length; i++) {
           const cue = soundCues[i];
           UI.showGenerationProgress(`Sound cue ${i+1}/${soundCues.length}: ${cue.label}`);
-          const sfxBlob = await ElevenLabsService.generateSoundEffect(_elApiKey, cue.prompt);
+          const sfxBlob = await ElevenLabsService.generateSoundEffect(null, cue.prompt);
           _downloadBlob(sfxBlob, `sfx-${String(i+1).padStart(2,'0')}-${_slugify(cue.label)}.mp3`);
-          await _sleep(500); // Rate limiting courtesy pause
+          await _sleep(500);
         }
       }
 
@@ -373,7 +478,6 @@ const App = (() => {
   function _persistUISettings() {
     try {
       const payload = { theme: State.get().ui.theme, fontSize: _fontSize };
-      if (_elApiKey) payload.elApiKey = _elApiKey;
       if (_elVoiceMap && Object.keys(_elVoiceMap).length) payload.elVoiceMap = _elVoiceMap;
       Storage.saveUI(payload);
     } catch (e) {
@@ -405,26 +509,8 @@ const App = (() => {
         document.body.style.setProperty('--editor-font-size', _fontSize + 'px');
       }
 
-      // Restore persisted ElevenLabs settings (API key + voice mapping)
-      if (uiSettings.elApiKey) {
-        try {
-          const valid = await ElevenLabsService.validateApiKey(uiSettings.elApiKey);
-          if (valid.valid) {
-            _elApiKey = uiSettings.elApiKey;
-            try {
-              _elVoices = await ElevenLabsService.getVoices(_elApiKey);
-              _elVoiceMap = uiSettings.elVoiceMap || {};
-              UI.renderElVoicePanel(_elVoices, _elVoiceMap);
-              _showToast(`Restored ElevenLabs key — ${_elVoices.length} voices`);
-            } catch (e) {
-              console.warn('Could not fetch voices during restore', e);
-            }
-          } else {
-            console.warn('Stored ElevenLabs API key is invalid');
-          }
-        } catch (e) {
-          console.warn('Error validating stored ElevenLabs API key', e);
-        }
+      if (uiSettings.elVoiceMap) {
+        _elVoiceMap = uiSettings.elVoiceMap;
       }
     } catch (e) {
       console.warn('Restore UI settings failed', e);
@@ -465,9 +551,10 @@ const App = (() => {
     exportTxt,
     exportForElevenLabs,
     showPdfExport,
-    elSetApiKey,
+    elSaveApiKey,
     elSetVoice,
     elGenerateScene,
+    toggleAuth,
     ttsPlay,
     ttsStop,
     toggleTheme,

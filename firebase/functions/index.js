@@ -26,14 +26,39 @@ async function verifyToken(req, res, next) {
 
 // Save/Update the user's ElevenLabs API key (stored server-side in Firestore)
 app.post('/saveKey', verifyToken, async (req, res) => {
-  const { key } = req.body || {};
+  const { key, voiceMap } = req.body || {};
   if (!key) return res.status(400).json({ error: 'Missing key' });
   try {
-    await db.collection('eleven_keys').doc(req.uid).set({ key }, { merge: true });
+    const payload = { key, updatedAt: admin.firestore.FieldValue.serverTimestamp() };
+    if (voiceMap) payload.voiceMap = voiceMap;
+    await db.collection('eleven_keys').doc(req.uid).set(payload, { merge: true });
     return res.json({ ok: true });
   } catch (e) {
     console.error('saveKey failed', e);
     return res.status(500).json({ error: e.message || 'saveKey failed' });
+  }
+});
+
+app.post('/saveSettings', verifyToken, async (req, res) => {
+  const { voiceMap } = req.body || {};
+  if (!voiceMap) return res.status(400).json({ error: 'Missing voiceMap' });
+  try {
+    await db.collection('eleven_keys').doc(req.uid).set({ voiceMap, updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+    return res.json({ ok: true });
+  } catch (e) {
+    console.error('saveSettings failed', e);
+    return res.status(500).json({ error: e.message || 'saveSettings failed' });
+  }
+});
+
+app.get('/userSettings', verifyToken, async (req, res) => {
+  try {
+    const doc = await db.collection('eleven_keys').doc(req.uid).get();
+    const data = doc.exists ? doc.data() : {};
+    return res.json({ voiceMap: data.voiceMap || {} });
+  } catch (e) {
+    console.error('userSettings failed', e);
+    return res.status(500).json({ error: e.message || 'userSettings failed' });
   }
 });
 

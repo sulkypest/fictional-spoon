@@ -34,6 +34,8 @@
   <button class="tb-btn" onclick="App.changeFontSize(-1)" title="Smaller editor text">A-</button>
   <button class="tb-btn" onclick="App.changeFontSize(1)" title="Larger editor text">A+</button>
   <button class="tb-btn" onclick="App.toggleTheme()" id="theme-btn">☾</button>
+  <button class="tb-btn" id="auth-btn" onclick="App.toggleAuth()">Sign in</button>
+  <span id="auth-user" style="font-size:11px;color:var(--text3);margin-left:8px;">Not signed in</span>
   <div class="tb-spacer"></div>
   <span id="save-indicator"></span>
 </div>
@@ -131,10 +133,11 @@
 <div id="el-panel">
   <h4>⚡ ElevenLabs</h4>
   <p>Enter your API key to generate dialogue and sound effects directly from the script.</p>
+  <p id="el-auth-note" style="margin:0;font-size:11px;color:var(--text3);">Sign in to save your ElevenLabs key securely.</p>
   <input type="password" id="el-api-input" placeholder="sk-...your API key...">
   <div class="el-btns">
     <button onclick="UI.toggleElPanel()">Cancel</button>
-    <button class="primary" onclick="App.elConnectFromInput()">Connect</button>
+    <button class="primary" onclick="App.elConnectFromInput()">Save key</button>
   </div>
   <div id="el-voice-rows"></div>
   <div class="el-btns" id="el-generate-row" style="display:none;">
@@ -174,12 +177,18 @@
   </div>
 </div>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
 <!-- SCRIPTS — order matters -->
 <script src="src/config.js"></script>
 <script src="src/state.js"></script>
 <script src="src/storage.js"></script>
 <script src="src/tts.js"></script>
 <script src="src/elevenlabs.js"></script>
+<script src="src/firebase.js"></script>
 <script src="src/editor.js"></script>
 <script src="src/ui.js"></script>
 <script src="src/app.js"></script>
@@ -231,18 +240,18 @@ App.addCharacterFromInput = function() {
 App.elConnectFromInput = async function() {
   const key = document.getElementById('el-api-input').value.trim();
   const status = document.getElementById('el-status');
-  status.textContent = 'Connecting...';
+  status.textContent = 'Saving API key...';
   try {
-    const ok = await App.elSetApiKey(key);
+    const ok = await App.elSaveApiKey(key);
     if (ok) {
       document.getElementById('el-generate-row').style.display = 'flex';
-      status.textContent = 'Connected ✓';
+      status.textContent = 'Saved securely ✓';
     } else {
-      status.textContent = 'Connection failed — check your API key or network (see console)';
+      status.textContent = 'Save failed — check your API key or sign-in status';
     }
   } catch (e) {
     console.error('elConnectFromInput error', e);
-    status.textContent = 'Connection error: ' + (e.message || e);
+    status.textContent = 'Save error: ' + (e.message || e);
   }
 };
 
