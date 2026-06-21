@@ -218,10 +218,17 @@ const ElevenLabsService = (() => {
       }
 
       if (block.type === 'dialogue') {
+        // A sound cue, action beat, or parenthetical between two dialogue blocks
+        // doesn't mean the speaker changed — only a new CHARACTER heading does.
+        // If dialogue appears with no character ever set (a genuine orphan line),
+        // fall back to the stage manager voice rather than blocking generation
+        // entirely over one unattributable line.
+        const character = currentChar || '__STAGE_MANAGER__';
+        if (!currentChar) console.warn('Dialogue block with no preceding character heading, using stage manager voice:', block.id, text);
         dialogueInputs.push({
           text,
-          voiceId: voiceMap[currentChar] || null,
-          character: currentChar,
+          voiceId: currentChar ? (voiceMap[currentChar] || null) : stageMgrVoiceId,
+          character,
           blockId: block.id,
         });
         continue;
@@ -236,7 +243,6 @@ const ElevenLabsService = (() => {
           character: '__STAGE_MANAGER__',
           blockId: block.id,
         });
-        currentChar = null;
         continue;
       }
 
@@ -246,7 +252,6 @@ const ElevenLabsService = (() => {
           blockId: block.id,
           label: text.substring(0, 50),
         });
-        currentChar = null;
         continue;
       }
 
@@ -258,7 +263,6 @@ const ElevenLabsService = (() => {
           character: '__STAGE_MANAGER__',
           blockId: block.id,
         });
-        currentChar = null;
         continue;
       }
     }
