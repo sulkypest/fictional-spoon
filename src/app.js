@@ -481,6 +481,8 @@ const App = (() => {
       _elVoices = await ElevenLabsService.getVoices(null);
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
       UI.renderElVoiceLibrary(_elLibrary);
+      const elGenRow = document.getElementById('el-generate-row');
+      if (elGenRow && _elVoices.length) elGenRow.style.display = 'flex';
       _showToast(`${voice.name} assigned to ${character === '__STAGE_MANAGER__' ? 'Stage Mgr' : character}`);
     } catch (e) {
       console.error('Failed to assign library voice', e);
