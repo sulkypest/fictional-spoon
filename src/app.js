@@ -340,7 +340,10 @@ const App = (() => {
       if (!res.ok) return;
       const data = await res.json();
       if (data.voiceMap) {
-        _elVoiceMap = data.voiceMap;
+        // Merge rather than replace: _elVoiceMap may already hold the locally-restored
+        // (or just-assigned) map, which is more trustworthy than a server copy that can
+        // be stale if a previous save failed or raced with a reload. Local entries win.
+        _elVoiceMap = { ...data.voiceMap, ..._elVoiceMap };
       }
     } catch (e) {
       console.warn('Failed to load ElevenLabs user settings', e);
