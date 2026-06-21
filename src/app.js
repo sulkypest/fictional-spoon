@@ -516,12 +516,13 @@ const App = (() => {
       return;
     }
 
-    console.log('App.elGenerateScene invoked');
+    console.log('[elGenerateScene] invoked');
     UI.showGenerationProgress('Preparing generation...');
     try {
       _saveCurrentScene();
       const id = State.get().activeSceneId;
       const scene = State.get().project.scenes.find(s => s.id === id);
+      console.log('[elGenerateScene] active scene:', scene && scene.title, 'blocks:', scene && scene.blocks.length);
       if (!scene) {
         UI.hideGenerationProgress();
         _showToast('No active scene to generate');
@@ -532,17 +533,28 @@ const App = (() => {
       const { dialogueInputs, soundCues } = ElevenLabsService.parseSceneForGeneration(
         scene.blocks, _elVoiceMap, stageMgrId
       );
+      console.log('[elGenerateScene] dialogueInputs:', dialogueInputs.length, 'soundCues:', soundCues.length, 'stageMgrId:', stageMgrId);
 
       const unassigned = [...new Set(dialogueInputs.filter(i => !i.voiceId && i.character !== '__STAGE_MANAGER__').map(i => i.character))];
       if (unassigned.length) {
+        console.log('[elGenerateScene] unassigned characters:', unassigned);
         UI.hideGenerationProgress();
         _showToast(`Please assign ElevenLabs voices for: ${unassigned.join(', ')}`);
         UI.showElVoicePanel();
         return;
       }
 
+      if (!dialogueInputs.length) {
+        console.log('[elGenerateScene] no dialogue/action/sound lines found in this scene');
+        UI.hideGenerationProgress();
+        _showToast('This scene has no dialogue to generate');
+        return;
+      }
+
       UI.showGenerationProgress('Generating dialogue...');
+      console.log('[elGenerateScene] calling generateDialogue...');
       const audioBlob = await ElevenLabsService.generateDialogue(null, dialogueInputs);
+      console.log('[elGenerateScene] generateDialogue resolved, blob size:', audioBlob.size);
       _downloadBlob(audioBlob, `${scene.title}-dialogue.mp3`);
 
       if (soundCues.length) {
@@ -550,6 +562,7 @@ const App = (() => {
         for (let i = 0; i < soundCues.length; i++) {
           const cue = soundCues[i];
           UI.showGenerationProgress(`Sound cue ${i+1}/${soundCues.length}: ${cue.label}`);
+          console.log('[elGenerateScene] generating sound cue', i + 1, cue.label);
           const sfxBlob = await ElevenLabsService.generateSoundEffect(null, cue.prompt);
           _downloadBlob(sfxBlob, `sfx-${String(i+1).padStart(2,'0')}-${_slugify(cue.label)}.mp3`);
           await _sleep(500);
@@ -557,9 +570,10 @@ const App = (() => {
       }
 
       UI.hideGenerationProgress();
+      console.log('[elGenerateScene] complete');
       _showToast(`Done — ${soundCues.length} SFX + dialogue downloaded`);
     } catch (e) {
-      console.error('elGenerateScene error', e);
+      console.error('[elGenerateScene] error', e);
       UI.hideGenerationProgress();
       _showToast('Generation failed: ' + (e && e.message ? e.message : e));
     }
