@@ -400,6 +400,10 @@ body.format-bbc .block-character .block-input { text-align: left; }
 #el-panel .el-btns { display: flex; gap: 8px; }
 #el-panel button { flex: 1; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 11px; font-family: var(--sans); border: 1px solid var(--border2); background: var(--bg4); color: var(--text2); }
 #el-panel button.primary { background: var(--accent2); border-color: var(--accent); color: #1a1a1a; font-weight: 600; }
+
+#el-generate-options { display: flex; flex-direction: column; gap: 6px; padding: 8px 10px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 6px; }
+.el-generate-output-mode { display: flex; flex-direction: column; gap: 4px; }
+.el-generate-output-mode label, .el-generate-checkbox { font-size: 11px; color: var(--text2); display: flex; align-items: center; gap: 6px; cursor: pointer; }
 #el-voice-rows { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
 
 /* Voice Library filters */

@@ -127,52 +127,22 @@ const ElevenLabsService = (() => {
   // ── Text to Dialogue (multi-speaker, Eleven v3) ───────────────────────────
 
   /**
-   * Generate a complete multi-speaker dialogue scene.
+   * Generate audio for a single dialogue chunk (one text-to-dialogue call). Callers
+   * are responsible for chunking — see parseSceneForGeneration, which already splits
+   * on the character limit and on sound-cue boundaries.
    * @param {string} apiKey
-   * @param {Array} inputs - [{ text, voiceId }, ...]
+   * @param {Array} inputs - [{ text, voiceId }, ...], already within the char limit
    * @returns {Blob} - audio/mpeg blob
    */
-  async function generateDialogue(apiKey, inputs) {
-    // Split into chunks of CONFIG.elevenlabs.maxCharsPerRequest
-    const chunks = _chunkDialogue(inputs);
-    const blobs = [];
-
-    for (const chunk of chunks) {
-      const payload = {
-        model_id: CONFIG.elevenlabs.dialogueModel,
-        inputs: chunk.map(item => ({
-          text: item.text,
-          voice_id: item.voiceId,
-        })),
-      };
-      const blob = await _request(apiKey, '/text-to-dialogue', 'POST', payload, true);
-      blobs.push(blob);
-    }
-
-    // Combine blobs if multiple chunks
-    return blobs.length === 1 ? blobs[0] : new Blob(blobs, { type: 'audio/mpeg' });
-  }
-
-  /**
-   * Split dialogue inputs into chunks that respect the character limit.
-   */
-  function _chunkDialogue(inputs) {
-    const limit = CONFIG.elevenlabs.maxCharsPerRequest;
-    const chunks = [];
-    let current = [];
-    let count = 0;
-
-    for (const item of inputs) {
-      if (count + item.text.length > limit && current.length > 0) {
-        chunks.push(current);
-        current = [];
-        count = 0;
-      }
-      current.push(item);
-      count += item.text.length;
-    }
-    if (current.length) chunks.push(current);
-    return chunks;
+  async function generateDialogueChunk(apiKey, inputs) {
+    const payload = {
+      model_id: CONFIG.elevenlabs.dialogueModel,
+      inputs: inputs.map(item => ({
+        text: item.text,
+        voice_id: item.voiceId,
+      })),
+    };
+    return _request(apiKey, '/text-to-dialogue', 'POST', payload, true);
   }
 
   // ── Sound Effects ─────────────────────────────────────────────────────────
@@ -196,17 +166,41 @@ const ElevenLabsService = (() => {
   // ── Script parsing ────────────────────────────────────────────────────────
 
   /**
-   * Convert editor blocks for a scene into ElevenLabs dialogue inputs.
-   * Separates dialogue from sound cues.
+   * Convert editor blocks for a scene into an ORDERED list of generation segments —
+   * either a chunk of consecutive dialogue lines (one text-to-dialogue call) or a
+   * single sound cue (one sound-generation call) — in script order. Chunk boundaries
+   * are forced at every sound cue (so audio can be sequenced/zipped in the right
+   * order) and at the existing character-limit, same as before.
    * @param {Array} blocks - scene blocks from editor
    * @param {Object} voiceMap - { CHARACTER_NAME: voiceId }
    * @param {string} stageMgrVoiceId - voice for stage directions
-   * @returns {{ dialogueInputs: Array, soundCues: Array }}
+   * @param {{ includeDirections?: boolean }} options - includeDirections (default true):
+   *   when false, action/parenthetical lines are dropped entirely instead of being
+   *   narrated, for a polished cut where real sound effects stand in for them.
+   * @returns {{ segments: Array, dialogueInputs: Array, soundCues: Array }}
    */
-  function parseSceneForGeneration(blocks, voiceMap, stageMgrVoiceId) {
+  function parseSceneForGeneration(blocks, voiceMap, stageMgrVoiceId, options = {}) {
+    const { includeDirections = true } = options;
+    const limit = CONFIG.elevenlabs.maxCharsPerRequest;
+    const segments = [];
     const dialogueInputs = [];
     const soundCues = [];
     let currentChar = null;
+    let chunk = [];
+    let chunkChars = 0;
+
+    function flushChunk() {
+      if (chunk.length) segments.push({ type: 'dialogue', inputs: chunk });
+      chunk = [];
+      chunkChars = 0;
+    }
+
+    function pushDialogue(input) {
+      if (chunkChars + input.text.length > limit && chunk.length > 0) flushChunk();
+      chunk.push(input);
+      chunkChars += input.text.length;
+      dialogueInputs.push(input);
+    }
 
     for (const block of blocks) {
       const text = (block.text || '').trim();
@@ -225,7 +219,7 @@ const ElevenLabsService = (() => {
         // entirely over one unattributable line.
         const character = currentChar || '__STAGE_MANAGER__';
         if (!currentChar) console.warn('Dialogue block with no preceding character heading, using stage manager voice:', block.id, text);
-        dialogueInputs.push({
+        pushDialogue({
           text,
           voiceId: currentChar ? (voiceMap[currentChar] || null) : stageMgrVoiceId,
           character,
@@ -235,9 +229,10 @@ const ElevenLabsService = (() => {
       }
 
       if (block.type === 'parenthetical') {
+        if (!includeDirections) continue;
         // Read by stage manager in between dialogue
         const clean = text.replace(/^\(|\)$/g, '');
-        dialogueInputs.push({
+        pushDialogue({
           text: clean,
           voiceId: stageMgrVoiceId,
           character: '__STAGE_MANAGER__',
@@ -247,17 +242,17 @@ const ElevenLabsService = (() => {
       }
 
       if (block.type === 'sound') {
-        soundCues.push({
-          prompt: text,
-          blockId: block.id,
-          label: text.substring(0, 50),
-        });
+        flushChunk();
+        const cue = { prompt: text, blockId: block.id, label: text.substring(0, 50) };
+        soundCues.push(cue);
+        segments.push({ type: 'sound', ...cue });
         continue;
       }
 
       if (block.type === 'action') {
+        if (!includeDirections) continue;
         // Action lines narrated by stage manager
-        dialogueInputs.push({
+        pushDialogue({
           text,
           voiceId: stageMgrVoiceId,
           character: '__STAGE_MANAGER__',
@@ -266,8 +261,9 @@ const ElevenLabsService = (() => {
         continue;
       }
     }
+    flushChunk();
 
-    return { dialogueInputs, soundCues };
+    return { segments, dialogueInputs, soundCues };
   }
 
   // ── Validation ────────────────────────────────────────────────────────────
@@ -285,7 +281,7 @@ const ElevenLabsService = (() => {
     getVoices,
     searchVoiceLibrary,
     addSharedVoice,
-    generateDialogue,
+    generateDialogueChunk,
     generateSoundEffect,
     parseSceneForGeneration,
     validateApiKey,

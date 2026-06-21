@@ -258,6 +258,13 @@ const App = (() => {
     UI.showPdfPreview(State.get().project);
   }
 
+  function _setGenerateUIVisible(visible) {
+    const elGenRow = document.getElementById('el-generate-row');
+    const elGenOptions = document.getElementById('el-generate-options');
+    if (elGenRow) elGenRow.style.display = visible ? 'flex' : 'none';
+    if (elGenOptions) elGenOptions.style.display = visible ? 'block' : 'none';
+  }
+
   async function _handleAuthStateChange(user) {
     console.log('=== Auth state changed ===', user ? `User: ${user.email}` : 'No user (signed out)');
     _currentUser = user;
@@ -283,8 +290,7 @@ const App = (() => {
       _elVoices = [];
       _elVoiceMap = {};
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
-      const elGenRow = document.getElementById('el-generate-row');
-      if (elGenRow) elGenRow.style.display = 'none';
+      _setGenerateUIVisible(false);
       UI.setElPanelAuthNote('Sign in to save your ElevenLabs key securely.');
       UI.setSignInPrompt('Sign in to save/load scripts and access ElevenLabs.');
       UI.showSplashScreen();
@@ -365,14 +371,12 @@ const App = (() => {
       _elVoices = await ElevenLabsService.getVoices(null);
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
       if (_elVoices.length) {
-        const elGenRow = document.getElementById('el-generate-row');
-        if (elGenRow) elGenRow.style.display = 'flex';
+        _setGenerateUIVisible(true);
         UI.setElPanelAuthNote(`Signed in as ${_currentUser.displayName || _currentUser.email}.`);
       }
     } catch (e) {
       console.warn('Could not refresh ElevenLabs voices after sign-in', e);
-      const elGenRow = document.getElementById('el-generate-row');
-      if (elGenRow) elGenRow.style.display = 'none';
+      _setGenerateUIVisible(false);
       UI.setElPanelAuthNote('Sign in and save your ElevenLabs API key to enable generation.');
     }
   }
@@ -380,8 +384,7 @@ const App = (() => {
   function openElPanel() {
     if (!_currentUser) {
       UI.toggleElPanel();
-      const elGenRow = document.getElementById('el-generate-row');
-      if (elGenRow) elGenRow.style.display = 'none';
+      _setGenerateUIVisible(false);
       UI.setElPanelAuthNote('Please sign in with Draft Punk before using ElevenLabs.');
       return;
     }
@@ -419,8 +422,7 @@ const App = (() => {
       }
       _elVoices = await ElevenLabsService.getVoices(null);
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
-      const elGenRow = document.getElementById('el-generate-row');
-      if (elGenRow) elGenRow.style.display = 'flex';
+      _setGenerateUIVisible(true);
       UI.setElPanelAuthNote(`Key saved securely. Signed in as ${_currentUser.displayName || _currentUser.email}.`);
       _showToast(`Connected — ${_elVoices.length} voices available`);
       elSearchVoiceLibrary();
@@ -493,8 +495,7 @@ const App = (() => {
       _elVoices = await ElevenLabsService.getVoices(null);
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
       UI.renderElVoiceLibrary(_elLibrary);
-      const elGenRow = document.getElementById('el-generate-row');
-      if (elGenRow && _elVoices.length) elGenRow.style.display = 'flex';
+      if (_elVoices.length) _setGenerateUIVisible(true);
       _showToast(`${voice.name} assigned to ${character === '__STAGE_MANAGER__' ? 'Stage Mgr' : character}`);
     } catch (e) {
       console.error('Failed to assign library voice', e);
@@ -516,62 +517,79 @@ const App = (() => {
       return;
     }
 
-    console.log('[elGenerateScene] invoked');
     UI.showGenerationProgress('Preparing generation...');
     try {
       _saveCurrentScene();
       const id = State.get().activeSceneId;
       const scene = State.get().project.scenes.find(s => s.id === id);
-      console.log('[elGenerateScene] active scene:', scene && scene.title, 'blocks:', scene && scene.blocks.length);
       if (!scene) {
         UI.hideGenerationProgress();
         _showToast('No active scene to generate');
         return;
       }
 
+      const outputMode = document.querySelector('input[name="el-output-mode"]:checked')?.value || 'combined';
+      const includeDirections = document.getElementById('el-include-directions')?.checked || false;
+
       const stageMgrId = _elVoiceMap['__STAGE_MANAGER__'] || _elVoices[0]?.id;
-      const { dialogueInputs, soundCues } = ElevenLabsService.parseSceneForGeneration(
-        scene.blocks, _elVoiceMap, stageMgrId
+      const { segments, dialogueInputs } = ElevenLabsService.parseSceneForGeneration(
+        scene.blocks, _elVoiceMap, stageMgrId, { includeDirections }
       );
-      console.log('[elGenerateScene] dialogueInputs:', dialogueInputs.length, 'soundCues:', soundCues.length, 'stageMgrId:', stageMgrId);
+      console.log('[elGenerateScene] segments:', segments.length, 'outputMode:', outputMode, 'includeDirections:', includeDirections);
 
       const unassigned = [...new Set(dialogueInputs.filter(i => !i.voiceId && i.character !== '__STAGE_MANAGER__').map(i => i.character))];
       if (unassigned.length) {
-        console.log('[elGenerateScene] unassigned characters:', unassigned);
         UI.hideGenerationProgress();
         _showToast(`Please assign ElevenLabs voices for: ${unassigned.join(', ')}`);
         UI.showElVoicePanel();
         return;
       }
 
-      if (!dialogueInputs.length) {
-        console.log('[elGenerateScene] no dialogue/action/sound lines found in this scene');
+      if (!segments.length) {
         UI.hideGenerationProgress();
-        _showToast('This scene has no dialogue to generate');
+        _showToast('This scene has nothing to generate');
         return;
       }
 
-      UI.showGenerationProgress('Generating dialogue...');
-      console.log('[elGenerateScene] calling generateDialogue...');
-      const audioBlob = await ElevenLabsService.generateDialogue(null, dialogueInputs);
-      console.log('[elGenerateScene] generateDialogue resolved, blob size:', audioBlob.size);
-      _downloadBlob(audioBlob, `${scene.title}-dialogue.mp3`);
-
-      if (soundCues.length) {
-        UI.showGenerationProgress(`Generating ${soundCues.length} sound cues...`);
-        for (let i = 0; i < soundCues.length; i++) {
-          const cue = soundCues[i];
-          UI.showGenerationProgress(`Sound cue ${i+1}/${soundCues.length}: ${cue.label}`);
-          console.log('[elGenerateScene] generating sound cue', i + 1, cue.label);
-          const sfxBlob = await ElevenLabsService.generateSoundEffect(null, cue.prompt);
-          _downloadBlob(sfxBlob, `sfx-${String(i+1).padStart(2,'0')}-${_slugify(cue.label)}.mp3`);
+      // Generate every segment in script order, so the result can be sequenced
+      // (combined mode) or labelled in running order (zip mode).
+      const generated = [];
+      for (let i = 0; i < segments.length; i++) {
+        const seg = segments[i];
+        if (seg.type === 'dialogue') {
+          UI.showGenerationProgress(`Generating dialogue (${i + 1}/${segments.length})...`);
+          const blob = await ElevenLabsService.generateDialogueChunk(null, seg.inputs);
+          generated.push({ blob, kind: 'dialogue', label: 'dialogue' });
+        } else {
+          UI.showGenerationProgress(`Generating sound effect (${i + 1}/${segments.length}): ${seg.label}`);
+          const blob = await ElevenLabsService.generateSoundEffect(null, seg.prompt);
+          generated.push({ blob, kind: 'sound', label: seg.label });
           await _sleep(500);
         }
       }
 
+      const baseName = _slugify(scene.title) || 'scene';
+      if (outputMode === 'zip') {
+        UI.showGenerationProgress('Packaging zip...');
+        const files = [];
+        const manifestLines = [`${scene.title} — generated ${new Date().toISOString()}`, ''];
+        for (let i = 0; i < generated.length; i++) {
+          const g = generated[i];
+          const idx = String(i + 1).padStart(2, '0');
+          const name = g.kind === 'dialogue' ? `${idx}-dialogue.mp3` : `${idx}-sfx-${_slugify(g.label)}.mp3`;
+          files.push({ name, data: await g.blob.arrayBuffer() });
+          manifestLines.push(`${idx}. [${g.kind}] ${g.label}`);
+        }
+        files.push({ name: 'running-order.txt', data: new TextEncoder().encode(manifestLines.join('\n')) });
+        _downloadBlob(Zip.createZip(files), `${baseName}.zip`);
+      } else {
+        UI.showGenerationProgress('Combining into one file...');
+        const combined = await AudioMixer.concatToWav(generated.map(g => g.blob));
+        _downloadBlob(combined, `${baseName}.wav`);
+      }
+
       UI.hideGenerationProgress();
-      console.log('[elGenerateScene] complete');
-      _showToast(`Done — ${soundCues.length} SFX + dialogue downloaded`);
+      _showToast(`Done — ${generated.length} segments generated`);
     } catch (e) {
       console.error('[elGenerateScene] error', e);
       UI.hideGenerationProgress();

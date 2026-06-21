@@ -156,6 +156,14 @@
   <div id="el-voice-filters" class="el-voice-filters"></div>
   <div id="el-voice-library"></div>
 
+  <div id="el-generate-options" style="display:none;">
+    <h4>Output</h4>
+    <div class="el-generate-output-mode">
+      <label><input type="radio" name="el-output-mode" value="combined" checked> One combined master file</label>
+      <label><input type="radio" name="el-output-mode" value="zip"> Separate files, zipped together</label>
+    </div>
+    <label class="el-generate-checkbox"><input type="checkbox" id="el-include-directions"> Voice spoken stage directions (off = replaced by sound effects only)</label>
+  </div>
   <div class="el-btns" id="el-generate-row" style="display:none;">
     <button class="primary" onclick="App.elGenerateScene()">⚡ Generate current scene</button>
   </div>
@@ -204,6 +212,8 @@
 <script src="src/storage.js"></script>
 <script src="src/tts.js"></script>
 <script src="src/elevenlabs.js"></script>
+<script src="src/zip.js"></script>
+<script src="src/audio-mixer.js"></script>
 <script src="src/firebase.js"></script>
 <script src="src/editor.js"></script>
 <script src="src/ui.js"></script>
