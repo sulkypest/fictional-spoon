@@ -313,10 +313,10 @@ const App = (() => {
   }
 
   async function _saveElUserSettings() {
-    if (!_currentUser) return;
+    if (!_currentUser) return false;
     try {
       const token = await FirebaseAuth.getToken();
-      await fetch(CONFIG.elevenlabs.apiBaseUrl + '/saveSettings', {
+      const res = await fetch(CONFIG.elevenlabs.apiBaseUrl + '/saveSettings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -324,8 +324,17 @@ const App = (() => {
         },
         body: JSON.stringify({ voiceMap: _elVoiceMap }),
       });
+      if (!res.ok) {
+        const error = await res.json().catch(() => null);
+        console.warn('Failed to save ElevenLabs user settings:', res.status, error);
+        _showToast(`Voice saved on this device only — sync failed (${res.status})`);
+        return false;
+      }
+      return true;
     } catch (e) {
       console.warn('Failed to save ElevenLabs user settings', e);
+      _showToast('Voice saved on this device only — sync to your account failed');
+      return false;
     }
   }
 
