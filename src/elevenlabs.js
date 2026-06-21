@@ -174,9 +174,13 @@ const ElevenLabsService = (() => {
    * @param {Array} blocks - scene blocks from editor
    * @param {Object} voiceMap - { CHARACTER_NAME: voiceId }
    * @param {string} stageMgrVoiceId - voice for stage directions
+   * Parentheticals are never spoken — they're merged into the next dialogue line as
+   * an inline Eleven v3 delivery tag (e.g. "(whispering, scared)" becomes
+   * "[whispering, scared] ..."), which the model reads as performance direction.
    * @param {{ includeDirections?: boolean }} options - includeDirections (default true):
-   *   when false, action/parenthetical lines are dropped entirely instead of being
-   *   narrated, for a polished cut where real sound effects stand in for them.
+   *   when false, action lines are dropped entirely instead of being narrated, for a
+   *   polished cut where real sound effects stand in for them. Parenthetical delivery
+   *   tags are always applied regardless of this setting, since they're never spoken.
    * @returns {{ segments: Array, dialogueInputs: Array, soundCues: Array }}
    */
   function parseSceneForGeneration(blocks, voiceMap, stageMgrVoiceId, options = {}) {
@@ -186,6 +190,7 @@ const ElevenLabsService = (() => {
     const dialogueInputs = [];
     const soundCues = [];
     let currentChar = null;
+    let pendingTag = '';
     let chunk = [];
     let chunkChars = 0;
 
@@ -212,15 +217,16 @@ const ElevenLabsService = (() => {
       }
 
       if (block.type === 'dialogue') {
-        // A sound cue, action beat, or parenthetical between two dialogue blocks
-        // doesn't mean the speaker changed — only a new CHARACTER heading does.
-        // If dialogue appears with no character ever set (a genuine orphan line),
-        // fall back to the stage manager voice rather than blocking generation
-        // entirely over one unattributable line.
+        // A sound cue or action beat between two dialogue blocks doesn't mean the
+        // speaker changed — only a new CHARACTER heading does. If dialogue appears
+        // with no character ever set (a genuine orphan line), fall back to the
+        // stage manager voice rather than blocking generation over one line.
         const character = currentChar || '__STAGE_MANAGER__';
         if (!currentChar) console.warn('Dialogue block with no preceding character heading, using stage manager voice:', block.id, text);
+        const taggedText = pendingTag ? `[${pendingTag}] ${text}` : text;
+        pendingTag = '';
         pushDialogue({
-          text,
+          text: taggedText,
           voiceId: currentChar ? (voiceMap[currentChar] || null) : stageMgrVoiceId,
           character,
           blockId: block.id,
@@ -229,15 +235,11 @@ const ElevenLabsService = (() => {
       }
 
       if (block.type === 'parenthetical') {
-        if (!includeDirections) continue;
-        // Read by stage manager in between dialogue
+        // Delivery direction for the line that follows, e.g. "(whispering, scared)" —
+        // carried over as a tag rather than spoken, even across an intervening action
+        // or sound cue, until the next dialogue line consumes it.
         const clean = text.replace(/^\(|\)$/g, '');
-        pushDialogue({
-          text: clean,
-          voiceId: stageMgrVoiceId,
-          character: '__STAGE_MANAGER__',
-          blockId: block.id,
-        });
+        pendingTag = pendingTag ? `${pendingTag}, ${clean}` : clean;
         continue;
       }
 

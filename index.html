@@ -162,7 +162,8 @@
       <label><input type="radio" name="el-output-mode" value="combined" checked> One combined master file</label>
       <label><input type="radio" name="el-output-mode" value="zip"> Separate files, zipped together</label>
     </div>
-    <label class="el-generate-checkbox"><input type="checkbox" id="el-include-directions"> Voice spoken stage directions (off = replaced by sound effects only)</label>
+    <label class="el-generate-checkbox"><input type="checkbox" id="el-include-directions"> Narrate action lines aloud (off = silent, let sound effects carry it)</label>
+    <p style="margin:4px 0 0;font-size:10px;color:var(--text3);">Tip: write (parentheticals) like "(whispering, scared)" before a line for tone — they're never spoken, just direction for the voice.</p>
   </div>
   <div class="el-btns" id="el-generate-row" style="display:none;">
     <button class="primary" onclick="App.elGenerateScene()">⚡ Generate current scene</button>
