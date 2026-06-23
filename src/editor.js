@@ -112,10 +112,22 @@ const Editor = (() => {
     _setPlaceholder(ta, type);
     label.textContent = type.replace('-', ' ');
     ta.setAttribute('autocapitalize', _isCapsType(type) ? 'characters' : 'none');
-    if (_isCapsType(type)) ta.value = ta.value.toUpperCase();
+    if (_isCapsType(type)) _applyUppercase(ta);
     _autoResize(ta);
     ta.focus();
     _closePicker();
+  }
+
+  // Reassigning textarea.value always resets the caret to the end, even when the
+  // new value is identical — so only write when the case actually changed, and
+  // restore the caret/selection afterwards.
+  function _applyUppercase(ta) {
+    const upper = ta.value.toUpperCase();
+    if (upper === ta.value) return;
+    const { selectionStart, selectionEnd } = ta;
+    ta.value = upper;
+    ta.selectionStart = selectionStart;
+    ta.selectionEnd = selectionEnd;
   }
 
   function getActiveBlock() { return _activeBlock; }
@@ -180,7 +192,7 @@ const Editor = (() => {
 
   function _onInput(ta, block) {
     const type = block.dataset.type;
-    if (_isCapsType(type)) ta.value = ta.value.toUpperCase();
+    if (_isCapsType(type)) _applyUppercase(ta);
     if (type === 'character') _showCharSuggest(ta);
     State.markDirty();
   }

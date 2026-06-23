@@ -36,7 +36,20 @@ const ElevenLabsService = (() => {
     };
 
     const url = base + path;
-    const res = await fetch(url, opts);
+    // Safety net against a genuinely hung connection (e.g. a cold backend that never
+    // responds) — generous, since dialogue/SFX generation can legitimately take a
+    // while, but a real request should never take this long.
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000);
+    let res;
+    try {
+      res = await fetch(url, { ...opts, signal: controller.signal });
+    } catch (e) {
+      if (e.name === 'AbortError') throw new Error('Request timed out — the server took too long to respond');
+      throw e;
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     if (!res.ok) {
       let msg = `ElevenLabs API error ${res.status}`;

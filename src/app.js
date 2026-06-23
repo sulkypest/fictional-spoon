@@ -271,20 +271,16 @@ const App = (() => {
     UI.setAuthState(user);
 
     if (user) {
-      console.log('✓ User logged in, loading settings and voices...');
-      try {
-        await _loadElUserSettings();
-      } catch (e) {
-        console.warn('Failed to load ElevenLabs user settings:', e);
-      }
-      try {
-        await _refreshElVoicesIfPossible();
-      } catch (e) {
-        console.warn('Failed to refresh ElevenLabs voices:', e);
-      }
-      console.log('✓ Hiding splash screen');
+      console.log('✓ User logged in');
+      // The editor itself doesn't need ElevenLabs data to work, so never let a
+      // slow/cold backend call (Cloud Function cold start, ElevenLabs API) block
+      // the main app from appearing — load it in the background instead.
       UI.clearSignInPrompt();
       UI.hideSplashScreen();
+      _loadElUserSettings()
+        .catch(e => console.warn('Failed to load ElevenLabs user settings:', e))
+        .then(() => _refreshElVoicesIfPossible())
+        .catch(e => console.warn('Failed to refresh ElevenLabs voices:', e));
     } else {
       console.log('User logged out, showing splash screen');
       _elVoices = [];
