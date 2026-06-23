@@ -112,7 +112,11 @@ const Editor = (() => {
     _setPlaceholder(ta, type);
     label.textContent = type.replace('-', ' ');
     ta.setAttribute('autocapitalize', _isCapsType(type) ? 'characters' : 'none');
-    if (_isCapsType(type)) _applyUppercase(ta);
+    // Don't force-case existing text just because the block passed through a
+    // caps type while Tab-cycling — that permanently destroyed the original
+    // case of dialogue/action text that happened to cycle through e.g. SOUND
+    // on its way to landing on a different type. Only live typing (_onInput)
+    // should force case, never a type switch on text that's already there.
     _autoResize(ta);
     ta.focus();
     _closePicker();

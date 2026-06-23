@@ -225,7 +225,9 @@ const ElevenLabsService = (() => {
       if (!text) continue;
 
       if (block.type === 'character') {
-        currentChar = text;
+        // Normalize independently of however the block's text is actually cased —
+        // the cast list / voiceMap keys are always uppercase (see addCharacterFromInput).
+        currentChar = text.toUpperCase();
         continue;
       }
 
