@@ -20,6 +20,7 @@
 
 <!-- TOOLBAR -->
 <div id="toolbar" class="hidden">
+  <button class="menu-btn" onclick="UI.toggleSidebar()" aria-label="Toggle sidebar">☰</button>
   <span class="app-name">Scriptwriter</span>
   <div class="sep"></div>
   <button class="tb-btn" onclick="App.newScene()">+ Scene</button>
@@ -53,6 +54,9 @@
 
 <!-- MAIN -->
 <div id="main" class="hidden">
+
+  <!-- SIDEBAR BACKDROP (mobile only, closes sidebar on tap) -->
+  <div id="sidebar-backdrop" onclick="UI.toggleSidebar()"></div>
 
   <!-- SIDEBAR -->
   <div id="sidebar">

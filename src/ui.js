@@ -83,8 +83,12 @@ const UI = (() => {
       const isPlaying = TTS.activeSceneId() === s.id;
       item.className = 'scene-item' + (isActive ? ' active' : '');
       item.onclick = (e) => {
-        if (!e.target.classList.contains('scene-del') && !e.target.classList.contains('scene-play'))
+        if (!e.target.classList.contains('scene-del') && !e.target.classList.contains('scene-play')) {
           App.loadScenePub(s.id);
+          // On mobile the sidebar is an overlay drawer — close it after picking a scene.
+          document.getElementById('sidebar')?.classList.remove('open');
+          document.getElementById('sidebar-backdrop')?.classList.remove('visible');
+        }
       };
 
       const label = document.createElement('div');
@@ -134,6 +138,11 @@ const UI = (() => {
       item.appendChild(del);
       list.appendChild(item);
     });
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar')?.classList.toggle('open');
+    document.getElementById('sidebar-backdrop')?.classList.toggle('visible');
   }
 
   function switchSideTab(tab) {
@@ -544,7 +553,7 @@ const UI = (() => {
 
   return {
     setFormat, setTitle, setAuthState, setElPanelAuthNote, setSignInPrompt, clearSignInPrompt, showSplashScreen, hideSplashScreen,
-    renderSidebar, renderCharList, switchSideTab, toggleAddChar,
+    renderSidebar, renderCharList, switchSideTab, toggleAddChar, toggleSidebar,
     showEditor, showEmptyState, setSceneTitle, setWordCount,
     toggleVoicePanel, buildVoicePanel,
     toggleElPanel, showElApiKeyPrompt, showElVoicePanel, renderElVoicePanel, renderElVoiceLibrary,
