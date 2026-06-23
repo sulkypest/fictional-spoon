@@ -265,6 +265,61 @@ const App = (() => {
     if (elGenOptions) elGenOptions.style.display = visible ? 'block' : 'none';
   }
 
+  // ── Project cloud sync ───────────────────────────────────────────────────────
+  // Conflict policy is last-write-wins, keyed off project.meta.updatedAt (stamped
+  // here on every save) — there's no merge across devices. Whichever copy has the
+  // newer timestamp replaces the other.
+
+  function _touchProjectUpdatedAt() {
+    const project = State.get().project;
+    if (project?.meta) project.meta.updatedAt = Date.now();
+  }
+
+  async function _saveProjectToCloud() {
+    if (!_currentUser) return;
+    try {
+      const token = await FirebaseAuth.getToken();
+      const res = await fetch(CONFIG.elevenlabs.apiBaseUrl + '/saveProject', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ project: State.get().project }),
+      });
+      if (!res.ok) console.warn('Cloud project save failed:', res.status);
+    } catch (e) {
+      console.warn('Cloud project save failed:', e);
+    }
+  }
+
+  async function _syncProjectWithCloud() {
+    if (!_currentUser) return;
+    try {
+      const token = await FirebaseAuth.getToken();
+      const res = await fetch(CONFIG.elevenlabs.apiBaseUrl + '/loadProject', {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      const cloudProject = data.project;
+      const localProject = State.get().project;
+      const cloudTime = cloudProject?.meta?.updatedAt || 0;
+      const localTime = localProject?.meta?.updatedAt || 0;
+
+      if (cloudProject && cloudTime > localTime) {
+        State.setProject(cloudProject);
+        Storage.saveLocal(cloudProject);
+        _showToast('Loaded your latest saved project');
+      } else if (localProject?.scenes?.length && localTime >= cloudTime) {
+        await _saveProjectToCloud();
+      }
+    } catch (e) {
+      console.warn('Project sync failed:', e);
+    }
+  }
+
   async function _handleAuthStateChange(user) {
     console.log('=== Auth state changed ===', user ? `User: ${user.email}` : 'No user (signed out)');
     _currentUser = user;
@@ -272,11 +327,12 @@ const App = (() => {
 
     if (user) {
       console.log('✓ User logged in');
-      // The editor itself doesn't need ElevenLabs data to work, so never let a
+      // The editor itself doesn't need ElevenLabs/cloud data to work, so never let a
       // slow/cold backend call (Cloud Function cold start, ElevenLabs API) block
       // the main app from appearing — load it in the background instead.
       UI.clearSignInPrompt();
       UI.hideSplashScreen();
+      _syncProjectWithCloud();
       _loadElUserSettings()
         .catch(e => console.warn('Failed to load ElevenLabs user settings:', e))
         .then(() => _refreshElVoicesIfPossible())
@@ -307,6 +363,12 @@ const App = (() => {
       }
     } else {
       try {
+        if (State.get().isDirty) {
+          _saveCurrentScene();
+          _touchProjectUpdatedAt();
+          Storage.saveLocal(State.get().project);
+          await _saveProjectToCloud();
+        }
         await FirebaseAuth.signOut();
       } catch (e) {
         _showToast('Sign-out failed');
@@ -614,7 +676,9 @@ const App = (() => {
     setInterval(() => {
       if (!State.get().isDirty) return;
       _saveCurrentScene();
+      _touchProjectUpdatedAt();
       Storage.saveLocal(State.get().project);
+      if (_currentUser) _saveProjectToCloud();
     }, CONFIG.storage.autosaveIntervalMs);
   }
 

@@ -10,6 +10,11 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Script projects, same reasoning — only the Cloud Function (Admin SDK) touches this.
+    match /projects/{userId} {
+      allow read, write: if false;
+    }
+
     // Deny everything else by default.
     match /{document=**} {
       allow read, write: if false;

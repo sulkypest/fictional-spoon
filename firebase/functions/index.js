@@ -77,6 +77,34 @@ app.get('/userSettings', verifyToken, async (req, res) => {
   }
 });
 
+// Save/load the user's script project. Conflict policy is last-write-wins, keyed off
+// project.meta.updatedAt (stamped client-side) — there's no merge of divergent edits
+// across devices, the newer timestamp simply replaces the older one.
+app.post('/saveProject', verifyToken, async (req, res) => {
+  const { project } = req.body || {};
+  if (!project) return res.status(400).json({ error: 'Missing project' });
+  try {
+    await db.collection('projects').doc(req.uid).set({
+      project,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+    return res.json({ ok: true });
+  } catch (e) {
+    console.error('saveProject failed', e);
+    return res.status(500).json({ error: e.message || 'saveProject failed' });
+  }
+});
+
+app.get('/loadProject', verifyToken, async (req, res) => {
+  try {
+    const doc = await db.collection('projects').doc(req.uid).get();
+    return res.json({ project: doc.exists ? (doc.data().project || null) : null });
+  } catch (e) {
+    console.error('loadProject failed', e);
+    return res.status(500).json({ error: e.message || 'loadProject failed' });
+  }
+});
+
 // Proxy route: forwards requests to ElevenLabs on behalf of the authenticated user
 app.all('/el/*', verifyToken, async (req, res) => {
   try {
