@@ -471,11 +471,15 @@ body.format-bbc .block-character .block-input { text-align: left; }
 #pdf-doc p { margin: 0; padding: 0; }
 @media print {
   #pdf-toolbar { display: none !important; }
-  #pdf-content { padding: 0; }
+  /* The screen layout uses flex + overflow:auto to make #pdf-content scroll in its
+     own box — but that same overflow:auto is a scroll container print can't paginate
+     across, so it was clipping the whole document to one page. Reset both to plain
+     block flow with no height constraint so print can flow/paginate normally. */
+  #pdf-content { display: block; flex: none; overflow: visible; height: auto; padding: 0; }
   #pdf-doc { box-shadow: none; padding: 1in 1in 1in 1.5in; max-width: 100%; }
   body * { visibility: hidden; }
   #pdf-preview, #pdf-preview * { visibility: visible; }
-  #pdf-preview { position: absolute; left: 0; top: 0; }
+  #pdf-preview { display: block; position: absolute; left: 0; top: 0; height: auto; }
 }
 
 /* Status bar */
