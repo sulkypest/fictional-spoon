@@ -232,6 +232,12 @@ const App = (() => {
       const data = await Storage.loadFromFile();
       if (data.ttsVoices) TTS.setCharacterVoices(data.ttsVoices);
       State.setProject(data);
+      // setProject() marks the project clean, so the autosave dirty-check would
+      // otherwise skip persisting an import entirely — save immediately instead
+      // of relying on a later edit to trigger it.
+      _touchProjectUpdatedAt();
+      Storage.saveLocal(State.get().project);
+      if (_currentUser) await _saveProjectToCloud();
       _showToast('Project loaded');
     } catch (e) {
       _showToast('Could not load file: ' + e.message);
