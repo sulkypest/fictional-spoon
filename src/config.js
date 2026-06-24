@@ -20,9 +20,12 @@ const CONFIG = {
   /**
    * Rough estimate of spoken duration, shown per-scene and as a project total.
    * A guide for pacing, not a guarantee of actual generated audio length.
+   * 170 wpm is the midpoint of the commonly cited 150-180 wpm range specifically
+   * for audio drama dialogue pacing (faster than general "clear delivery" speech,
+   * since dramatic dialogue is typically more energetic/conversational).
    */
   timing: {
-    wordsPerMinute: 150,    // dialogue/action speaking pace
+    wordsPerMinute: 170,    // dialogue/action speaking pace
     soundEffectSeconds: 4,  // assumed length per sound cue
   },
 

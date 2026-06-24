@@ -474,10 +474,15 @@ body.format-bbc .block-character .block-input { text-align: left; }
 #pdf-doc p { margin: 0; padding: 0; }
 @media print {
   #pdf-toolbar { display: none !important; }
-  /* The screen layout uses flex + overflow:auto to make #pdf-content scroll in its
-     own box — but that same overflow:auto is a scroll container print can't paginate
-     across, so it was clipping the whole document to one page. Reset both to plain
-     block flow with no height constraint so print can flow/paginate normally. */
+  /* The app shell pins <body> to exactly one viewport (height:100vh; overflow:hidden)
+     for the on-screen editor UI. That constraint is never reset for print, and even
+     though #pdf-preview is position:absolute, browsers' print engines still clip
+     absolutely-positioned content to a hidden-overflow ancestor's box — capping the
+     whole document to one page's worth of height regardless of its real content. */
+  html, body { height: auto; overflow: visible; }
+  /* The screen layout also uses flex + overflow:auto to make #pdf-content scroll in
+     its own box — that overflow:auto is itself a scroll container print can't
+     paginate across. Reset both to plain block flow with no height constraint. */
   #pdf-content { display: block; flex: none; overflow: visible; height: auto; padding: 0; }
   #pdf-doc { box-shadow: none; padding: 1in 1in 1in 1.5in; max-width: 100%; }
   body * { visibility: hidden; }
