@@ -75,6 +75,11 @@ const App = (() => {
       if (firstScene) _loadScene(firstScene.id);
       else UI.showEmptyState();
       UI.setTitle(project.meta?.title || 'Untitled');
+      // The ElevenLabs "Your cast" list reads project.characters at render time —
+      // if the project changes after it last rendered (e.g. cloud sync finishing
+      // after sign-in, or a manual import), it would otherwise be stuck showing
+      // whatever characters existed at that one-time render, not the real cast.
+      UI.renderElVoicePanel(_elVoices, _elVoiceMap);
     });
 
     State.on('scenes:changed', () => {
