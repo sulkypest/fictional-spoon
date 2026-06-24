@@ -12,7 +12,7 @@ const ELEVENLABS_API_BASE_URL = 'https://us-central1-draft-punk-a0735.cloudfunct
 
 const CONFIG = {
   app: {
-    name: 'Scriptwriter',          // Replace when name is decided
+    name: 'Cuefighters',
     version: '0.1.0',
     buildType: 'local',            // 'local' | 'hosted' | 'commercial'
   },

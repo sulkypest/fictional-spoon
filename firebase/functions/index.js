@@ -13,6 +13,8 @@ const app = express();
 // Frontend domain(s) allowed to call this API. The frontend can move (e.g. a future
 // custom domain) by editing only this list — the backend's own URL never changes.
 const ALLOWED_ORIGINS = [
+  'https://cuefighters.com',
+  'https://www.cuefighters.com',
   'https://sulkypest.github.io',
   'http://localhost:3000',
   'http://127.0.0.1:3000',

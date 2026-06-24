@@ -205,7 +205,7 @@ const App = (() => {
 
   // ── Save / Load ───────────────────────────────────────────────────────────
 
-  function _requireAuth(action = 'use Scriptwriter') {
+  function _requireAuth(action = 'use Cuefighters') {
     if (_currentUser) {
       UI.clearSignInPrompt();
       return true;
@@ -443,7 +443,7 @@ const App = (() => {
     if (!_currentUser) {
       UI.toggleElPanel();
       _setGenerateUIVisible(false);
-      UI.setElPanelAuthNote('Please sign in with Draft Punk before using ElevenLabs.');
+      UI.setElPanelAuthNote('Please sign in to Cuefighters before using ElevenLabs.');
       return;
     }
     UI.toggleElPanel();

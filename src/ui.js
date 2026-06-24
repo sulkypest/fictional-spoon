@@ -18,7 +18,7 @@ const UI = (() => {
   // ── Title ─────────────────────────────────────────────────────────────────
 
   function setTitle(title) {
-    document.querySelector('.app-name').textContent = title || 'Scriptwriter';
+    document.querySelector('.app-name').textContent = title || 'Cuefighters';
   }
 
   function setAuthState(user) {
