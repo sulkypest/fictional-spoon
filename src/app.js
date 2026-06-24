@@ -177,7 +177,7 @@ const App = (() => {
     blocks.forEach(b => {
       if (b.text.trim()) words += b.text.trim().split(/\s+/).length;
     });
-    UI.setWordCount(words);
+    UI.setWordCount(words, Timing.estimateSeconds(blocks));
   }
 
   // ── Character management ──────────────────────────────────────────────────

@@ -17,6 +17,15 @@ const CONFIG = {
     buildType: 'local',            // 'local' | 'hosted' | 'commercial'
   },
 
+  /**
+   * Rough estimate of spoken duration, shown per-scene and as a project total.
+   * A guide for pacing, not a guarantee of actual generated audio length.
+   */
+  timing: {
+    wordsPerMinute: 150,    // dialogue/action speaking pace
+    soundEffectSeconds: 4,  // assumed length per sound cue
+  },
+
   storage: {
     localStorageKey: 'scriptwriter_project_v1',
     autosaveIntervalMs: 30000,

@@ -79,7 +79,7 @@
       <!-- SCENES -->
       <div id="panel-scenes" class="panel active">
         <div id="scenes-header">
-          <span>Scenes</span>
+          <span>Scenes <span id="scenes-total-time" class="scenes-total-time"></span></span>
           <button class="sidebar-add-btn" onclick="App.newScene()" title="Add scene">+</button>
         </div>
         <div id="scene-list"></div>
@@ -213,6 +213,7 @@
 
 <!-- SCRIPTS — order matters -->
 <script src="src/config.js"></script>
+<script src="src/timing.js"></script>
 <script src="src/state.js"></script>
 <script src="src/storage.js"></script>
 <script src="src/tts.js"></script>

@@ -77,6 +77,8 @@ const UI = (() => {
     const list = document.getElementById('scene-list');
     list.innerHTML = '';
 
+    let totalSeconds = 0;
+
     project.scenes.forEach((s, i) => {
       const item = document.createElement('div');
       const isActive = s.id === State.get().activeSceneId;
@@ -95,6 +97,12 @@ const UI = (() => {
       label.className = 'scene-label';
       label.textContent = `${i + 1}. ${s.title || 'Untitled'}`;
 
+      const sceneSeconds = Timing.estimateSeconds(s.blocks);
+      totalSeconds += sceneSeconds;
+      const time = document.createElement('div');
+      time.className = 'scene-time';
+      time.textContent = Timing.formatDuration(sceneSeconds);
+
       const play = document.createElement('button');
       play.className = 'scene-play' + (isPlaying ? ' playing' : '');
       play.textContent = isPlaying ? '■' : '▶';
@@ -108,10 +116,14 @@ const UI = (() => {
       del.onclick = (e) => { e.stopPropagation(); App.deleteScene(s.id); };
 
       item.appendChild(label);
+      item.appendChild(time);
       item.appendChild(play);
       item.appendChild(del);
       list.appendChild(item);
     });
+
+    const totalEl = document.getElementById('scenes-total-time');
+    if (totalEl) totalEl.textContent = project.scenes.length ? `~${Timing.formatDuration(totalSeconds)} total` : '';
   }
 
   function renderCharList() {
@@ -181,8 +193,9 @@ const UI = (() => {
     document.getElementById('scene-title-input').value = title || '';
   }
 
-  function setWordCount(n) {
-    document.getElementById('scene-word-count').textContent = `${n} words`;
+  function setWordCount(n, seconds) {
+    const time = seconds != null ? ` · ~${Timing.formatDuration(seconds)}` : '';
+    document.getElementById('scene-word-count').textContent = `${n} words${time}`;
   }
 
   // ── Voice panel (browser TTS) ─────────────────────────────────────────────

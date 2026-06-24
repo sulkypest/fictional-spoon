@@ -218,6 +218,8 @@ body {
   align-items: center; justify-content: space-between;
 }
 #scenes-header span, #chars-header span { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
+.scenes-total-time { text-transform: none; letter-spacing: normal; opacity: 0.8; }
+.scenes-total-time:not(:empty)::before { content: '· '; }
 .sidebar-add-btn { background: none; border: none; color: var(--accent2); cursor: pointer; font-size: 18px; line-height: 1; padding: 0 4px; transition: color 0.15s; }
 .sidebar-add-btn:hover { color: var(--accent); }
 
@@ -230,6 +232,7 @@ body {
 .scene-item.active { background: var(--bg3); border-left-color: var(--accent); }
 .scene-item .scene-label { font-size: 12px; color: var(--text2); font-family: var(--mono); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .scene-item.active .scene-label { color: var(--text); }
+.scene-time { font-size: 10px; color: var(--text3); font-family: var(--mono); flex-shrink: 0; }
 .scene-play, .scene-del {
   background: none; border: none; cursor: pointer; font-size: 13px;
   padding: 0 2px; opacity: 0; transition: opacity 0.15s, color 0.15s;
