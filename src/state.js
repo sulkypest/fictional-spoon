@@ -114,14 +114,25 @@ const State = (() => {
 
   function removeCharacter(name) {
     _state.project.characters = _state.project.characters.filter(c => c !== name);
+    if (_state.project.characterNotes) delete _state.project.characterNotes[name];
     markDirty();
     emit('characters:changed');
+  }
+
+  function setCharacterNotes(name, notes) {
+    if (!_state.project.characterNotes) _state.project.characterNotes = {};
+    if (notes) {
+      _state.project.characterNotes[name] = notes;
+    } else {
+      delete _state.project.characterNotes[name];
+    }
+    markDirty();
   }
 
   return {
     on, emit, get,
     setProject, setActiveScene, setFormat, markDirty, markClean,
     setUI, addScene, removeScene, updateScene, updateSceneTitle,
-    addCharacter, removeCharacter,
+    addCharacter, removeCharacter, setCharacterNotes,
   };
 })();

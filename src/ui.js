@@ -126,28 +126,57 @@ const UI = (() => {
     if (totalEl) totalEl.textContent = project.scenes.length ? `~${Timing.formatDuration(totalSeconds)} total` : '';
   }
 
+  const _expandedNotes = new Set();
+
   function renderCharList() {
     const project = State.get().project;
     if (!project) return;
     const list = document.getElementById('char-list');
     list.innerHTML = '';
+    const notes = project.characterNotes || {};
 
     project.characters.forEach(c => {
       const item = document.createElement('div');
       item.className = 'char-item';
+
+      const row = document.createElement('div');
+      row.className = 'char-row';
 
       const name = document.createElement('div');
       name.className = 'char-name';
       name.textContent = c;
       name.onclick = () => App.insertCharacterBlock(c);
 
+      const hasNote = Boolean(notes[c]);
+      const notesBtn = document.createElement('button');
+      notesBtn.className = 'char-notes-btn' + (hasNote ? ' has-note' : '');
+      notesBtn.textContent = '📝';
+      notesBtn.title = 'Notes';
+      notesBtn.onclick = () => {
+        if (_expandedNotes.has(c)) _expandedNotes.delete(c);
+        else _expandedNotes.add(c);
+        renderCharList();
+      };
+
       const del = document.createElement('button');
       del.className = 'char-del';
       del.textContent = '×';
       del.onclick = () => App.removeCharacter(c);
 
-      item.appendChild(name);
-      item.appendChild(del);
+      row.appendChild(name);
+      row.appendChild(notesBtn);
+      row.appendChild(del);
+      item.appendChild(row);
+
+      if (_expandedNotes.has(c)) {
+        const textarea = document.createElement('textarea');
+        textarea.className = 'char-notes';
+        textarea.placeholder = 'Notes on this character...';
+        textarea.value = notes[c] || '';
+        textarea.oninput = () => App.setCharacterNotes(c, textarea.value);
+        item.appendChild(textarea);
+      }
+
       list.appendChild(item);
     });
   }

@@ -60,6 +60,7 @@ const App = (() => {
       version: 1,
       meta: { title: 'New Project', subtitle: '', author: '', created: new Date().getFullYear().toString(), format: 'screenplay' },
       characters: [],
+      characterNotes: {},
       scenes: [],
     };
   }
@@ -194,6 +195,10 @@ const App = (() => {
 
   function removeCharacter(name) {
     State.removeCharacter(name);
+  }
+
+  function setCharacterNotes(name, notes) {
+    State.setCharacterNotes(name, notes);
   }
 
   function insertCharacterBlock(name) {
@@ -778,6 +783,7 @@ const App = (() => {
     updateSceneTitle,
     addCharacter,
     removeCharacter,
+    setCharacterNotes,
     insertCharacterBlock,
     saveToFile,
     loadFromFile,
