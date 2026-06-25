@@ -86,6 +86,16 @@ const State = (() => {
     emit('scenes:changed');
   }
 
+  function moveScene(id, direction) {
+    const scenes = _state.project.scenes;
+    const index = scenes.findIndex(s => s.id === id);
+    const swapWith = index + direction;
+    if (index === -1 || swapWith < 0 || swapWith >= scenes.length) return;
+    [scenes[index], scenes[swapWith]] = [scenes[swapWith], scenes[index]];
+    markDirty();
+    emit('scenes:changed');
+  }
+
   function updateScene(id, blocks) {
     const scene = _state.project.scenes.find(s => s.id === id);
     if (scene) {
@@ -132,7 +142,7 @@ const State = (() => {
   return {
     on, emit, get,
     setProject, setActiveScene, setFormat, markDirty, markClean,
-    setUI, addScene, removeScene, updateScene, updateSceneTitle,
+    setUI, addScene, removeScene, moveScene, updateScene, updateSceneTitle,
     addCharacter, removeCharacter, setCharacterNotes,
   };
 })();

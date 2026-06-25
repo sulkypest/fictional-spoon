@@ -172,6 +172,11 @@ const App = (() => {
     if (first) _loadScene(first.id);
   }
 
+  function moveScene(id, direction) {
+    State.moveScene(id, direction);
+    UI.renderSidebar();
+  }
+
   function updateSceneTitle(title) {
     const id = State.get().activeSceneId;
     if (id) State.updateSceneTitle(id, title);
@@ -780,6 +785,7 @@ const App = (() => {
     init,
     newScene,
     deleteScene,
+    moveScene,
     updateSceneTitle,
     addCharacter,
     removeCharacter,

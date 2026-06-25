@@ -85,12 +85,11 @@ const UI = (() => {
       const isPlaying = TTS.activeSceneId() === s.id;
       item.className = 'scene-item' + (isActive ? ' active' : '');
       item.onclick = (e) => {
-        if (!e.target.classList.contains('scene-del') && !e.target.classList.contains('scene-play')) {
-          App.loadScenePub(s.id);
-          // On mobile the sidebar is an overlay drawer — close it after picking a scene.
-          document.getElementById('sidebar')?.classList.remove('open');
-          document.getElementById('sidebar-backdrop')?.classList.remove('visible');
-        }
+        if (e.target.closest('.scene-actions')) return;
+        App.loadScenePub(s.id);
+        // On mobile the sidebar is an overlay drawer — close it after picking a scene.
+        document.getElementById('sidebar')?.classList.remove('open');
+        document.getElementById('sidebar-backdrop')?.classList.remove('visible');
       };
 
       const label = document.createElement('div');
@@ -102,6 +101,23 @@ const UI = (() => {
       const time = document.createElement('div');
       time.className = 'scene-time';
       time.textContent = Timing.formatDuration(sceneSeconds);
+
+      const actions = document.createElement('div');
+      actions.className = 'scene-actions';
+
+      const up = document.createElement('button');
+      up.className = 'scene-move';
+      up.textContent = '↑';
+      up.title = 'Move up';
+      up.disabled = i === 0;
+      up.onclick = (e) => { e.stopPropagation(); App.moveScene(s.id, -1); };
+
+      const down = document.createElement('button');
+      down.className = 'scene-move';
+      down.textContent = '↓';
+      down.title = 'Move down';
+      down.disabled = i === project.scenes.length - 1;
+      down.onclick = (e) => { e.stopPropagation(); App.moveScene(s.id, 1); };
 
       const play = document.createElement('button');
       play.className = 'scene-play' + (isPlaying ? ' playing' : '');
@@ -115,10 +131,14 @@ const UI = (() => {
       del.title = 'Delete scene';
       del.onclick = (e) => { e.stopPropagation(); App.deleteScene(s.id); };
 
+      actions.appendChild(up);
+      actions.appendChild(down);
+      actions.appendChild(play);
+      actions.appendChild(del);
+
       item.appendChild(label);
       item.appendChild(time);
-      item.appendChild(play);
-      item.appendChild(del);
+      item.appendChild(actions);
       list.appendChild(item);
     });
 
