@@ -86,14 +86,33 @@ const State = (() => {
     emit('scenes:changed');
   }
 
+  // Reorders within the scene's own status group (active vs draft), not raw
+  // array position — active and draft scenes are interleaved in the same
+  // array, so a raw-adjacent swap could silently no-op or cross groups.
   function moveScene(id, direction) {
     const scenes = _state.project.scenes;
-    const index = scenes.findIndex(s => s.id === id);
-    const swapWith = index + direction;
-    if (index === -1 || swapWith < 0 || swapWith >= scenes.length) return;
-    [scenes[index], scenes[swapWith]] = [scenes[swapWith], scenes[index]];
+    const scene = scenes.find(s => s.id === id);
+    if (!scene) return;
+    const status = scene.status || 'active';
+    const group = scenes.filter(s => (s.status || 'active') === status);
+    const groupIndex = group.findIndex(s => s.id === id);
+    const swapIndex = groupIndex + direction;
+    if (swapIndex < 0 || swapIndex >= group.length) return;
+    const neighbor = group[swapIndex];
+    const rawA = scenes.indexOf(scene);
+    const rawB = scenes.indexOf(neighbor);
+    [scenes[rawA], scenes[rawB]] = [scenes[rawB], scenes[rawA]];
     markDirty();
     emit('scenes:changed');
+  }
+
+  function setSceneStatus(id, status) {
+    const scene = _state.project.scenes.find(s => s.id === id);
+    if (scene) {
+      scene.status = status;
+      markDirty();
+      emit('scenes:changed');
+    }
   }
 
   function updateScene(id, blocks) {
@@ -142,7 +161,7 @@ const State = (() => {
   return {
     on, emit, get,
     setProject, setActiveScene, setFormat, markDirty, markClean,
-    setUI, addScene, removeScene, moveScene, updateScene, updateSceneTitle,
+    setUI, addScene, removeScene, moveScene, setSceneStatus, updateScene, updateSceneTitle,
     addCharacter, removeCharacter, setCharacterNotes,
   };
 })();

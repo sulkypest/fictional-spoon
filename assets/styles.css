@@ -213,11 +213,12 @@ body {
 .panel.active { display: block; }
 
 /* Scenes panel */
-#scenes-header, #chars-header {
+#scenes-header, #chars-header, .drafts-header {
   padding: 10px 12px 6px; display: flex;
   align-items: center; justify-content: space-between;
 }
-#scenes-header span, #chars-header span { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
+.drafts-header { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 10px; }
+#scenes-header span, #chars-header span, .drafts-header span { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
 .scenes-total-time { text-transform: none; letter-spacing: normal; opacity: 0.8; }
 .scenes-total-time:not(:empty)::before { content: '· '; }
 .sidebar-add-btn { background: none; border: none; color: var(--accent2); cursor: pointer; font-size: 18px; line-height: 1; padding: 0 4px; transition: color 0.15s; }
@@ -234,14 +235,16 @@ body {
 .scene-item.active .scene-label { color: var(--text); }
 .scene-time { font-size: 10px; color: var(--text3); font-family: var(--mono); flex-shrink: 0; }
 .scene-actions { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
-.scene-move, .scene-play, .scene-del {
+.scene-move, .scene-archive, .scene-play, .scene-del {
   background: none; border: none; cursor: pointer; font-size: 13px;
   padding: 0 2px; opacity: 0; transition: opacity 0.15s, color 0.15s;
   flex-shrink: 0; color: var(--text3);
 }
 .scene-item:hover .scene-move,
+.scene-item:hover .scene-archive,
 .scene-item:hover .scene-play,
 .scene-item:hover .scene-del { opacity: 1; }
+.scene-archive:hover { color: var(--accent); }
 .scene-move { font-size: 11px; }
 .scene-move:disabled { opacity: 0 !important; cursor: default; }
 .scene-move:not(:disabled):hover { color: var(--accent); }

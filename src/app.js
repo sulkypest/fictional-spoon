@@ -166,15 +166,37 @@ const App = (() => {
   }
 
   function deleteScene(id) {
-    if (State.get().project.scenes.length <= 1) return;
+    const scenes = State.get().project.scenes;
+    const scene = scenes.find(s => s.id === id);
+    if (!scene) return;
+    const isActive = (scene.status || 'active') === 'active';
+    const activeCount = scenes.filter(s => (s.status || 'active') === 'active').length;
+    if (isActive && activeCount <= 1) return;
+
+    const wasOpen = State.get().activeSceneId === id;
     State.removeScene(id);
-    const first = State.get().project.scenes[0];
-    if (first) _loadScene(first.id);
+    if (wasOpen) {
+      const remaining = State.get().project.scenes;
+      const nextActive = remaining.find(s => (s.status || 'active') === 'active');
+      const fallback = nextActive || remaining[0];
+      if (fallback) _loadScene(fallback.id);
+    }
   }
 
   function moveScene(id, direction) {
     State.moveScene(id, direction);
     UI.renderSidebar();
+  }
+
+  function setSceneStatus(id, status) {
+    // If you move the scene you're currently looking at into drafts, don't leave
+    // the editor pointed at a scene that's no longer part of the main sequence.
+    const movingOpenSceneToDraft = State.get().activeSceneId === id && status === 'draft';
+    State.setSceneStatus(id, status);
+    if (movingOpenSceneToDraft) {
+      const nextActive = State.get().project.scenes.find(s => (s.status || 'active') === 'active');
+      if (nextActive) _loadScene(nextActive.id);
+    }
   }
 
   function updateSceneTitle(title) {
@@ -786,6 +808,7 @@ const App = (() => {
     newScene,
     deleteScene,
     moveScene,
+    setSceneStatus,
     updateSceneTitle,
     addCharacter,
     removeCharacter,

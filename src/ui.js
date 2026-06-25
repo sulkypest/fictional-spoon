@@ -71,79 +71,102 @@ const UI = (() => {
 
   // ── Sidebar ───────────────────────────────────────────────────────────────
 
+  function _renderSceneItem(s, i, group, isDraft) {
+    const item = document.createElement('div');
+    const isActive = s.id === State.get().activeSceneId;
+    const isPlaying = TTS.activeSceneId() === s.id;
+    item.className = 'scene-item' + (isActive ? ' active' : '');
+    item.onclick = (e) => {
+      if (e.target.closest('.scene-actions')) return;
+      App.loadScenePub(s.id);
+      // On mobile the sidebar is an overlay drawer — close it after picking a scene.
+      document.getElementById('sidebar')?.classList.remove('open');
+      document.getElementById('sidebar-backdrop')?.classList.remove('visible');
+    };
+
+    const label = document.createElement('div');
+    label.className = 'scene-label';
+    label.textContent = isDraft ? (s.title || 'Untitled') : `${i + 1}. ${s.title || 'Untitled'}`;
+
+    const sceneSeconds = Timing.estimateSeconds(s.blocks);
+    const time = document.createElement('div');
+    time.className = 'scene-time';
+    time.textContent = Timing.formatDuration(sceneSeconds);
+
+    const actions = document.createElement('div');
+    actions.className = 'scene-actions';
+
+    const up = document.createElement('button');
+    up.className = 'scene-move';
+    up.textContent = '↑';
+    up.title = 'Move up';
+    up.disabled = i === 0;
+    up.onclick = (e) => { e.stopPropagation(); App.moveScene(s.id, -1); };
+
+    const down = document.createElement('button');
+    down.className = 'scene-move';
+    down.textContent = '↓';
+    down.title = 'Move down';
+    down.disabled = i === group.length - 1;
+    down.onclick = (e) => { e.stopPropagation(); App.moveScene(s.id, 1); };
+
+    const archive = document.createElement('button');
+    archive.className = 'scene-archive';
+    archive.textContent = isDraft ? '⤴' : '⤵';
+    archive.title = isDraft ? 'Move to Scenes' : 'Move to Drafts';
+    archive.onclick = (e) => { e.stopPropagation(); App.setSceneStatus(s.id, isDraft ? 'active' : 'draft'); };
+
+    const play = document.createElement('button');
+    play.className = 'scene-play' + (isPlaying ? ' playing' : '');
+    play.textContent = isPlaying ? '■' : '▶';
+    play.title = isPlaying ? 'Stop' : 'Read aloud';
+    play.onclick = (e) => { e.stopPropagation(); App.ttsPlay(s.id); };
+
+    const del = document.createElement('button');
+    del.className = 'scene-del';
+    del.textContent = '×';
+    del.title = 'Delete scene';
+    del.onclick = (e) => { e.stopPropagation(); App.deleteScene(s.id); };
+
+    actions.appendChild(up);
+    actions.appendChild(down);
+    actions.appendChild(archive);
+    actions.appendChild(play);
+    actions.appendChild(del);
+
+    item.appendChild(label);
+    item.appendChild(time);
+    item.appendChild(actions);
+    return { item, sceneSeconds };
+  }
+
   function renderSidebar() {
     const project = State.get().project;
     if (!project) return;
     const list = document.getElementById('scene-list');
+    const draftList = document.getElementById('draft-list');
+    const draftsHeader = document.getElementById('drafts-header');
     list.innerHTML = '';
+    draftList.innerHTML = '';
+
+    const active = project.scenes.filter(s => (s.status || 'active') === 'active');
+    const drafts = project.scenes.filter(s => s.status === 'draft');
 
     let totalSeconds = 0;
-
-    project.scenes.forEach((s, i) => {
-      const item = document.createElement('div');
-      const isActive = s.id === State.get().activeSceneId;
-      const isPlaying = TTS.activeSceneId() === s.id;
-      item.className = 'scene-item' + (isActive ? ' active' : '');
-      item.onclick = (e) => {
-        if (e.target.closest('.scene-actions')) return;
-        App.loadScenePub(s.id);
-        // On mobile the sidebar is an overlay drawer — close it after picking a scene.
-        document.getElementById('sidebar')?.classList.remove('open');
-        document.getElementById('sidebar-backdrop')?.classList.remove('visible');
-      };
-
-      const label = document.createElement('div');
-      label.className = 'scene-label';
-      label.textContent = `${i + 1}. ${s.title || 'Untitled'}`;
-
-      const sceneSeconds = Timing.estimateSeconds(s.blocks);
+    active.forEach((s, i) => {
+      const { item, sceneSeconds } = _renderSceneItem(s, i, active, false);
       totalSeconds += sceneSeconds;
-      const time = document.createElement('div');
-      time.className = 'scene-time';
-      time.textContent = Timing.formatDuration(sceneSeconds);
-
-      const actions = document.createElement('div');
-      actions.className = 'scene-actions';
-
-      const up = document.createElement('button');
-      up.className = 'scene-move';
-      up.textContent = '↑';
-      up.title = 'Move up';
-      up.disabled = i === 0;
-      up.onclick = (e) => { e.stopPropagation(); App.moveScene(s.id, -1); };
-
-      const down = document.createElement('button');
-      down.className = 'scene-move';
-      down.textContent = '↓';
-      down.title = 'Move down';
-      down.disabled = i === project.scenes.length - 1;
-      down.onclick = (e) => { e.stopPropagation(); App.moveScene(s.id, 1); };
-
-      const play = document.createElement('button');
-      play.className = 'scene-play' + (isPlaying ? ' playing' : '');
-      play.textContent = isPlaying ? '■' : '▶';
-      play.title = isPlaying ? 'Stop' : 'Read aloud';
-      play.onclick = (e) => { e.stopPropagation(); App.ttsPlay(s.id); };
-
-      const del = document.createElement('button');
-      del.className = 'scene-del';
-      del.textContent = '×';
-      del.title = 'Delete scene';
-      del.onclick = (e) => { e.stopPropagation(); App.deleteScene(s.id); };
-
-      actions.appendChild(up);
-      actions.appendChild(down);
-      actions.appendChild(play);
-      actions.appendChild(del);
-
-      item.appendChild(label);
-      item.appendChild(time);
-      item.appendChild(actions);
       list.appendChild(item);
     });
 
+    drafts.forEach((s, i) => {
+      const { item } = _renderSceneItem(s, i, drafts, true);
+      draftList.appendChild(item);
+    });
+    if (draftsHeader) draftsHeader.style.display = drafts.length ? 'flex' : 'none';
+
     const totalEl = document.getElementById('scenes-total-time');
-    if (totalEl) totalEl.textContent = project.scenes.length ? `~${Timing.formatDuration(totalSeconds)} total` : '';
+    if (totalEl) totalEl.textContent = active.length ? `~${Timing.formatDuration(totalSeconds)} total` : '';
   }
 
   const _expandedNotes = new Set();
