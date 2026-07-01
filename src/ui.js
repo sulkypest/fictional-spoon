@@ -149,8 +149,9 @@ const UI = (() => {
     list.innerHTML = '';
     draftList.innerHTML = '';
 
-    const active = project.scenes.filter(s => (s.status || 'active') === 'active');
-    const drafts = project.scenes.filter(s => s.status === 'draft');
+    const scenes = State.getActiveScenes();
+    const active = scenes.filter(s => (s.status || 'active') === 'active');
+    const drafts = scenes.filter(s => s.status === 'draft');
 
     let totalSeconds = 0;
     active.forEach((s, i) => {
@@ -222,6 +223,28 @@ const UI = (() => {
 
       list.appendChild(item);
     });
+  }
+
+  function renderEpisodeSelector() {
+    const project = State.get().project;
+    if (!project?.episodes) return;
+    const episodes = project.episodes;
+    const activeId = State.get().activeEpisodeId;
+    const index = episodes.findIndex(e => e.id === activeId);
+    const active = episodes[index] || episodes[0];
+
+    const input = document.getElementById('episode-title-input');
+    if (input && active) input.value = active.title || '';
+
+    const prevBtn = document.querySelector('#episode-bar .ep-nav:first-child');
+    const nextBtn = document.querySelector('#episode-bar .ep-nav:last-of-type');
+    const delBtn = document.querySelector('#episode-bar .ep-del');
+    if (prevBtn) prevBtn.disabled = index <= 0;
+    if (nextBtn) nextBtn.disabled = index >= episodes.length - 1;
+    if (delBtn) delBtn.disabled = episodes.length <= 1;
+
+    const bar = document.getElementById('episode-bar');
+    if (bar) bar.style.display = episodes.length >= 1 ? 'flex' : 'none';
   }
 
   function toggleSidebar() {
@@ -638,7 +661,7 @@ const UI = (() => {
 
   return {
     setFormat, setTitle, setAuthState, setElPanelAuthNote, setSignInPrompt, clearSignInPrompt, showSplashScreen, hideSplashScreen,
-    renderSidebar, renderCharList, switchSideTab, toggleAddChar, toggleSidebar,
+    renderEpisodeSelector, renderSidebar, renderCharList, switchSideTab, toggleAddChar, toggleSidebar,
     showEditor, showEmptyState, setSceneTitle, setWordCount,
     toggleVoicePanel, buildVoicePanel,
     toggleElPanel, showElApiKeyPrompt, showElVoicePanel, renderElVoicePanel, renderElVoiceLibrary,

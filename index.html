@@ -60,6 +60,15 @@
 
   <!-- SIDEBAR -->
   <div id="sidebar">
+    <!-- EPISODE BAR: title input (inline rename) + nav arrows + add/delete -->
+    <div id="episode-bar">
+      <button class="ep-nav" onclick="App.switchEpisodeRelative(-1)" title="Previous episode">‹</button>
+      <input type="text" id="episode-title-input" placeholder="Episode title..." oninput="App.renameEpisode(this.value)">
+      <button class="ep-nav" onclick="App.switchEpisodeRelative(1)" title="Next episode">›</button>
+      <button class="sidebar-add-btn" onclick="App.newEpisode()" title="Add episode">+</button>
+      <button class="ep-del" onclick="App.deleteEpisode()" title="Delete episode">×</button>
+    </div>
+
     <div id="sidebar-tabs">
       <div class="stab active" onclick="UI.switchSideTab('scenes')">Scenes</div>
       <div class="stab" onclick="UI.switchSideTab('chars')">Cast</div>
@@ -257,7 +266,7 @@ App._loadScenePublic = (function() {
     const cur = State.get().activeSceneId;
     if (cur) State.updateScene(cur, blocks);
     State.setActiveScene(id);
-    const scene = State.get().project?.scenes.find(s => s.id === id);
+    const scene = State.getActiveScenes().find(s => s.id === id);
     if (!scene) { UI.showEmptyState(); return; }
     UI.setSceneTitle(scene.title);
     UI.showEditor();

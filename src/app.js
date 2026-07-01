@@ -45,7 +45,7 @@ const App = (() => {
     // Try restoring last session from localStorage
     const saved = Storage.loadLocal();
     if (saved) {
-      State.setProject(saved);
+      State.setProject(_migrateProject(saved));
       _showToast('Session restored');
     } else {
       // Load blank project — user will open or create
@@ -57,12 +57,33 @@ const App = (() => {
 
   function _blankProject() {
     return {
-      version: 1,
-      meta: { title: 'New Project', subtitle: '', author: '', created: new Date().getFullYear().toString(), format: 'screenplay' },
+      version: 2,
+      meta: { title: 'New Project', author: '', created: new Date().getFullYear().toString(), format: 'screenplay' },
       characters: [],
       characterNotes: {},
-      scenes: [],
+      episodes: [{ id: 'ep' + Date.now(), title: 'Episode 1', scenes: [] }],
     };
+  }
+
+  // Older projects/exports store scenes directly on the project. Wrap them into
+  // a single episode so every project flowing through the app is the same
+  // shape — every load path (local storage, file import, cloud sync) must run
+  // through this before the rest of the app ever sees the project.
+  function _migrateProject(project) {
+    if (!project) return project;
+    if (Array.isArray(project.episodes)) {
+      project.episodes.forEach(ep => { if (!Array.isArray(ep.scenes)) ep.scenes = []; });
+      if (!project.characterNotes) project.characterNotes = {};
+      return project;
+    }
+    const scenes = Array.isArray(project.scenes) ? project.scenes : [];
+    const migrated = {
+      ...project,
+      characterNotes: project.characterNotes || {},
+      episodes: [{ id: 'ep' + Date.now(), title: project.meta?.subtitle || 'Episode 1', scenes }],
+    };
+    delete migrated.scenes;
+    return migrated;
   }
 
   // ── State event bindings ──────────────────────────────────────────────────
@@ -70,9 +91,11 @@ const App = (() => {
   function _bindStateEvents() {
     State.on('project:loaded', (project) => {
       UI.setFormat(project.meta?.format || 'screenplay');
+      UI.renderEpisodeSelector();
       UI.renderSidebar();
       UI.renderCharList();
-      const firstScene = project.scenes[0];
+      const scenes = State.getActiveScenes();
+      const firstScene = scenes.find(s => (s.status || 'active') === 'active') || scenes[0];
       if (firstScene) _loadScene(firstScene.id);
       else UI.showEmptyState();
       UI.setTitle(project.meta?.title || 'Untitled');
@@ -85,6 +108,19 @@ const App = (() => {
 
     State.on('scenes:changed', () => {
       UI.renderSidebar();
+    });
+
+    State.on('episodes:changed', () => {
+      UI.renderEpisodeSelector();
+    });
+
+    State.on('episode:changed', () => {
+      UI.renderEpisodeSelector();
+      UI.renderSidebar();
+      const scenes = State.getActiveScenes();
+      const firstScene = scenes.find(s => (s.status || 'active') === 'active') || scenes[0];
+      if (firstScene) _loadScene(firstScene.id);
+      else UI.showEmptyState();
     });
 
     State.on('characters:changed', () => {
@@ -141,7 +177,7 @@ const App = (() => {
   function _loadScene(id) {
     _saveCurrentScene();
     State.setActiveScene(id);
-    const scene = State.get().project.scenes.find(s => s.id === id);
+    const scene = State.getActiveScenes().find(s => s.id === id);
     if (!scene) { UI.showEmptyState(); return; }
     UI.setSceneTitle(scene.title);
     UI.showEditor();
@@ -155,7 +191,7 @@ const App = (() => {
     const id = 'b' + Date.now();
     const scene = {
       id,
-      title: title || `Scene ${State.get().project.scenes.length + 1}`,
+      title: title || `Scene ${State.getActiveScenes().length + 1}`,
       blocks: [
         { id: id + '_1', type: 'scene-heading', text: 'INT. LOCATION' },
         { id: id + '_2', type: 'action', text: '' },
@@ -165,8 +201,38 @@ const App = (() => {
     _loadScene(id);
   }
 
+  // ── Episodes ──────────────────────────────────────────────────────────────
+  // Characters/voices are shared series-wide; only the scene list is per-episode.
+
+  function newEpisode() {
+    _saveCurrentScene();
+    const episodes = State.get().project.episodes;
+    const episode = { id: 'ep' + Date.now(), title: `Episode ${episodes.length + 1}`, scenes: [] };
+    State.addEpisode(episode);
+    State.setActiveEpisode(episode.id);
+  }
+
+  function switchEpisodeRelative(direction) {
+    _saveCurrentScene();
+    const episodes = State.get().project.episodes;
+    const currentId = State.get().activeEpisodeId;
+    const index = episodes.findIndex(e => e.id === currentId);
+    const next = episodes[index + direction];
+    if (next) State.setActiveEpisode(next.id);
+  }
+
+  function renameEpisode(title) {
+    const id = State.get().activeEpisodeId;
+    if (id) State.updateEpisodeTitle(id, title);
+  }
+
+  function deleteEpisode() {
+    _saveCurrentScene();
+    State.removeEpisode(State.get().activeEpisodeId);
+  }
+
   function deleteScene(id) {
-    const scenes = State.get().project.scenes;
+    const scenes = State.getActiveScenes();
     const scene = scenes.find(s => s.id === id);
     if (!scene) return;
     const isActive = (scene.status || 'active') === 'active';
@@ -176,7 +242,7 @@ const App = (() => {
     const wasOpen = State.get().activeSceneId === id;
     State.removeScene(id);
     if (wasOpen) {
-      const remaining = State.get().project.scenes;
+      const remaining = State.getActiveScenes();
       const nextActive = remaining.find(s => (s.status || 'active') === 'active');
       const fallback = nextActive || remaining[0];
       if (fallback) _loadScene(fallback.id);
@@ -194,7 +260,7 @@ const App = (() => {
     const movingOpenSceneToDraft = State.get().activeSceneId === id && status === 'draft';
     State.setSceneStatus(id, status);
     if (movingOpenSceneToDraft) {
-      const nextActive = State.get().project.scenes.find(s => (s.status || 'active') === 'active');
+      const nextActive = State.getActiveScenes().find(s => (s.status || 'active') === 'active');
       if (nextActive) _loadScene(nextActive.id);
     }
   }
@@ -268,7 +334,7 @@ const App = (() => {
     try {
       const data = await Storage.loadFromFile();
       if (data.ttsVoices) TTS.setCharacterVoices(data.ttsVoices);
-      State.setProject(data);
+      State.setProject(_migrateProject(data));
       // setProject() marks the project clean, so the autosave dirty-check would
       // otherwise skip persisting an import entirely — save immediately instead
       // of relying on a later edit to trigger it.
@@ -281,24 +347,36 @@ const App = (() => {
     }
   }
 
+  // Exports/PDF are a per-episode concept — build a view shaped like the old
+  // flat project (meta + scenes) so storage.js/ui.js don't need to know
+  // episodes exist at all.
+  function _episodeView() {
+    const project = State.get().project;
+    const episode = State.getActiveEpisode();
+    return {
+      meta: { ...project.meta, subtitle: episode?.title || project.meta?.subtitle || '' },
+      scenes: State.getActiveScenes(),
+    };
+  }
+
   function exportTxt() {
     if (!_requireAuth('export your script')) return;
     _saveCurrentScene();
-    Storage.exportTxt(State.get().project);
+    Storage.exportTxt(_episodeView());
   }
 
   function exportForElevenLabs(sceneOnly = false) {
     if (!_requireAuth('export for ElevenLabs')) return;
     _saveCurrentScene();
     const id = sceneOnly ? State.get().activeSceneId : null;
-    Storage.exportForElevenLabs(State.get().project, id);
+    Storage.exportForElevenLabs(_episodeView(), id);
     _showToast('Exported 2 files: dialogue + sound cues');
   }
 
   function showPdfExport() {
     if (!_requireAuth('preview or export PDF')) return;
     _saveCurrentScene();
-    UI.showPdfPreview(State.get().project);
+    UI.showPdfPreview(_episodeView());
   }
 
   function _setGenerateUIVisible(visible) {
@@ -346,16 +424,17 @@ const App = (() => {
       });
       if (!res.ok) return;
       const data = await res.json();
-      const cloudProject = data.project;
+      const cloudProject = data.project ? _migrateProject(data.project) : null;
       const localProject = State.get().project;
       const cloudTime = cloudProject?.meta?.updatedAt || 0;
       const localTime = localProject?.meta?.updatedAt || 0;
+      const localHasContent = localProject?.episodes?.some(e => e.scenes.length);
 
       if (cloudProject && cloudTime > localTime) {
         State.setProject(cloudProject);
         Storage.saveLocal(cloudProject);
         _showToast('Loaded your latest saved project');
-      } else if (localProject?.scenes?.length && localTime >= cloudTime) {
+      } else if (localHasContent && localTime >= cloudTime) {
         await _saveProjectToCloud();
       }
     } catch (e) {
@@ -622,7 +701,7 @@ const App = (() => {
     try {
       _saveCurrentScene();
       const id = State.get().activeSceneId;
-      const scene = State.get().project.scenes.find(s => s.id === id);
+      const scene = State.getActiveScenes().find(s => s.id === id);
       if (!scene) {
         UI.hideGenerationProgress();
         _showToast('No active scene to generate');
@@ -806,6 +885,7 @@ const App = (() => {
   return {
     init,
     newScene,
+    newEpisode, switchEpisodeRelative, renameEpisode, deleteEpisode,
     deleteScene,
     moveScene,
     setSceneStatus,

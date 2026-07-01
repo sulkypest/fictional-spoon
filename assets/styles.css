@@ -178,6 +178,25 @@ body {
   display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden;
 }
 
+#episode-bar {
+  display: flex; align-items: center; gap: 4px;
+  padding: 8px 10px; border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+}
+#episode-title-input {
+  flex: 1; background: none; border: none; outline: none;
+  color: var(--text); font-size: 11px; font-family: var(--sans);
+  font-weight: 600; min-width: 0;
+}
+#episode-title-input::placeholder { color: var(--text3); }
+.ep-nav, .ep-del {
+  background: none; border: none; color: var(--text3); cursor: pointer;
+  font-size: 14px; padding: 0 3px; transition: color 0.15s;
+}
+.ep-nav:not(:disabled):hover { color: var(--accent); }
+.ep-nav:disabled, .ep-del:disabled { opacity: 0.3; cursor: default; }
+.ep-del:not(:disabled):hover { color: var(--danger); }
+
 #sidebar-tabs { display: flex; border-bottom: 1px solid var(--border); }
 .stab {
   flex: 1; padding: 8px 0; text-align: center; font-size: 11px;
