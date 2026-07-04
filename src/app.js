@@ -324,6 +324,7 @@ const App = (() => {
     const project = State.get().project;
     project.meta = project.meta || {};
     project.ttsVoices = TTS.getCharacterVoices();
+    if (Object.keys(_elVoiceMap).length) project.elVoiceMap = _elVoiceMap;
     const filename = Storage.saveToFile(project);
     State.markClean();
     UI.setSaveIndicator(`⬇ Saved: ${filename}`);
@@ -334,14 +335,19 @@ const App = (() => {
     try {
       const data = await Storage.loadFromFile();
       if (data.ttsVoices) TTS.setCharacterVoices(data.ttsVoices);
+      if (data.elVoiceMap) { _elVoiceMap = { ...data.elVoiceMap, ..._elVoiceMap }; _persistUISettings(); }
       State.setProject(_migrateProject(data));
       // setProject() marks the project clean, so the autosave dirty-check would
       // otherwise skip persisting an import entirely — save immediately instead
       // of relying on a later edit to trigger it.
       _touchProjectUpdatedAt();
       Storage.saveLocal(State.get().project);
-      if (_currentUser) await _saveProjectToCloud();
-      _showToast('Project loaded');
+      if (_currentUser) {
+        const ok = await _saveProjectToCloud();
+        _showToast(ok ? 'Project loaded' : 'Project loaded — cloud save failed, local copy kept');
+      } else {
+        _showToast('Project loaded');
+      }
     } catch (e) {
       _showToast('Could not load file: ' + e.message);
     }
@@ -408,9 +414,16 @@ const App = (() => {
         },
         body: JSON.stringify({ project: State.get().project }),
       });
-      if (!res.ok) console.warn('Cloud project save failed:', res.status);
+      if (!res.ok) {
+        console.warn('Cloud project save failed:', res.status);
+        UI.setSaveIndicator('⚠ Cloud save failed — project saved locally only');
+        return false;
+      }
+      return true;
     } catch (e) {
       console.warn('Cloud project save failed:', e);
+      UI.setSaveIndicator('⚠ Cloud save failed — project saved locally only');
+      return false;
     }
   }
 
@@ -435,8 +448,13 @@ const App = (() => {
         Storage.saveLocal(cloudProject);
         _showToast('Loaded your latest saved project');
       } else if (localHasContent && localTime >= cloudTime) {
+        // Only push local → cloud when local actually has content.
+        // Never let a blank local project (empty scenes, missing timestamp) overwrite
+        // a real cloud project just because the timestamps happen to compare equal.
         await _saveProjectToCloud();
       }
+      // If local has no content and cloud has nothing, leave both alone — a blank
+      // project should never be pushed to cloud and silently destroy an older save.
     } catch (e) {
       console.warn('Project sync failed:', e);
     }
@@ -795,9 +813,20 @@ const App = (() => {
   // ── Autosave ──────────────────────────────────────────────────────────────
 
   function _startAutosave() {
-    setInterval(() => {
-      if (!State.get().isDirty) return;
+    // Synchronously flush the current scene to localStorage on page close.
+    // The cloud push is async and the browser won't wait for it, but
+    // localStorage survives and will be pushed on the next session.
+    window.addEventListener('beforeunload', () => {
       _saveCurrentScene();
+      _touchProjectUpdatedAt();
+      Storage.saveLocal(State.get().project);
+    });
+
+    setInterval(() => {
+      // Always flush the current scene — the dirty flag can be stale if the editor
+      // fires input events faster than markDirty is called. The scene flush is cheap.
+      _saveCurrentScene();
+      if (!State.get().isDirty) return;
       _touchProjectUpdatedAt();
       Storage.saveLocal(State.get().project);
       if (_currentUser) _saveProjectToCloud();
