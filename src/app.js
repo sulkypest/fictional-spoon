@@ -822,7 +822,14 @@ const App = (() => {
   function _persistUISettings() {
     try {
       const payload = { theme: State.get().ui.theme, fontSize: _fontSize };
-      if (_elVoiceMap && Object.keys(_elVoiceMap).length) payload.elVoiceMap = _elVoiceMap;
+      if (_elVoiceMap && Object.keys(_elVoiceMap).length) {
+        payload.elVoiceMap = _elVoiceMap;
+      } else {
+        // Don't overwrite an existing voice map with empty — e.g. when font size
+        // changes while logged out and _elVoiceMap has been cleared.
+        const existing = Storage.loadUI();
+        if (existing?.elVoiceMap) payload.elVoiceMap = existing.elVoiceMap;
+      }
       Storage.saveUI(payload);
     } catch (e) {
       console.warn('Persist UI settings failed', e);
