@@ -199,6 +199,117 @@ const KEY_UI = KEY + '_ui';
     }
   }
 
+  // ── Reaper RPP export ─────────────────────────────────────────────────────
+
+  function _rppEsc(str) {
+    return (str || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+  }
+
+  function exportReaper(project, sceneId) {
+    const WPM      = CONFIG.timing.wordsPerMinute;
+    const SFX_DUR  = CONFIG.timing.soundEffectSeconds;
+    const LINE_GAP = 0.4;
+    const SCENE_GAP = 2.0;
+
+    const scenes = sceneId
+      ? project.scenes.filter(s => s.id === sceneId)
+      : project.scenes;
+    if (!scenes.length) return;
+
+    const trackOrder = [];
+    const trackMap   = {};
+    const markers    = [];
+
+    function ensureTrack(name) {
+      if (!trackMap[name]) { trackMap[name] = []; trackOrder.push(name); }
+    }
+
+    let pos = 0;
+
+    scenes.forEach((scene, si) => {
+      if (si > 0) pos += SCENE_GAP;
+      markers.push({ position: pos, label: scene.title || `Scene ${si + 1}` });
+
+      let currentChar = null;
+
+      scene.blocks.forEach(b => {
+        const text = (b.text || '').trim();
+        if (!text) return;
+
+        if (b.type === 'character') {
+          currentChar = text.toUpperCase();
+          return;
+        }
+        if (b.type === 'dialogue') {
+          const char = currentChar || 'UNKNOWN';
+          ensureTrack(char);
+          const dur = Math.max(0.5, (text.split(/\s+/).length / WPM) * 60);
+          trackMap[char].push({ position: pos, duration: dur, name: text });
+          pos += dur + LINE_GAP;
+          return;
+        }
+        if (b.type === 'action') {
+          ensureTrack('NARRATOR');
+          const dur = Math.max(0.5, (text.split(/\s+/).length / WPM) * 60);
+          trackMap['NARRATOR'].push({ position: pos, duration: dur, name: text });
+          pos += dur + LINE_GAP;
+          return;
+        }
+        if (b.type === 'sound') {
+          ensureTrack('SFX');
+          trackMap['SFX'].push({ position: pos, duration: SFX_DUR, name: text });
+          pos += SFX_DUR + LINE_GAP;
+        }
+      });
+    });
+
+    // Characters first, utility tracks last
+    const charTracks    = trackOrder.filter(n => n !== 'NARRATOR' && n !== 'SFX');
+    const specialTracks = trackOrder.filter(n => n === 'NARRATOR' || n === 'SFX');
+    const ordered       = [...charTracks, ...specialTracks];
+
+    const out = [];
+    out.push('<REAPER_PROJECT 0.1 "6.0" 0');
+    out.push('  TEMPO 120 4 4');
+    out.push('  PLAYRATE 1 0 0.25 4');
+
+    markers.forEach((m, i) => {
+      out.push(`  MARKER ${i + 1} ${m.position.toFixed(6)} "${_rppEsc(m.label)}" 0 -1 1`);
+    });
+
+    ordered.forEach(name => {
+      out.push('  <TRACK');
+      out.push(`    NAME "${_rppEsc(name)}"`);
+      out.push('    VOLPAN 1 0 -1 -1 1');
+      out.push('    MUTE 0');
+      trackMap[name].forEach(item => {
+        out.push('    <ITEM');
+        out.push(`      POSITION ${item.position.toFixed(6)}`);
+        out.push(`      LENGTH ${item.duration.toFixed(6)}`);
+        out.push(`      NAME "${_rppEsc(item.name)}"`);
+        out.push('      MUTE 0 0');
+        out.push('      VOLPAN 1 0 -1 -1');
+        out.push('      SOFFS 0 0');
+        out.push('      PLAYRATE 1 1 0 -1 0 0.0025');
+        out.push('      <SOURCE EMPTY');
+        out.push('      >');
+        out.push('    >');
+      });
+      out.push('  >');
+    });
+
+    out.push('>');
+
+    const blob = new Blob([out.join('\n') + '\n'], { type: 'application/octet-stream' });
+    const a = document.createElement('a');
+    const base = (sceneId ? (scenes[0]?.title || 'scene') : (project.meta?.title || 'project'))
+      .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    a.href = URL.createObjectURL(blob);
+    a.download = (base || 'export') + '.rpp';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
   return {
     saveToFile,
     loadFromFile,
@@ -210,5 +321,6 @@ const KEY_UI = KEY + '_ui';
     clearUI,
     exportTxt,
     exportForElevenLabs,
+    exportReaper,
   };
 })();

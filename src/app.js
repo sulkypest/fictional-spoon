@@ -379,6 +379,14 @@ const App = (() => {
     _showToast('Exported 2 files: dialogue + sound cues');
   }
 
+  function exportReaper(sceneOnly = false) {
+    if (!_requireAuth('export to Reaper')) return;
+    _saveCurrentScene();
+    const id = sceneOnly ? State.get().activeSceneId : null;
+    Storage.exportReaper(_episodeView(), id);
+    _showToast('Exported .rpp — open in Reaper to see your tracks');
+  }
+
   function showPdfExport() {
     if (!_requireAuth('preview or export PDF')) return;
     _saveCurrentScene();
@@ -934,6 +942,7 @@ const App = (() => {
     loadFromFile,
     exportTxt,
     exportForElevenLabs,
+    exportReaper,
     showPdfExport,
     elSaveApiKey,
     elSetVoice,
