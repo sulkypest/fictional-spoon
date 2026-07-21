@@ -648,6 +648,7 @@ const App = (() => {
       return false;
     }
     try {
+      _saveCurrentScene(); // flush editor so new CHARACTER blocks are in state before scan
       _elVoices = await ElevenLabsService.getVoices(null);
       UI.renderElVoicePanel(_elVoices, _elVoiceMap);
       _showToast(`Voices refreshed — ${_elVoices.length} voices`);

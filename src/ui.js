@@ -358,7 +358,19 @@ const UI = (() => {
     title.textContent = 'Your cast';
     container.appendChild(title);
 
-    [...project.characters, '__STAGE_MANAGER__'].forEach(char => {
+    // Collect all CHARACTER blocks from the script so the cast panel reflects the
+    // actual script content, not just the sidebar list (which may lag behind).
+    const scriptChars = new Set(project.characters || []);
+    (State.getActiveScenes() || []).forEach(scene => {
+      (scene.blocks || []).forEach(b => {
+        if (b.type === 'character' && b.text?.trim()) {
+          scriptChars.add(b.text.trim().toUpperCase());
+        }
+      });
+    });
+    const allChars = [...scriptChars].sort();
+
+    [...allChars, '__STAGE_MANAGER__'].forEach(char => {
       const row = document.createElement('div');
       row.className = 'voice-row';
       const label = document.createElement('label');
