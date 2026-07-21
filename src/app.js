@@ -125,6 +125,7 @@ const App = (() => {
 
     State.on('characters:changed', () => {
       UI.renderCharList();
+      UI.renderElVoicePanel(_elVoices, _elVoiceMap);
     });
 
     State.on('format:changed', (fmt) => {
