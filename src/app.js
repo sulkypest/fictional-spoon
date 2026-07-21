@@ -768,7 +768,8 @@ const App = (() => {
         if (seg.type === 'dialogue') {
           UI.showGenerationProgress(`Generating dialogue (${i + 1}/${segments.length})...`);
           const blob = await ElevenLabsService.generateDialogueChunk(null, seg.inputs);
-          generated.push({ blob, kind: 'dialogue', label: 'dialogue' });
+          const chars = [...new Set(seg.inputs.map(i => i.character).filter(Boolean))];
+          generated.push({ blob, kind: 'dialogue', label: 'dialogue', characters: chars });
         } else {
           UI.showGenerationProgress(`Generating sound effect (${i + 1}/${segments.length}): ${seg.label}`);
           const blob = await ElevenLabsService.generateSoundEffect(null, seg.prompt);
@@ -791,6 +792,29 @@ const App = (() => {
         }
         files.push({ name: 'running-order.txt', data: new TextEncoder().encode(manifestLines.join('\n')) });
         _downloadBlob(Zip.createZip(files), `${baseName}.zip`);
+      } else if (outputMode === 'reaper') {
+        UI.showGenerationProgress('Getting audio durations...');
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const files = [];
+        const rppItems = [];
+        for (let i = 0; i < generated.length; i++) {
+          const g = generated[i];
+          const idx = String(i + 1).padStart(2, '0');
+          const filename = g.kind === 'dialogue' ? `${idx}-dialogue.mp3` : `${idx}-sfx-${_slugify(g.label)}.mp3`;
+          const buf = await g.blob.arrayBuffer();
+          let duration = g.kind === 'sound' ? 4.0 : 3.0;
+          try {
+            const decoded = await audioCtx.decodeAudioData(buf.slice(0));
+            duration = decoded.duration;
+          } catch (_) { /* use fallback */ }
+          files.push({ name: filename, data: buf });
+          rppItems.push({ filename, duration, kind: g.kind, characters: g.characters || [], label: g.label });
+        }
+        audioCtx.close();
+        UI.showGenerationProgress('Building Reaper project...');
+        const rpp = _buildReaperRpp(scene.title, rppItems);
+        files.push({ name: `${baseName}.rpp`, data: new TextEncoder().encode(rpp) });
+        _downloadBlob(Zip.createZip(files), `${baseName}-reaper.zip`);
       } else {
         UI.showGenerationProgress('Combining into one file...');
         const combined = await AudioMixer.concatToWav(generated.map(g => g.blob));
@@ -804,6 +828,70 @@ const App = (() => {
       UI.hideGenerationProgress();
       _showToast('Generation failed: ' + (e && e.message ? e.message : e));
     }
+  }
+
+  function _buildReaperRpp(sceneTitle, items) {
+    const trackOrder = [];
+    const trackMap = {};
+    function ensureTrack(name) {
+      if (!trackMap[name]) { trackMap[name] = []; trackOrder.push(name); }
+    }
+    function rppEsc(s) { return (s || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"'); }
+
+    let pos = 0;
+    const GAP = 0.3;
+
+    for (const item of items) {
+      let trackName;
+      if (item.kind === 'sound') {
+        trackName = 'SFX';
+      } else {
+        const chars = item.characters.filter(c => c && c !== '__STAGE_MANAGER__');
+        if (chars.length === 1) {
+          trackName = chars[0];
+        } else if (chars.length === 0) {
+          trackName = 'NARRATOR';
+        } else {
+          trackName = 'DIALOGUE';
+        }
+      }
+      ensureTrack(trackName);
+      trackMap[trackName].push({ pos, dur: item.duration, file: item.filename, name: item.label || item.filename });
+      pos += item.duration + GAP;
+    }
+
+    const charTracks = trackOrder.filter(n => n !== 'NARRATOR' && n !== 'SFX' && n !== 'DIALOGUE');
+    const utilTracks = trackOrder.filter(n => n === 'DIALOGUE' || n === 'NARRATOR' || n === 'SFX');
+    const ordered = [...charTracks, ...utilTracks];
+
+    const out = [];
+    out.push('<REAPER_PROJECT 0.1 "6.0" 0');
+    out.push('  TEMPO 120 4 4');
+    out.push('  PLAYRATE 1 0 0.25 4');
+    out.push(`  MARKER 1 0.000000 "${rppEsc(sceneTitle)}" 0 -1 1`);
+    ordered.forEach(name => {
+      out.push('  <TRACK');
+      out.push(`    NAME "${rppEsc(name)}"`);
+      out.push('    VOLPAN 1 0 -1 -1 1');
+      out.push('    MUTE 0');
+      trackMap[name].forEach(item => {
+        out.push('    <ITEM');
+        out.push(`      POSITION ${item.pos.toFixed(6)}`);
+        out.push(`      LENGTH ${item.dur.toFixed(6)}`);
+        out.push(`      NAME "${rppEsc(item.name)}"`);
+        out.push('      MUTE 0 0');
+        out.push('      VOLPAN 1 0 -1 -1');
+        out.push('      SOFFS 0 0');
+        out.push('      PLAYRATE 1 1 0 -1 0 0.0025');
+        out.push('      <SOURCE MP3');
+        out.push(`        FILE "${rppEsc(item.file)}"`);
+        out.push('      >');
+        out.push('    >');
+      });
+      out.push('  >');
+    });
+    out.push('>');
+    return out.join('\n') + '\n';
   }
 
   // ── TTS (browser preview) ─────────────────────────────────────────────────
