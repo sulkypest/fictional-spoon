@@ -42,12 +42,14 @@ async function verifyToken(req, res, next) {
 }
 
 // Save/Update the user's ElevenLabs API key (stored server-side in Firestore)
+// voiceMap is serialised to a JSON string because Firestore rejects field names
+// that start and end with __ (e.g. __STAGE_MANAGER__).
 app.post('/saveKey', verifyToken, async (req, res) => {
   const { key, voiceMap } = req.body || {};
   if (!key) return res.status(400).json({ error: 'Missing key' });
   try {
     const payload = { key, updatedAt: admin.firestore.FieldValue.serverTimestamp() };
-    if (voiceMap) payload.voiceMap = voiceMap;
+    if (voiceMap) payload.voiceMap = JSON.stringify(voiceMap);
     await db.collection('eleven_keys').doc(req.uid).set(payload, { merge: true });
     return res.json({ ok: true });
   } catch (e) {
@@ -60,7 +62,10 @@ app.post('/saveSettings', verifyToken, async (req, res) => {
   const { voiceMap } = req.body || {};
   if (!voiceMap) return res.status(400).json({ error: 'Missing voiceMap' });
   try {
-    await db.collection('eleven_keys').doc(req.uid).set({ voiceMap, updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+    await db.collection('eleven_keys').doc(req.uid).set({
+      voiceMap: JSON.stringify(voiceMap),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    }, { merge: true });
     return res.json({ ok: true });
   } catch (e) {
     console.error('saveSettings failed', e);
@@ -72,7 +77,11 @@ app.get('/userSettings', verifyToken, async (req, res) => {
   try {
     const doc = await db.collection('eleven_keys').doc(req.uid).get();
     const data = doc.exists ? doc.data() : {};
-    return res.json({ voiceMap: data.voiceMap || {} });
+    let voiceMap = {};
+    if (data.voiceMap) {
+      voiceMap = typeof data.voiceMap === 'string' ? JSON.parse(data.voiceMap) : data.voiceMap;
+    }
+    return res.json({ voiceMap });
   } catch (e) {
     console.error('userSettings failed', e);
     return res.status(500).json({ error: e.message || 'userSettings failed' });
@@ -82,12 +91,13 @@ app.get('/userSettings', verifyToken, async (req, res) => {
 // Save/load the user's script project. Conflict policy is last-write-wins, keyed off
 // project.meta.updatedAt (stamped client-side) — there's no merge of divergent edits
 // across devices, the newer timestamp simply replaces the older one.
+// project is serialised to a JSON string for the same reason as voiceMap above.
 app.post('/saveProject', verifyToken, async (req, res) => {
   const { project } = req.body || {};
   if (!project) return res.status(400).json({ error: 'Missing project' });
   try {
     await db.collection('projects').doc(req.uid).set({
-      project,
+      project: JSON.stringify(project),
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     });
     return res.json({ ok: true });
@@ -100,7 +110,10 @@ app.post('/saveProject', verifyToken, async (req, res) => {
 app.get('/loadProject', verifyToken, async (req, res) => {
   try {
     const doc = await db.collection('projects').doc(req.uid).get();
-    return res.json({ project: doc.exists ? (doc.data().project || null) : null });
+    if (!doc.exists) return res.json({ project: null });
+    const raw = doc.data().project;
+    const project = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : null;
+    return res.json({ project });
   } catch (e) {
     console.error('loadProject failed', e);
     return res.status(500).json({ error: e.message || 'loadProject failed' });

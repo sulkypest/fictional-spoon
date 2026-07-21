@@ -59,8 +59,8 @@
 
   async function getToken() {
     const user = auth.currentUser;
-    if (!user) return null;
-    return user.getIdToken();
+    if (!user) throw new Error('Not signed in');
+    return user.getIdToken(true); // force-refresh so stale cached tokens never reach the server
   }
 
   function getCurrentUser() {

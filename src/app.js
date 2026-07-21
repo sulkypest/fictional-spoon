@@ -613,6 +613,7 @@ const App = (() => {
     }
     try {
       const token = await FirebaseAuth.getToken();
+      if (!token) { _showToast('Could not get auth token — try signing out and back in'); return false; }
       const res = await fetch(CONFIG.elevenlabs.apiBaseUrl + '/saveKey', {
         method: 'POST',
         headers: {
