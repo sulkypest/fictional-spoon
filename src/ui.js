@@ -539,7 +539,13 @@ const UI = (() => {
       optNone.value = '';
       optNone.textContent = 'Assign to...';
       assign.appendChild(optNone);
-      [...project.characters, '__STAGE_MANAGER__'].forEach(ch => {
+      const assignChars = new Set(project.characters || []);
+      (State.getActiveScenes() || []).forEach(scene => {
+        (scene.blocks || []).forEach(b => {
+          if (b.type === 'character' && b.text?.trim()) assignChars.add(b.text.trim().toUpperCase());
+        });
+      });
+      [...assignChars].sort().concat('__STAGE_MANAGER__').forEach(ch => {
         const o = document.createElement('option');
         o.value = ch;
         o.textContent = ch === '__STAGE_MANAGER__' ? 'Stage Mgr' : ch;
