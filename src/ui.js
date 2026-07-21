@@ -6,6 +6,19 @@
 
 const UI = (() => {
 
+  let _previewAudio = null;
+  let _previewBtn   = null;
+  let _previewUrl   = null;
+
+  function _stopPreview() {
+    if (_previewAudio) {
+      _previewAudio.pause();
+      if (_previewUrl) { URL.revokeObjectURL(_previewUrl); _previewUrl = null; }
+      _previewAudio = null;
+    }
+    if (_previewBtn) { _previewBtn.textContent = '▶ Preview'; _previewBtn = null; }
+  }
+
   // ── Format ────────────────────────────────────────────────────────────────
 
   function setFormat(fmt) {
@@ -497,19 +510,25 @@ const UI = (() => {
         const btn = document.createElement('button');
         btn.textContent = '▶ Preview';
         btn.onclick = async () => {
+          // Same button clicked while playing — stop it
+          if (_previewBtn === btn) { _stopPreview(); return; }
+          // Different button — stop whatever is currently playing
+          _stopPreview();
           try {
             btn.textContent = 'Loading...';
+            _previewBtn = btn;
             const r = await fetch(v.previewUrl);
             const b = await r.arrayBuffer();
             const blob = new Blob([b], { type: r.headers.get('content-type') || 'audio/mpeg' });
-            const url = URL.createObjectURL(blob);
-            const aud = new Audio(url);
-            aud.onended = () => { URL.revokeObjectURL(url); btn.textContent = '▶ Preview'; };
-            aud.play();
+            _previewUrl = URL.createObjectURL(blob);
+            _previewAudio = new Audio(_previewUrl);
+            _previewAudio.onended = () => _stopPreview();
+            _previewAudio.play();
+            btn.textContent = '■ Stop';
           } catch (e) {
             console.error('Voice preview failed', e);
             _showToast('Voice preview failed');
-            btn.textContent = '▶ Preview';
+            _stopPreview();
           }
         };
         controls.appendChild(btn);
