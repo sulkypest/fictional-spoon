@@ -838,6 +838,71 @@ const App = (() => {
     }
   }
 
+  async function elGenerateCharacter(character) {
+    if (!_currentUser) {
+      _showToast('Sign in first to generate with ElevenLabs');
+      return;
+    }
+    const displayName = character === '__STAGE_MANAGER__' ? 'Stage Manager' : character;
+    UI.showGenerationProgress(`Preparing ${displayName} lines...`);
+    try {
+      _saveCurrentScene();
+      const id = State.get().activeSceneId;
+      const scene = State.getActiveScenes().find(s => s.id === id);
+      if (!scene) {
+        UI.hideGenerationProgress();
+        _showToast('No active scene');
+        return;
+      }
+
+      if (!_elVoiceMap[character]) {
+        UI.hideGenerationProgress();
+        _showToast(`No voice assigned for ${displayName} — assign one first`);
+        return;
+      }
+
+      const stageMgrId = _elVoiceMap['__STAGE_MANAGER__'] || _elVoices[0]?.id;
+      const includeDirections = document.getElementById('el-include-directions')?.checked || false;
+      const { segments } = ElevenLabsService.parseSceneForGeneration(
+        scene.blocks, _elVoiceMap, stageMgrId, { includeDirections, singleLineChunks: true }
+      );
+
+      // Keep each segment's scene-order index (1-based) so filenames match the Reaper export.
+      const charSegments = segments
+        .map((seg, i) => ({ seg, sceneIdx: i + 1 }))
+        .filter(({ seg }) => seg.type === 'dialogue' && seg.inputs[0]?.character === character);
+
+      if (!charSegments.length) {
+        UI.hideGenerationProgress();
+        _showToast(`No lines found for ${displayName} in this scene`);
+        return;
+      }
+
+      const charSlug = _slugify(character) || 'character';
+      const baseName = _slugify(scene.title) || 'scene';
+      const files = [];
+      const manifestLines = [`${displayName} lines — ${scene.title} — generated ${new Date().toISOString()}`, ''];
+
+      for (let i = 0; i < charSegments.length; i++) {
+        const { seg, sceneIdx } = charSegments[i];
+        UI.showGenerationProgress(`Generating ${displayName} (${i + 1}/${charSegments.length})...`);
+        const blob = await ElevenLabsService.generateDialogueChunk(null, seg.inputs);
+        const filename = `${String(sceneIdx).padStart(2, '0')}-${charSlug}.mp3`;
+        files.push({ name: filename, data: await blob.arrayBuffer() });
+        manifestLines.push(`${filename}  →  ${seg.inputs[0].text}`);
+      }
+
+      files.push({ name: 'manifest.txt', data: new TextEncoder().encode(manifestLines.join('\n')) });
+      _downloadBlob(Zip.createZip(files), `${baseName}-${charSlug}.zip`);
+      UI.hideGenerationProgress();
+      _showToast(`Done — ${charSegments.length} lines for ${displayName}`);
+    } catch (e) {
+      console.error('[elGenerateCharacter] error', e);
+      UI.hideGenerationProgress();
+      _showToast('Generation failed: ' + (e && e.message ? e.message : e));
+    }
+  }
+
   function _buildReaperRpp(sceneTitle, items) {
     const trackOrder = [];
     const trackMap = {};
@@ -1048,6 +1113,7 @@ const App = (() => {
     elLoadMoreVoiceLibrary,
     elAssignLibraryVoice,
     elGenerateScene,
+    elGenerateCharacter,
     openElPanel,
     toggleAuth,
     ttsPlay,

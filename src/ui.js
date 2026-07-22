@@ -401,8 +401,14 @@ const UI = (() => {
         sel.appendChild(opt);
       });
       sel.onchange = () => App.elSetVoice(char, sel.value);
+      const genBtn = document.createElement('button');
+      genBtn.className = 'gen-char-btn';
+      genBtn.textContent = 'Generate';
+      genBtn.title = `Generate only ${char === '__STAGE_MANAGER__' ? 'stage manager' : char}'s lines`;
+      genBtn.onclick = () => App.elGenerateCharacter(char);
       row.appendChild(label);
       row.appendChild(sel);
+      row.appendChild(genBtn);
       container.appendChild(row);
     });
 
