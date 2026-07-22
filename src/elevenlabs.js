@@ -197,7 +197,7 @@ const ElevenLabsService = (() => {
    * @returns {{ segments: Array, dialogueInputs: Array, soundCues: Array }}
    */
   function parseSceneForGeneration(blocks, voiceMap, stageMgrVoiceId, options = {}) {
-    const { includeDirections = true } = options;
+    const { includeDirections = true, singleLineChunks = false } = options;
     const limit = CONFIG.elevenlabs.maxCharsPerRequest;
     const segments = [];
     const dialogueInputs = [];
@@ -246,6 +246,7 @@ const ElevenLabsService = (() => {
           character,
           blockId: block.id,
         });
+        if (singleLineChunks) flushChunk();
         continue;
       }
 
@@ -275,6 +276,7 @@ const ElevenLabsService = (() => {
           character: '__STAGE_MANAGER__',
           blockId: block.id,
         });
+        if (singleLineChunks) flushChunk();
         continue;
       }
     }

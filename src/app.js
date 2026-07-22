@@ -742,7 +742,7 @@ const App = (() => {
 
       const stageMgrId = _elVoiceMap['__STAGE_MANAGER__'] || _elVoices[0]?.id;
       const { segments, dialogueInputs } = ElevenLabsService.parseSceneForGeneration(
-        scene.blocks, _elVoiceMap, stageMgrId, { includeDirections }
+        scene.blocks, _elVoiceMap, stageMgrId, { includeDirections, singleLineChunks: outputMode === 'reaper' }
       );
       console.log('[elGenerateScene] segments:', segments.length, 'outputMode:', outputMode, 'includeDirections:', includeDirections);
 
@@ -769,7 +769,7 @@ const App = (() => {
           UI.showGenerationProgress(`Generating dialogue (${i + 1}/${segments.length})...`);
           const blob = await ElevenLabsService.generateDialogueChunk(null, seg.inputs);
           const chars = [...new Set(seg.inputs.map(i => i.character).filter(Boolean))];
-          generated.push({ blob, kind: 'dialogue', label: 'dialogue', characters: chars });
+          generated.push({ blob, kind: 'dialogue', label: 'dialogue', characters: chars, inputs: seg.inputs });
         } else {
           UI.showGenerationProgress(`Generating sound effect (${i + 1}/${segments.length}): ${seg.label}`);
           const blob = await ElevenLabsService.generateSoundEffect(null, seg.prompt);
@@ -800,7 +800,15 @@ const App = (() => {
         for (let i = 0; i < generated.length; i++) {
           const g = generated[i];
           const idx = String(i + 1).padStart(2, '0');
-          const filename = g.kind === 'dialogue' ? `${idx}-dialogue.mp3` : `${idx}-sfx-${_slugify(g.label)}.mp3`;
+          let filename, itemLabel;
+          if (g.kind === 'dialogue') {
+            const charSlug = _slugify((g.characters || [])[0] || 'dialogue') || 'dialogue';
+            filename = `${idx}-${charSlug}.mp3`;
+            itemLabel = g.inputs?.[0]?.text || g.label;
+          } else {
+            filename = `${idx}-sfx-${_slugify(g.label)}.mp3`;
+            itemLabel = g.label;
+          }
           const buf = await g.blob.arrayBuffer();
           let duration = g.kind === 'sound' ? 4.0 : 3.0;
           try {
@@ -808,7 +816,7 @@ const App = (() => {
             duration = decoded.duration;
           } catch (_) { /* use fallback */ }
           files.push({ name: filename, data: buf });
-          rppItems.push({ filename, duration, kind: g.kind, characters: g.characters || [], label: g.label });
+          rppItems.push({ filename, duration, kind: g.kind, characters: g.characters || [], label: itemLabel });
         }
         audioCtx.close();
         UI.showGenerationProgress('Building Reaper project...');
@@ -873,7 +881,6 @@ const App = (() => {
       out.push('  <TRACK');
       out.push(`    NAME "${rppEsc(name)}"`);
       out.push('    VOLPAN 1 0 -1 -1 1');
-      out.push('    MUTE 0');
       trackMap[name].forEach(item => {
         out.push('    <ITEM');
         out.push(`      POSITION ${item.pos.toFixed(6)}`);
