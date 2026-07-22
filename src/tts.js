@@ -72,7 +72,7 @@ const TTS = (() => {
 
   function play(sceneId) {
     stop();
-    const scene = State.get().project?.scenes.find(s => s.id === sceneId);
+    const scene = State.getActiveScenes().find(s => s.id === sceneId);
     if (!scene) return;
 
     _queue = _buildQueue(scene.blocks);

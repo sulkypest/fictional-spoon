@@ -8,12 +8,10 @@ const UI = (() => {
 
   let _previewAudio = null;
   let _previewBtn   = null;
-  let _previewUrl   = null;
 
   function _stopPreview() {
     if (_previewAudio) {
       _previewAudio.pause();
-      if (_previewUrl) { URL.revokeObjectURL(_previewUrl); _previewUrl = null; }
       _previewAudio = null;
     }
     if (_previewBtn) { _previewBtn.textContent = '▶ Preview'; _previewBtn = null; }
@@ -515,27 +513,17 @@ const UI = (() => {
       if (v.previewUrl) {
         const btn = document.createElement('button');
         btn.textContent = '▶ Preview';
-        btn.onclick = async () => {
-          // Same button clicked while playing — stop it
+        btn.onclick = () => {
           if (_previewBtn === btn) { _stopPreview(); return; }
-          // Different button — stop whatever is currently playing
           _stopPreview();
-          try {
-            btn.textContent = 'Loading...';
-            _previewBtn = btn;
-            const r = await fetch(v.previewUrl);
-            const b = await r.arrayBuffer();
-            const blob = new Blob([b], { type: r.headers.get('content-type') || 'audio/mpeg' });
-            _previewUrl = URL.createObjectURL(blob);
-            _previewAudio = new Audio(_previewUrl);
-            _previewAudio.onended = () => _stopPreview();
-            _previewAudio.play();
-            btn.textContent = '■ Stop';
-          } catch (e) {
-            console.error('Voice preview failed', e);
-            _showToast('Voice preview failed');
-            _stopPreview();
-          }
+          btn.textContent = 'Loading...';
+          _previewBtn = btn;
+          _previewAudio = new Audio(v.previewUrl);
+          _previewAudio.onended = () => _stopPreview();
+          _previewAudio.onerror = () => { _showToast('Voice preview failed'); _stopPreview(); };
+          _previewAudio.play()
+            .then(() => { btn.textContent = '■ Stop'; })
+            .catch(() => { _showToast('Voice preview failed'); _stopPreview(); });
         };
         controls.appendChild(btn);
       }
