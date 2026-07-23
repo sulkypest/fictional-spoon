@@ -31,7 +31,7 @@ const CONFIG = {
 
   storage: {
     localStorageKey: 'scriptwriter_project_v1',
-    autosaveIntervalMs: 30000,
+    autosaveIntervalMs: 10000,
   },
 
   formats: {

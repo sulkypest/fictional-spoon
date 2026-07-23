@@ -7,6 +7,7 @@
 const App = (() => {
 
   let _currentUser = null;
+  let _lastToken = null;     // Most recent valid Firebase auth token (for keepalive saves)
   let _elVoices = [];        // ElevenLabs voice list (voices already in this account)
   let _elVoiceMap = {};      // { CHARACTER: elevenlabs_voice_id }
   let _pendingGeneration = null;
@@ -412,22 +413,32 @@ const App = (() => {
   }
 
   async function _saveProjectToCloud() {
-    if (!_currentUser) return;
+    if (!_currentUser) return false;
     try {
-      const token = await FirebaseAuth.getToken();
-      const res = await fetch(CONFIG.elevenlabs.apiBaseUrl + '/saveProject', {
+      const payload = JSON.stringify({ project: State.get().project });
+      let token = await FirebaseAuth.getToken();
+      _lastToken = token;
+      let res = await fetch(CONFIG.elevenlabs.apiBaseUrl + '/saveProject', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({ project: State.get().project }),
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: payload,
       });
+      if (res.status === 401) {
+        // Token expired — force-refresh once and retry
+        token = await _currentUser.getIdToken(true);
+        _lastToken = token;
+        res = await fetch(CONFIG.elevenlabs.apiBaseUrl + '/saveProject', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: payload,
+        });
+      }
       if (!res.ok) {
         console.warn('Cloud project save failed:', res.status);
         UI.setSaveIndicator('⚠ Cloud save failed — project saved locally only');
         return false;
       }
+      UI.setSaveIndicator('✓ Saved');
       return true;
     } catch (e) {
       console.warn('Cloud project save failed:', e);
@@ -440,11 +451,15 @@ const App = (() => {
     if (!_currentUser) return;
     try {
       const token = await FirebaseAuth.getToken();
+      _lastToken = token;
       const res = await fetch(CONFIG.elevenlabs.apiBaseUrl + '/loadProject', {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${token}` },
       });
-      if (!res.ok) return;
+      if (!res.ok) {
+        console.warn('loadProject failed:', res.status);
+        return;
+      }
       const data = await res.json();
       const cloudProject = data.project ? _migrateProject(data.project) : null;
       const localProject = State.get().project;
@@ -452,18 +467,20 @@ const App = (() => {
       const localTime = localProject?.meta?.updatedAt || 0;
       const localHasContent = localProject?.episodes?.some(e => e.scenes.length);
 
-      if (cloudProject && cloudTime > localTime) {
+      if (cloudProject && (!localHasContent || cloudTime > localTime)) {
+        // Load cloud when: local is blank (new/fresh device) OR cloud version is newer.
+        // A blank local project must never win over a real cloud save regardless
+        // of the timestamp, since it has no updatedAt and would compare as 0.
         State.setProject(cloudProject);
         Storage.saveLocal(cloudProject);
-        _showToast('Loaded your latest saved project');
-      } else if (localHasContent && localTime >= cloudTime) {
-        // Only push local → cloud when local actually has content.
-        // Never let a blank local project (empty scenes, missing timestamp) overwrite
-        // a real cloud project just because the timestamps happen to compare equal.
+        _showToast('Loaded your saved project');
+      } else if (localHasContent) {
+        // Local has content the cloud doesn't — push it up.
+        // Touch the timestamp so the next device can see it is newer.
+        _touchProjectUpdatedAt();
         await _saveProjectToCloud();
       }
-      // If local has no content and cloud has nothing, leave both alone — a blank
-      // project should never be pushed to cloud and silently destroy an older save.
+      // Both blank: nothing to do.
     } catch (e) {
       console.warn('Project sync failed:', e);
     }
@@ -984,13 +1001,25 @@ const App = (() => {
   // ── Autosave ──────────────────────────────────────────────────────────────
 
   function _startAutosave() {
-    // Synchronously flush the current scene to localStorage on page close.
-    // The cloud push is async and the browser won't wait for it, but
-    // localStorage survives and will be pushed on the next session.
+    // On page close: flush to localStorage synchronously, then fire a keepalive
+    // fetch so the cloud save completes even as the page unloads. We use the
+    // cached _lastToken (set on every successful autosave) so there's no async
+    // token lookup that the browser might abort before it resolves.
     window.addEventListener('beforeunload', () => {
       _saveCurrentScene();
       _touchProjectUpdatedAt();
       Storage.saveLocal(State.get().project);
+      if (_currentUser && _lastToken) {
+        fetch(CONFIG.elevenlabs.apiBaseUrl + '/saveProject', {
+          method: 'POST',
+          keepalive: true,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${_lastToken}`,
+          },
+          body: JSON.stringify({ project: State.get().project }),
+        }).catch(() => {});
+      }
     });
 
     setInterval(() => {
