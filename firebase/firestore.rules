@@ -1,8 +1,15 @@
 rules_version = '2';
 
+// SUPERSEDED — no longer deployed from this repo. This project (draft-punk-a0735)
+// is shared with Draft Punk, which is the canonical source of truth for these
+// rules as of 2026-08-31: ~/Documents/draftpunk/firestore.rules. This repo's
+// firebase.json no longer has a "firestore" key, so `firebase deploy` here can't
+// push rules again. Kept only for history — edit the Draft Punk copy instead.
+
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // ── Cue Fighters ──────────────────────────────────────────────────────────
     // ElevenLabs keys are written/read only by the Cloud Function via the Admin SDK,
     // which bypasses these rules. Deny all direct client access so a user's browser
     // can never read another user's (or even their own) stored key from Firestore.
@@ -13,6 +20,69 @@ service cloud.firestore {
     // Script projects, same reasoning — only the Cloud Function (Admin SDK) touches this.
     match /projects/{userId} {
       allow read, write: if false;
+    }
+
+    // ── Draft Punk ────────────────────────────────────────────────────────────
+    // Shares the same Firebase project as Cue Fighters — these paths are
+    // Draft Punk's, everything above is Cue Fighters'.
+
+    // Public profile doc: username, display name, word totals, friends list.
+    // Readable by any signed-in user (leaderboard, friend lookups); writable
+    // only by its owner.
+    match /users/{userId} {
+      allow get, list: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+
+      match /writing/{chapterId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // username -> uid reservation. Readable by any signed-in user (availability
+    // checks, friend lookups by username); only claimable/removable by the uid
+    // it points to.
+    match /usernames/{name} {
+      allow read: if request.auth != null;
+      allow create, update: if request.auth != null && request.resource.data.uid == request.auth.uid;
+      allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
+    }
+
+    match /friendRequests/{requestId} {
+      allow get: if request.auth != null &&
+        (resource == null || resource.data.to == request.auth.uid || resource.data.from == request.auth.uid);
+      allow list: if request.auth != null &&
+        (resource.data.to == request.auth.uid || resource.data.from == request.auth.uid);
+      allow create: if request.auth != null && request.resource.data.from == request.auth.uid;
+      allow delete: if request.auth != null &&
+        (resource.data.to == request.auth.uid || resource.data.from == request.auth.uid);
+    }
+
+    // Cross-user notification: the accepter writes this for the original
+    // sender to pick up on their next sign-in.
+    match /friendAcceptances/{acceptanceId} {
+      allow create: if request.auth != null && request.resource.data.addFriend == request.auth.uid;
+      allow read, delete: if request.auth != null && resource.data.addTo == request.auth.uid;
+    }
+
+    match /messages/{messageId} {
+      allow get: if request.auth != null &&
+        (resource == null || resource.data.to == request.auth.uid || resource.data.from == request.auth.uid);
+      allow list: if request.auth != null &&
+        (resource.data.to == request.auth.uid || resource.data.from == request.auth.uid);
+      allow create: if request.auth != null && request.resource.data.from == request.auth.uid;
+      allow update: if request.auth != null && resource.data.to == request.auth.uid;
+      allow delete: if request.auth != null &&
+        (resource.data.to == request.auth.uid || resource.data.from == request.auth.uid);
+    }
+
+    match /shares/{shareId} {
+      allow get: if request.auth != null &&
+        (resource == null || resource.data.ownerId == request.auth.uid || request.auth.uid in resource.data.sharedWith);
+      allow list: if request.auth != null &&
+        (resource.data.ownerId == request.auth.uid || request.auth.uid in resource.data.sharedWith);
+      allow create, update: if request.auth != null && request.resource.data.ownerId == request.auth.uid;
+      allow delete: if request.auth != null &&
+        (resource.data.ownerId == request.auth.uid || request.auth.uid in resource.data.sharedWith);
     }
 
     // Deny everything else by default.
